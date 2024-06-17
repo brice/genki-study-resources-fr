@@ -1,12 +1,11 @@
 ﻿# Genki Study Resources
-Genki Study Resources is a website that offers a vast collection of exercises for practicing what is taught in [Genki: An Integrated Course in Elementary Japanese](http://genki.japantimes.co.jp/index_en). It was mainly created to help aid with self-study, as such, you can use it online or offline depending on your needs. Choose one of the links below to begin testing the Japanese you've learned in Genki!
+Genki Study Resources est un site web qui offre une vaste collection d'exercices pour pratiquer ce qui est enseigné dans [Genki: An Integrated Course in Elementary Japanese](http://genki.japantimes.co.jp/index_en). Il a été principalement créé pour aider à l'auto-apprentissage, et vous pouvez donc l'utiliser en ligne ou hors ligne selon vos besoins. Choisissez l'un des liens ci-dessous pour commencer à tester le japonais que vous avez appris dans Genki !
 
+**Version en ligne :** [2ème édition](https://sethclydesdale.github.io/genki-study-resources/) | [3ème édition](https://sethclydesdale.github.io/genki-study-resources/lessons-3rd/)
 
-**Online Version:** [2nd Edition](https://sethclydesdale.github.io/genki-study-resources/) | [3rd Edition](https://sethclydesdale.github.io/genki-study-resources/lessons-3rd/)
+**Version hors ligne :** [télécharger](https://github.com/SethClydesdale/genki-study-resources/archive/master.zip)
 
-**Offline Version:** [download](https://github.com/SethClydesdale/genki-study-resources/archive/master.zip)
-
-If you're interested in learning Japanese, please see [this guide](https://sethclydesdale.github.io/genki-study-resources/help/japanese-guide/)!
+Si vous êtes intéressé par l'apprentissage du japonais, veuillez consulter [ce guide](https://sethclydesdale.github.io/genki-study-resources/help/japanese-guide/) !
 
 ### Other Languages
 
@@ -16,60 +15,65 @@ Genki Study Resources is also available in other languages, courtesy of contribu
 
 -----
 
-**Quick Links**
-- [Using the Offline Version](#using-the-offline-version)
-- [Keyboard Shortcuts](#keyboard-shortcuts)
-- [Suggestions, Feedback, Bug Reports](#suggestions-feedback-bug-reports)
-- [Resources for Studying Japanese](#resources-for-studying-japanese)
-- [Special Thanks](#special-thanks)
-- [Donate](#donate)
+**Liens rapides**
+- [Genki Study Resources](#genki-study-resources)
+    - [Other Languages](#other-languages)
+    - [Utilisation de la version hors ligne](#utilisation-de-la-version-hors-ligne)
+    - [Raccourcis clavier](#raccourcis-clavier)
+      - [Global](#global)
+      - [Exercices](#exercices)
+        - [Choix multiples](#choix-multiples)
+    - [Suggestions, commentaires, rapports de bugs](#suggestions-commentaires-rapports-de-bugs)
+    - [Ressources pour étudier le japonais](#ressources-pour-étudier-le-japonais)
+        - [Tools](#tools)
+        - [Websites](#websites)
+    - [Remerciements spéciaux](#remerciements-spéciaux)
+    - [Donate](#donate)
 
+### Utilisation de la version hors ligne
+Si vous utilisez la version hors ligne, vous devrez décompresser les fichiers. Une fois cela fait, vous pouvez accéder à toutes les ressources d'étude en ouvrant l'un des fichiers [**index.html**](https://i62.servimg.com/u/f62/18/21/41/30/captur11.png) dans le navigateur de votre choix. Cela devrait offrir la même expérience que la version en ligne, cependant, lorsque de nouveaux exercices/leçons sont ajoutés, ils ne seront pas disponibles ; vous devrez télécharger la dernière version du dépôt pour les obtenir.
 
-### Using the Offline Version
-If you're using the offline version you'll have to unzip the files. Once you've done that, you can access all the study resources by opening any of the [**index.html**](https://i62.servimg.com/u/f62/18/21/41/30/captur11.png) files in the browser of your choice. It should have the same experience as the online version, however, whenever new exercises/lessons are added they will not be available; you'll have to download the latest version of the repository to get them.
+**Si les icônes sont cassées :** Si vous utilisez Firefox et que les icônes apparaissent cassées, veuillez consulter [ce sujet](https://sethclydesdale.github.io/genki-study-resources/help/broken-icons/) pour résoudre le problème.
 
-**If icons are broken:** If you use Firefox and icons appear broken, then please see [this topic](https://sethclydesdale.github.io/genki-study-resources/help/broken-icons/) to resolve the issue.
+**Si les paramètres ne se sauvegardent pas :** Si vos paramètres ne se sauvegardent pas, tels que la préférence furigana ou le mode sombre, veuillez consulter [ce sujet](https://sethclydesdale.github.io/genki-study-resources/help/stuck-loading/) pour résoudre le problème.
 
-**If settings will not save:** If your settings will not save, such as furigana preference or dark mode, please see [this topic](https://sethclydesdale.github.io/genki-study-resources/help/stuck-loading/) for resolving the issue.
-
-
-### Keyboard Shortcuts
-Genki Study Resources supports a few keyboard shortcuts which you can use to make things easier. These shortcuts are typically used via <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>KEY</kbd> for Windows and <kbd>CMD</kbd>+<kbd>SHIFT</kbd>+<kbd>KEY</kbd> for Mac.
+### Raccourcis clavier
+Genki Study Resources prend en charge quelques raccourcis clavier que vous pouvez utiliser pour faciliter les choses. Ces raccourcis sont généralement utilisés via <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>TOUCHE</kbd> pour Windows et <kbd>CMD</kbd>+<kbd>SHIFT</kbd>+<kbd>TOUCHE</kbd> pour Mac.
 
 #### Global
-Shortcuts that can be used anywhere.
+Raccourcis qui peuvent être utilisés n'importe où.
 
-| Shortcut | Description |
+| Raccourci | Description |
 | -------- | ----------- |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>D</kbd> | Toggle Dark Mode on/off |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>M</kbd> | Open Settings Manager |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>D</kbd> | Activer/désactiver le mode sombre |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>M</kbd> | Ouvrir le gestionnaire de paramètres |
 
-#### Exercises
-Shortcuts that can only be used in exercises.
+#### Exercices
+Raccourcis qui peuvent uniquement être utilisés dans les exercices.
 
-| Shortcut | Description |
+| Raccourci | Description |
 | -------- | ----------- |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>LEFT</kbd> | Navigate to the previous exercise in the lesson |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>RIGHT</kbd> | Navigate to the next exercise in the lesson |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>R</kbd> | Navigate to a random exercise |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>E</kbd> | Open/Close the Exercise List |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Q</kbd> | Open/Close the Quick Dictionary |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>F</kbd> | Toggle Furigana on/off |
-| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>C</kbd> | Check answers (for written exercises) |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>LEFT</kbd> | Naviguer vers l'exercice précédent de la leçon |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>RIGHT</kbd> | Naviguer vers l'exercice suivant de la leçon |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>R</kbd> | Naviguer vers un exercice aléatoire |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>E</kbd> | Ouvrir/fermer la liste des exercices |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Q</kbd> | Ouvrir/fermer le dictionnaire rapide |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>F</kbd> | Activer/désactiver le furigana |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>C</kbd> | Vérifier les réponses (pour les exercices écrits) |
 
-##### Multiple Choice
-The following shortcuts can only be used in multiple choice exercises to quickly select an answer.
+##### Choix multiples
+Les raccourcis suivants peuvent uniquement être utilisés dans les exercices à choix multiples pour sélectionner rapidement une réponse.
 
-| Shortcut | Description |
+| Raccourci | Description |
 | -------- | ----------- |
 | <kbd>ALT</kbd>+<kbd>A/B/C/D/etc.</kbd> | Selects option A/B/C/D/etc. |
 
 
-### Suggestions, Feedback, Bug Reports
-If you have any suggestions, feedback, questions, or bugs to report, feel free to [open a new discussion](https://github.com/SethClydesdale/genki-study-resources/discussions) in this repository. For alternative contact methods and detailed reporting information, please see the [report page](https://sethclydesdale.github.io/genki-study-resources/report/) for Genki Study Resources.
+### Suggestions, commentaires, rapports de bugs
+Si vous avez des suggestions, des commentaires, des questions ou des bugs à signaler, n'hésitez pas à [ouvrir une nouvelle discussion](https://github.com/SethClydesdale/genki-study-resources/discussions) dans ce dépôt. Pour des méthodes de contact alternatives et des informations détaillées sur le signalement, veuillez consulter la [page de signalement](https://sethclydesdale.github.io/genki-study-resources/report/) pour Genki Study Resources.
 
 
-### Resources for Studying Japanese
+### Ressources pour étudier le japonais
 
 ##### Tools
 - [Anki - SRS Flashcard App](https://apps.ankiweb.net/) (great for memorizing vocab; you can find decks for Genki [here](https://sethclydesdale.github.io/genki-study-resources/help/anki-decks/))
@@ -92,28 +96,28 @@ If you have any suggestions, feedback, questions, or bugs to report, feel free t
 - [/r/LearnJapanese Wiki](https://www.reddit.com/r/LearnJapanese/wiki/index) (additional resources, guides, etc.)
 
 
-### Special Thanks
-Genki Study Resources was made possible thanks to...
-- [The Japan Times](https://bookclub.japantimes.co.jp/en/), Eri Banno, Yoko Ikeda, Yutaka Ohno, Chikako Shinagawa, and Kyoko Tokashiki for Genki: An Integrated Course in Elementary Japanese.
-- Noriko Udagawa and Reiko Maruyama for some Illustrations that were used.
-- [DavidBurela](https://github.com/DavidBurela) for gifting me the 3rd Edition textbook and workbook of Genki I.
-- [Maarten Jacobs](https://github.com/maartenJacobs) for gifting me the 3rd Edition textbook and workbook of Genki II.
-- **Everyone** who donated, as I was able to purchase the Answer Key for the 3rd Edition thanks to your support.
-- [Patrick Roberts](https://github.com/patrickroberts) for [his help with an algorithm](https://stackoverflow.com/a/59337819/12502093) that helped make mixed kana/kanji answers possible in written quizzes.
-- [Dominik Klein](https://github.com/asdfjkl) for [his help with adding new recognition patterns](https://github.com/asdfjkl/kanjicanvas/issues/1) for the stroke order exercises.
-- [Ronserruya](https://github.com/Ronserruya) for the [Anki Decks and Deck Maker script](https://github.com/SethClydesdale/genki-study-resources/pull/89).
-- [Zakkaruu](https://github.com/Zakkaruu) for the [Kanji Anki Decks](https://github.com/SethClydesdale/genki-study-resources/issues/192).
-- [RealFakeAccount](https://github.com/RealFakeAccount) for the [xlsx wordlist generator](https://github.com/SethClydesdale/genki-study-resources/pull/109).
-- [sasagami358](http://sasagami358.blog.fc2.com/blog-entry-593.html) for the hiragana and katakana stroke order charts.
-- Everyone who helped support or contribute to this project, whether it was on GitHub or outside of it.
+### Remerciements spéciaux
+Genki Study Resources a été rendu possible grâce à...
+- [The Japan Times](https://bookclub.japantimes.co.jp/en/), Eri Banno, Yoko Ikeda, Yutaka Ohno, Chikako Shinagawa et Kyoko Tokashiki pour Genki: An Integrated Course in Elementary Japanese.
+- Noriko Udagawa et Reiko Maruyama pour certaines illustrations utilisées.
+- [DavidBurela](https://github.com/DavidBurela) pour m'avoir offert le manuel et le cahier d'exercices de la 3ème édition de Genki I.
+- [Maarten Jacobs](https://github.com/maartenJacobs) pour m'avoir offert le manuel et le cahier d'exercices de la 3ème édition de Genki II.
+- **Tout le monde** qui a fait un don, car j'ai pu acheter le Clé des Réponses pour la 3ème édition grâce à votre soutien.
+- [Patrick Roberts](https://github.com/patrickroberts) pour [son aide avec un algorithme](https://stackoverflow.com/a/59337819/12502093) qui a permis de rendre possible les réponses mixtes kana/kanji dans les quiz écrits.
+- [Dominik Klein](https://github.com/asdfjkl) pour [son aide avec l'ajout de nouveaux modèles de reconnaissance](https://github.com/asdfjkl/kanjicanvas/issues/1) pour les exercices d'ordre des traits.
+- [Ronserruya](https://github.com/Ronserruya) pour les [Anki Decks et le script Deck Maker](https://github.com/SethClydesdale/genki-study-resources/pull/89).
+- [Zakkaruu](https://github.com/Zakkaruu) pour les [Kanji Anki Decks](https://github.com/SethClydesdale/genki-study-resources/issues/192).
+- [RealFakeAccount](https://github.com/RealFakeAccount) pour le [générateur de listes de mots xlsx](https://github.com/SethClydesdale/genki-study-resources/pull/109).
+- [sasagami358](http://sasagami358.blog.fc2.com/blog-entry-593.html) pour les tableaux d'ordre des traits hiragana et katakana.
+- Tous ceux qui ont aidé à soutenir ou à contribuer à ce projet, que ce soit sur GitHub ou en dehors.
 
-The following resources were used in this project. I couldn't have done it without them, so check them out!
-- [Font-Awesome](https://github.com/FortAwesome/Font-Awesome) for the awesome icons.
-- [dragula](https://github.com/bevacqua/dragula) for the simple drag and drop.
-- [easytimer.js](https://github.com/albert-gonzalez/easytimer.js) for the super easy timer.
-- [Kanji Canvas](https://github.com/asdfjkl/kanjicanvas) for the stroke order exercises.
-- [Noto CJK](https://www.google.com/get/noto/help/cjk/) and [Sawarabi Gothic](https://fonts.google.com/specimen/Sawarabi+Gothic) for the fonts used in the Hiragana/Katakana stroke order exercises.
-- [Genanki](https://github.com/kerrickstaley/genanki) for the simple package to create Anki decks
+Les ressources suivantes ont été utilisées dans ce projet. Je n'aurais pas pu le faire sans elles, alors allez les voir !
+- [Font-Awesome](https://github.com/FortAwesome/Font-Awesome) pour les icônes géniales.
+- [dragula](https://github.com/bevacqua/dragula) pour le simple glisser-déposer.
+- [easytimer.js](https://github.com/albert-gonzalez/easytimer.js) pour le minuteur super facile.
+- [Kanji Canvas](https://github.com/asdfjkl/kanjicanvas) pour les exercices d'ordre des traits.
+- [Noto CJK](https://www.google.com/get/noto/help/cjk/) et [Sawarabi Gothic](https://fonts.google.com/specimen/Sawarabi+Gothic) pour les polices utilisées dans les exercices d'ordre des traits Hiragana/Katakana.
+- [Genanki](https://github.com/kerrickstaley/genanki) pour le package simple permettant de créer des decks Anki
 
 ### Donate
 If you found this project helpful and would like to donate, please see the [Donate page](https://sethclydesdale.github.io/genki-study-resources/donate/) for ways to support my work.
