@@ -853,7 +853,7 @@ a.jump-arrow:hover, a.jump-arrow:focus { color:#C60; }
 }
 
 .lesson-summary:before {
-  content:"In this lesson, we will learn how to...";
+  content:"Dans cette leçon, nous allons...";
   font-weight:bold;
   color:#F93;
 }

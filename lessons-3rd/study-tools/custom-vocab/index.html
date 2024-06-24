@@ -2,10 +2,10 @@
 <html lang="en" prefix="og: http://ogp.me/ns#" class="lang-en">
   <head>
     <meta charset="UTF-8">
-    <title>Custom Vocabulary Practice - Study Tools | Genki Study Resources - 3rd Edition</title>
-    <meta name="title" content="Custom Vocabulary Practice - Study Tools | Genki Study Resources - 3rd Edition">
-    <meta name="twitter:title" content="Custom Vocabulary Practice - Study Tools | Genki Study Resources - 3rd Edition">
-    <meta property="og:title" content="Custom Vocabulary Practice - Study Tools | Genki Study Resources - 3rd Edition">
+    <title>Custom Vocabulaire Practice - Study Tools | Ressources d'étude Genki - 3ème Edition</title>
+    <meta name="title" content="Custom Vocabulaire Practice - Study Tools | Ressources d'étude Genki - 3ème Edition">
+    <meta name="twitter:title" content="Custom Vocabulaire Practice - Study Tools | Ressources d'étude Genki - 3ème Edition">
+    <meta property="og:title" content="Custom Vocabulaire Practice - Study Tools | Ressources d'étude Genki - 3ème Edition">
     <meta name="description" content="Setup your own custom vocabulary to practice.">
     <meta property="og:description" content="Setup your own custom vocabulary to practice.">
     <link rel="shortcut icon" type="image/x-icon" href="../../../resources/images/genkico.ico">
@@ -29,7 +29,7 @@
   <body ondrop="Genki.tools.dropFile(event);">
     
     <header>
-      <h1><a href="../../" id="home-link" class="edition-icon third-ed">Genki Study Resources</a></h1>
+      <h1><a href="../../" id="home-link" class="edition-icon third-ed">Ressources d'étude Genki</a></h1>
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
@@ -48,10 +48,10 @@
     
     <div id="content">
       <div id="study-tool-editor" class="content-block loading">
-        <h2 id="custom-vocab-practice" class="title center">ツール - Custom Vocabulary Practice</h2>
+        <h2 id="custom-vocab-practice" class="title center">ツール - Custom Vocabulaire Practice</h2>
         <p>Welcome to the custom vocabulary practice tool! Here you will be able to setup your own set of words to practice. First insert a couple of words you want to practice. Once you've got your word list setup, click the "Study" button to begin practicing your custom vocabulary.</p>
         
-        <h2 id="vocab-list" class="section-title"><span class="en">Vocabulary list</span><span class="ja">単語の一覧</span></h2>
+        <h2 id="vocab-list" class="section-title"><span class="en">Vocabulaire list</span><span class="ja">単語の一覧</span></h2>
         <br>
         <ol id="study-tool-ui">
           <li class="item-row">
@@ -64,7 +64,7 @@
           </li>
         </ol>
         
-        <h3 id="vocab-code" class="sub-title"><span class="en">Custom Vocabulary Code</span><span class="ja">カスタム練習コード</span> (JSON)</h3>
+        <h3 id="vocab-code" class="sub-title"><span class="en">Custom Vocabulaire Code</span><span class="ja">カスタム練習コード</span> (JSON)</h3>
         <p>The custom vocabulary code is used to save your created vocabulary list. You can save this code to a text file for later, so you don't have to recreate your custom vocab. When you're ready to study your vocab again, just load the file or drag and drop it into this textarea and click "study" to continue where you left off.</p>
         
         <div id="study-tool-code">
@@ -72,7 +72,7 @@
         </div>
         
         <ul id="study-tool-settings" class="clear">
-          <li><a id="downloadCode" class="button" title="Save custom exercise" download="Custom Vocabulary Exercise"><span class="en">Save</span><span class="ja">セーブする</span></a></li>
+          <li><a id="downloadCode" class="button" title="Save custom exercise" download="Custom Vocabulaire Exercise"><span class="en">Save</span><span class="ja">セーブする</span></a></li>
           <li><button id="loadCode" class="button" title="Load custom exercise" onclick="this.nextSibling.click();"><span class="en">Load</span><span class="ja">ロードする</span></button><input id="study-tool-file" type="file" accept=".txt,.json,.js" onchange="Genki.tools.loadCode(this);"></li>
           <li><input id="prettyCode" type="checkbox" onchange="Genki.tools.settings.prettify(this);"><label for="prettyCode"><span class="en">Prettify</span><span class="ja">プリティファイ</span></label></li>
           <li><input id="noStudyWarning" type="checkbox" onchange="Genki.tools.settings.handleCheckbox(this);"><label for="noStudyWarning"><span class="en">Do not warn me</span><span class="ja">注意しないで</span></label></li>
@@ -92,7 +92,7 @@
           <strong>+</strong>: add a word<br>
           <strong>-</strong>: remove a word<br><br>
           
-          <strong>Custom Vocabulary Code</strong>: If you're familiar with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</a>, you can edit the vocabulary code, too. Here's a few tips:<br>
+          <strong>Custom Vocabulaire Code</strong>: If you're familiar with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</a>, you can edit the vocabulary code, too. Here's a few tips:<br>
           1. The syntax for a vocabulary item is "{WORD/KANJI}|{FURIGANA}":"{DEFINITION/KANA}|{SENTENCE}", with furigana and sentence being optional.<br>
           2. If using no furigana or sentences, simply remove the horizontal bars. It should be removed automatically if using the textarea above.<br>
           3. Please note that trailing commas will throw a syntax error, so simply delete the trailing comma and the vocabulary list will be updated.
