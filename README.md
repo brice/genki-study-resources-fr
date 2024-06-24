@@ -1,4 +1,10 @@
-﻿# Genki Study Resources
+﻿Ce projet est un fork de [SethClydesdale/genki-study-resources](https://sethclydesdale.github.io/genki-study-resources/). Merci à Seth Clydesdale et aux contributeurs pour leur travail !
+
+Vous pouvez faire un don à Seth Clydesdale [ici](https://sethclydesdale.github.io/genki-study-resources/donate/).
+
+Mon objectif est de traduire les exercices en français, et de les rendre accessibles à un public francophone. Si vous souhaitez contribuer à la traduction, n'hésitez pas à ouvrir une issue ou à me contacter.
+
+# Genki Study Resources
 Genki Study Resources est un site web qui offre une vaste collection d'exercices pour pratiquer ce qui est enseigné dans [Genki: An Integrated Course in Elementary Japanese](http://genki.japantimes.co.jp/index_en). Il a été principalement créé pour aider à l'auto-apprentissage, et vous pouvez donc l'utiliser en ligne ou hors ligne selon vos besoins. Choisissez l'un des liens ci-dessous pour commencer à tester le japonais que vous avez appris dans Genki !
 
 **Version en ligne :** [2ème édition](https://sethclydesdale.github.io/genki-study-resources/) | [3ème édition](https://sethclydesdale.github.io/genki-study-resources/lessons-3rd/)
