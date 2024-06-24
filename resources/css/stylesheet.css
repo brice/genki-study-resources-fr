@@ -817,7 +817,7 @@ footer li:first-child:before { display:none; }
 /* timer styles */
 #quiz-timer, #check-answers, #change-exercise-type-container { margin-top:10px; }
 #quiz-timer:before {
-  content:"Time Elapsed";
+  content:"Temps écoulé";
   display:block;
 }
 

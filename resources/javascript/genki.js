@@ -46,93 +46,93 @@
 
     // frequently used/generic strings
     lang : {
-      std_drag : 'Drag the English expression to the Japanese expression that has the same meaning.<br>TIP: Click an expression to mark it, then click an empty field to drop the answer there.',
-      std_kana : 'Drag the Kana to the matching Romaji.<br>TIP: Click the kana to mark it, then click an empty field to drop the answer there.',
-      std_num : 'Drag the Numbers to the matching Kana.<br>TIP: Click a number to mark it, then click an empty field to drop the answer there.',
-      std_multi : 'Solve the problems by choosing the correct answers.',
-      std_questions : 'Answer the questions as best as you can.',
-      std_culture : 'Answer the questions about Japanese culture as best as you can.',
-      std_stroke_order : 'Practice drawing each kanji by following the stroke order.',
-      std_drawing : 'Practice drawing the following kanji multiple times.',
-      
+      std_drag : 'Faites glisser l\'expression anglaise vers l\'expression japonaise qui a la même signification.<br>CONSEIL : Cliquez sur une expression pour la marquer, puis cliquez sur un champ vide pour déposer la réponse.',
+      std_kana : 'Faites glisser le Kana vers le Romaji correspondant.<br>CONSEIL : Cliquez sur le kana pour le marquer, puis cliquez sur un champ vide pour déposer la réponse.',
+      std_num : 'Faites glisser les chiffres vers le Kana correspondant.<br>CONSEIL : Cliquez sur un chiffre pour le marquer, puis cliquez sur un champ vide pour déposer la réponse.',
+      std_multi : 'Résolvez les problèmes en choisissant les bonnes réponses.',
+      std_questions : 'Répondez aux questions du mieux que vous pouvez.',
+      std_culture : 'Répondez aux questions sur la culture japonaise du mieux que vous pouvez.',
+      std_stroke_order : 'Entraînez-vous à dessiner chaque kanji en suivant l\'ordre des traits.',
+      std_drawing : 'Entraînez-vous à dessiner les kanji suivants plusieurs fois.',
+
       // additional vocab info
-      vocab_multi : 'Choose the correct definition for each Japanese expression.',
-      vocab_writing : 'Practice spelling the following words/expressions.',
-      vocab_fill : 'Write the Japanese definition for the following words/expressions.',
-      
+      vocab_multi : 'Choisissez la définition correcte pour chaque expression japonaise.',
+      vocab_writing : 'Entraînez-vous à épeler les mots/expressions suivants.',
+      vocab_fill : 'Écrivez la définition japonaise des mots/expressions suivants.',
+
       // additional kana info
-      kana_multi : 'Choose the correct Romaji for the %{KANA}.',
-      kana_writing : 'Practice writing the following %{KANA}.',
-      kana_fill : 'Complete the chart by filling in the Romaji.',
-      
+      kana_multi : 'Choisissez le Romaji correct pour le %{KANA}.',
+      kana_writing : 'Entraînez-vous à écrire le %{KANA} suivant.',
+      kana_fill : 'Complétez le tableau en remplissant le Romaji.',
+
       // addition number info
-      num_multi : 'Read the Japanese and choose the correct numbers.',
-      num_writing : 'Practice spelling the following numbers.',
-      num_fill : 'Write the following numbers in Japanese (hiragana).',
-      
-      kanji_readings_multi : 'Choose the correct readings for each kanji.',
-      kanji_readings_drag : 'Match each kanji with their readings.',
-      kanji_yomikata : '</div><p class="text-block" style="margin:10px 0;">▶ indicates the <em>on-yomi</em> (pronunciation originally borrowed from Chinese).<br>▷ indicates the <em>kun-yomi</em> (native Japanese reading).</p>',
-      
-      kanji_meanings_multi : 'Choose the correct meanings for each kanji.',
-      kanji_meanings_drag : 'Match each kanji with their meanings.',
-      
+      num_multi : 'Lisez le japonais et choisissez les bons chiffres.',
+      num_writing : 'Entraînez-vous à épeler les chiffres suivants.',
+      num_fill : 'Écrivez les chiffres suivants en japonais (hiragana).',
+
+      kanji_readings_multi : 'Choisissez les lectures correctes pour chaque kanji.',
+      kanji_readings_drag : 'Associez chaque kanji à ses lectures.',
+      kanji_yomikata : '</div><p class="text-block" style="margin:10px 0;">▶ indique le <em>on-yomi</em> (prononciation empruntée à l\'origine du chinois).<br>▷ indique le <em>kun-yomi</em> (lecture japonaise native).</p>',
+
+      kanji_meanings_multi : 'Choisissez les significations correctes pour chaque kanji.',
+      kanji_meanings_drag : 'Associez chaque kanji à ses significations.',
+
       // options for exercise variations
       opts : {
         kana : {
-          kana : 'Drag and Drop',
-          multi : 'Multiple Choice',
-          writing : 'Writing Practice',
-          fill : 'Fill in the Chart'
+          kana : 'Glisser-Déposer',
+          multi : 'Choix Multiple',
+          writing : 'Pratique d\'Écriture',
+          fill : 'Compléter le Tableau'
         },
-        
+
         numbers : {
-          drag : 'Drag and Drop',
-          multi : 'Multiple Choice',
-          writing : 'Spelling Practice',
-          fill : 'Write the Numbers'
+          drag : 'Glisser-Déposer',
+          multi : 'Choix Multiple',
+          writing : 'Pratique d\'Orthographe',
+          fill : 'Écrire les Chiffres'
         },
-        
+
         kanji : {
-          multi : 'Multiple Choice',
-          drag : 'Drag and Drop'
+          multi : 'Choix Multiple',
+          drag : 'Glisser-Déposer'
         },
-        
+
         vocab : {
-          drag : 'Drag and Drop',
-          multi : 'Multiple Choice',
-          writing : 'Spelling Practice',
-          fill : 'Write the Definition'
+          drag : 'Glisser-Déposer',
+          multi : 'Choix Multiple',
+          writing : 'Pratique d\'Orthographe',
+          fill : 'Écrire la Définition'
         },
-        
+
         practice : {
-          multi : 'Multiple Choice',
-          fill : 'Written',
-          drag : 'Drag and Drop'
+          multi : 'Choix Multiple',
+          fill : 'Écrit',
+          drag : 'Glisser-Déposer'
         },
-        
+
         hirakata : {
-          fill : 'Written',
-          stroke : 'Stroke Order Practice',
-          drawing : 'Drawing Practice'
+          fill : 'Écrit',
+          stroke : 'Pratique de l\'Ordre des Traits',
+          drawing : 'Pratique de Dessin'
         }
       },
-      
-      mistakes : 'The items outlined in <span class="t-red t-bold">red</span> were answered wrong before finding the correct answer. Review these problems before trying again.',
-      writing_mistakes : 'The items outlined in <span class="t-red t-bold">red</span> were answered wrong. Review these problems before trying again.',
-      multi_mistakes : 'The answers you selected that were wrong are outlined in <span class="t-red t-bold">red</span>. The correct answers are outlined in <span class="t-blue t-bold">blue</span>. Review these problems before trying again.',
-      stroke_mistakes : 'The characters you drew that were wrong are outlined in <span class="t-red t-bold">red</span>. Please review the stroke order and number of strokes for these characters before trying again.<br><br><b>Note:</b> Sometimes answers may be marked wrong by mistake, due to a mismatch in the recognition algorithm.<br>Please use your own discretion if this occurs.',
-      fill_mistakes : 'The items underlined in <span class="t-red t-bold">red</span> were answered wrong, the correct answers are listed underneath in <span class="t-green t-bold">green</span>. Review these problems before trying again.',
-      sub_answers : '<b>Note:</b> Answers inside <span class="t-blue t-bold">blue</span> parentheses separated by "<span class="alt-phrase-sep">/</span>" are a list of possible sub-answers; only one can be used.<br>For example.. <span class="t-green"><span class="alt-phrase">(</span>あの<span class="alt-phrase-sep">/</span>その<span class="alt-phrase">)</span>ねこ</span>: そのねこ or あのねこ <span class="t-green">(good)</span> vs あの/そのねこ <span class="t-red">(bad)</span><br><span class="t-green"><span class="alt-phrase">(</span>この<span class="alt-phrase-sep">/</span><span class="alt-phrase">)</span>ねこ</span> means the sub-answer is optional; it can be left out.',
-      
-      // buttons
-      // review button for drag/drop exercises
-      review : '<div id="review-exercise" class="center clearfix"><button id="review-button" class="button" onclick="Genki.review();"><i class="fa">&#xf02d;</i>Review</button></div>',
-      // furigana toggle for vocab exercises
-      toggle_furigana : '<button id="toggle-furigana" class="button" onclick="Genki.toggle.furigana(this);"><i class="fa">&#xf2a8;</i>' + ((storageOK && localStorage.furiganaVisible == 'false') ? 'Show' : 'Hide') + ' Furigana</button>',
-      // check answers button for written exercises
-      check_answers : '<div id="check-answers" class="center"><button id="check-answers-button" class="button" onclick="Genki.check.answers();"><i class="fa">&#xf00c;</i>Check Answers</button></div>',
-      back_to_dict : '<button class="button" onclick="Genki.reset();"><i class="fa">&#xf021;</i>Back to Dictionary</button>'
+
+      mistakes : 'Les éléments entourés en <span class="t-red t-bold">rouge</span> ont été mal répondus avant de trouver la bonne réponse. Revoyez ces problèmes avant d\'essayer à nouveau.',
+      writing_mistakes : 'Les éléments entourés en <span class="t-red t-bold">rouge</span> ont été mal répondus. Revoyez ces problèmes avant d\'essayer à nouveau.',
+      multi_mistakes : 'Les réponses que vous avez sélectionnées qui étaient incorrectes sont entourées en <span class="t-red t-bold">rouge</span>. Les réponses correctes sont entourées en <span class="t-blue t-bold">bleu</span>. Revoyez ces problèmes avant d\'essayer à nouveau.',
+      stroke_mistakes : 'Les caractères que vous avez dessinés incorrectement sont entourés en <span class="t-red t-bold">rouge</span>. Veuillez revoir l\'ordre des traits et le nombre de traits pour ces caractères avant d\'essayer à nouveau.<br><br><b>Remarque :</b> Parfois, les réponses peuvent être marquées comme incorrectes par erreur, en raison d\'un décalage dans l\'algorithme de reconnaissance.<br>Veuillez utiliser votre propre jugement si cela se produit.',
+      fill_mistakes : 'Les éléments soulignés en <span class="t-red t-bold">rouge</span> ont été mal répondus, les réponses correctes sont listées en dessous en <span class="t-green t-bold">vert</span>. Revoyez ces problèmes avant d\'essayer à nouveau.',
+      sub_answers : '<b>Remarque :</b> Les réponses entre parenthèses <span class="t-blue t-bold">bleues</span> séparées par "<span class="alt-phrase-sep">/</span>" sont une liste de sous-réponses possibles ; une seule peut être utilisée.<br>Par exemple.. <span class="t-green"><span class="alt-phrase">(</span>あの<span class="alt-phrase-sep">/</span>その<span class="alt-phrase">)</span>ねこ</span> : そのねこ ou あのねこ <span class="t-green">(bon)</span> contre あの/そのねこ <span class="t-red">(mauvais)</span><br><span class="t-green"><span class="alt-phrase">(</span>この<span class="alt-phrase-sep">/</span><span class="alt-phrase">)</span>ねこ</span> signifie que la sous-réponse est optionnelle ; elle peut être omise.',
+
+      // boutons
+      // bouton de révision pour les exercices de glisser-déposer
+      review : '<div id="review-exercise" class="center clearfix"><button id="review-button" class="button" onclick="Genki.review();"><i class="fa">&#xf02d;</i>Réviser</button></div>',
+      // bouton de bascule pour les furigana dans les exercices de vocabulaire
+      toggle_furigana : '<button id="toggle-furigana" class="button" onclick="Genki.toggle.furigana(this);"><i class="fa">&#xf2a8;</i>' + ((storageOK && localStorage.furiganaVisible == 'false') ? 'Afficher' : 'Masquer') + ' les Furigana</button>',
+      // bouton de vérification des réponses pour les exercices écrits
+      check_answers : '<div id="check-answers" class="center"><button id="check-answers-button" class="button" onclick="Genki.check.answers();"><i class="fa">&#xf00c;"></i>Vérifier les Réponses</button></div>',
+      back_to_dict : '<button class="button" onclick="Genki.reset();"><i class="fa">&#xf021;"></i>Retour au Dictionnaire</button>'
     },
 
     // info about the currently active exercise
@@ -236,11 +236,11 @@
             '<div title="The exercise type can still be changed via the Change Exercise Type button at the bottom of an exercise.">'+
               '<input id="modal-skip-ex-type" class="genki_input_hidden" type="checkbox"' + (storageOK && localStorage.genkiSkipExType == 'true' ? ' checked' : '') + ' onchange="localStorage.genkiSkipExType = this.checked">'+
               '<span tabindex="0" class="genki_pseudo_checkbox" onclick="this.previousSibling.click();" onkeypress="event.key == \'Enter\' && this.previousSibling.click();"></span>'+
-              '<label class="checkbox-label" for="modal-skip-ex-type">Skip Exercise Type Selection</label>'+
+              '<label class="checkbox-label" for="modal-skip-ex-type">Sauter la sélection du type d\'exercice</label>'+
             '</div>'+
           '</div>',
           
-          buttonText : 'Begin',
+          buttonText : 'Commencer',
           noClose : 1,
           zIndex : 'low',
           
@@ -586,7 +586,7 @@
 
       // # 3. WRITING PRACTICE #
       else if (o.type == 'writing') {
-        var quiz = '<div id="quiz-info">' + o.info + '<br>If you don\'t know how to type in Japanese on your computer, please visit our help page by <a href="../../../help/writing/' + Genki.local + '" target="_blank">clicking here</a>.</div><div id="question-list">',
+        var quiz = '<div id="quiz-info">' + o.info + '<br>Si vous ne savez pas comment taper en japonais sur votre ordinateur, veuillez visiter notre page d\'aide en <a href="../../../help/writing/' + Genki.local + '" target="_blank">cliquant ici</a>.</div><div id="question-list">',
             columns = o.columns,
             width = 'style="width:' + (100 / (columns + 1)) + '%;"',
             index = 0,
@@ -2274,16 +2274,17 @@
         
         button.id = 'change-exercise-type';
         button.className = 'button';
-        button.innerHTML = '<i class="fa">&#xf021;</i> Change Exercise Type';
+        button.innerHTML = '<i class="fa">&#xf021;</i> Changer le type d\'exercice';
         
         // action to perform on click of the button
         button.onclick = function () {
           // opens a prompt warning the user that the exercise will end
           GenkiModal.open({
-            title : 'Change Exercise Type?',
-            content : 'To change the exercise type, you must quit the current exercise. Do you want to quit?',
-            buttonText : 'Quit',
-            closeButtonText : 'Cancel',
+            title : 'Changer le type d\'exercice ?',
+            content : 'Pour changer le type d\'exercice, vous devez quitter l\'exercice en cours. Voulez-vous quitter ?',
+            buttonText : 'Quitter',
+            closeButtonText : 'Annuler',
+
             keepOpen : /\/dictionary\//.test(window.location) || (!Genki.tools && /"format"/.test(Genki.exerciseData)) ? true : false,
             
             // clicking "OK" will reload the exercise, leading to the exercise type selection screen
