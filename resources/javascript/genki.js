@@ -220,16 +220,16 @@
         
         // open selection window
         modal = GenkiModal.open({
-          title : 'Please Select an Exercise Type',
-          content : 'Please select the type of exercise you would like to do, then click "Begin" to start studying.<br><br>'+
+          title : 'Veuillez sélectionner un type d\'exercice',
+          content : 'Veuillez sélectionner le type d\'exercice que vous souhaitez faire, puis cliquez sur "Commencer" pour commencer à étudier.<br><br>'+
           '<div class="center">'+
             (/\/dictionary\/|\/custom-vocab\//.test(window.location) ? '' : '<div>'+
-              '<b>Current Exercise</b><br>'+
+              '<b>Exercice en cours</b><br>'+
               document.title.replace(/ \| Genki Study Resources.*$/, '')+
             '</div><br>')+
             
             '<div>'+
-              '<b>Exercise Type</b><br>'+
+              '<b>Type d\'exercice</b><br>'+
               '<select id="exercise-type">' + opts + '</select>'+
             '</div><br>'+
             
