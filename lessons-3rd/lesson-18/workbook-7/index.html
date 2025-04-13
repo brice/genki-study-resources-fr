@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,11 +75,11 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～ばよかったです.',
+      info : 'Complete the following problems using {!GRI|～ばよかったです|l18-p6}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Translate the sentences, using ～ばよかったです.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Translate the sentences, using {!GRI|～ばよかったです|l18-p6}.</p>'+
         
         '<div class="problem">'+
           'レストランに<ruby>行<rt>い</rt></ruby>きましたが、<ruby>閉<rt>し</rt></ruby>まっていました<br>'+
@@ -94,7 +107,7 @@
       '</div><br>'+
       
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">II</span>You find yourself in the following situations. Translate what you would say, using ～ばよかったです.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">II</span>You find yourself in the following situations. Translate what you would say, using {!GRI|～ばよかったです|l18-p6}.</p>'+
         '<div class="problem">'+
           'お<ruby>金<rt>かね</rt></ruby>がありません。<br>'+
           '(I should not have gone shopping.)<br>'+

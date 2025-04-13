@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,11 +75,11 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using questions within larger sentences.',
+      info : 'Complete the following problems using {!GRI|questions within larger sentences|l20-p4}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Fill in the blanks with "questions within larger sentences."</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Fill in the blanks with "{!GRI|questions within larger sentences|l20-p4}."</p>'+
         '<div class="problem">'+
           '(whether or not I will continue Japanese study)<br>'+
           '{日本語の勉強を続けるかどうか|にほんごのべんきょうをつづけるかどうか|' + Genki.getAlts('{日本語}の{勉強}を{続}けるかどうか', 'にほんご|べんきょう|つづ') + 'answer}わかりません。'+

@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,11 +75,11 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～てある.',
+      info : 'Complete the following problems using {!GRI|～てある|l21-p2}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Describe the picture, using ～てあります.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Describe the picture, using {!GRI|～てあります|l21-p2}.</p>'+
         '<div class="center">{!IMG|3rd-l21-wb4.png|Room}</div><br>'+
         '<div class="problem">{カーテンが開けてあります|カーテンがあけてあります|answer}。</div>'+
         '<div class="problem">{窓が閉めてあります|まどがしめてありま|' + Genki.getAlts('{窓}が{閉}めてあります', 'まど|し') + 'answer}。</div>'+
@@ -76,7 +89,7 @@
       '</div><br>'+
 
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">II</span>Translate the sentences, using ～てあります.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">II</span>Translate the sentences, using {!GRI|～てあります|l21-p2}.</p>'+
         '<div class="problem">'+
           'It is cold. Is the heater on?<br>'+
           '{寒いですね。ヒーターがつけてありますか。|さむいですね。ヒーターがつけてありますか。|answer}'+

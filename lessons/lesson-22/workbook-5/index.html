@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,11 +75,11 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～ば.',
+      info : 'Complete the following problems using {!GRI|～ば|l22-p4}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="section-desc">Translate the sentences, using ～ば.</p>'+
+        '<p class="section-desc">Translate the sentences, using {!GRI|～ば|l22-p4}.</p>'+
         '<div class="problem">'+
           'If you go to bed early, you won\'t be sleepy.<br>'+
           '{早く寝れば、眠くなりません|はやくねれば、ねむくなりません|' + Genki.getAlts('{早}く{寝}れば、{眠}くなりません', 'はや|ね|ねむ') + 'answer}。'+
@@ -92,7 +105,7 @@
           '{やってみれば、できるかもしれません}。'+
         '</div>'+
         
-        '<p class="section-desc">Complete the dialogues by translating the cues, using ～ば.</p>'+
+        '<p class="section-desc">Complete the dialogues by translating the cues, using {!GRI|～ば|l22-p4}.</p>'+
         '<div class="problem">'+
           'A：漢字がぜんぜん覚えられないんです。<br>'+
           '(If you write it many times, you can remember.)<br>'+

@@ -9,6 +9,272 @@
     document.getElementById('footer-home').href += 'lessons-3rd/';
   }
   
+  // # ANNOUNCEMENTS #
+  if (document.getElementById('announcement')) {
+    window.GenkiAnn = {
+      rotation : false, // determines if the announcements rotate
+      edition : /lessons-3rd/.test(window.location.pathname) ? '3rd' : '2nd', // determines current edition
+
+      // announcement messages
+      // params:
+      // date: [OPTIONAL] adds a date to the announcement, useful for highlighting updates and what not.
+      // content: message body for the announcement; write your announcements here!
+      // edition: [OPTIONAL] restricts the announcement to a specific edition, possible values are: 3rd || 2nd, announcements are global by default
+      msg : [
+        {
+          date : '4/8/25',
+          content : 'The Genki <a href="https://ko-fi.com/post/The-Genki-Grammar-Index-is-now-Complete-U7U01D73DJ" target="_blank">Grammar Index</a> is now complete! If you notice any typos or have any suggestions, please don\'t hesitate to let us know on GitHub. Happy Studying!'
+        },
+        
+        {
+          date : '2/10/25',
+          content : "You can now change the main theme color to the Genki II color scheme via the settings manager! <a href=\"https://ko-fi.com/post/New-Theme-Option-for-Genki-Study-Resources-L3L21ADWSN\" target=\"_blank\">Click here</a> to learn more about this new setting."
+        },
+        
+        {
+          date : '1/15/25',
+          content : "Happy New Year! With the new year, comes new projects! <a href=\"https://ko-fi.com/post/Plans-for-2025-C0C2192FBX\" target=\"_blank\">Click here</a> to learn about what I have planned for 2025."
+        },
+        
+        {
+          date : '12/14/24',
+          content : "I've been slowly rolling out ads on my website recently. They're optional for this project, however, so please <a href=\"https://ko-fi.com/post/Statement-Regarding-Ads-V7V717GGS6\" target=\"_blank\">click here</a> to learn more about this update."
+        },
+        
+        {
+          date : '10/26/24',
+          content : '<a href="https://ko-fi.com/post/GenkiTobira-Recent-Updates-Future-Plans-Z8Z6158OWB" target="_blank">Click here</a> to learn about the recent updates made to the website as well as my future plans.'
+        },
+
+        {
+          content : 'Interested in learning Japanese? Check out <a href="' + getPaths() + 'help/japanese-guide/">our guide</a> for more information on how to learn the language, as well as useful tools that you can utilize in your studies!'
+        },
+
+        {
+          edition : '2nd',
+          content : 'Looking for more self-study resources? Visit the official <a href="http://genki.japantimes.co.jp/self_en">self-study room</a> for Genki or check out some of the resources in the <a href="https://github.com/SethClydesdale/genki-study-resources#resources-for-studying-japanese">readme</a> on GitHub.'
+        },
+
+        {
+          edition : '3rd',
+          content : 'Looking for more self-study resources? Visit the official <a href="https://genki3.japantimes.co.jp/en/student/">self-study room</a> for Genki or check out some of the resources in the <a href="https://github.com/SethClydesdale/genki-study-resources#resources-for-studying-japanese">readme</a> on GitHub.'
+        },
+
+        {
+          content : 'Want to stay up to date on the latest changes made to Genki Study Resources? You can follow updates via <a href="https://github.com/SethClydesdale/genki-study-resources/commits/master">GitHub</a>, <a href="https://twitter.com/search?q=(%23GenkiStudyResources)%20(from%3Asethc1995)&src=typed_query&f=live">Twitter</a>, or <a href="https://ko-fi.com/sethc95/posts">Ko-fi</a>. Feel free to also contact us on <a href="https://github.com/SethClydesdale/genki-study-resources/discussions">the forum</a> if you have any questions or feedback.'
+        },
+
+        {
+          content : 'Have a question about the site? Check out the <a href="' + getPaths() + 'help/">FAQ</a>! If you can\'t find an answer to your question, feel free to contact us via <a href="https://github.com/SethClydesdale/genki-study-resources/issues">GitHub\'s issues</a> and we\'ll try to answer your question in a timely manner.'
+        },
+
+        {
+          content : 'Find a bug or mistake on the site? Want to submit a suggestion or give us feedback? Check out the <a href="' + getPaths() + 'report/">report page</a> for more information. We\'d love to hear from you!'
+        },
+
+        {
+          content : 'Don\'t have a network connection all the time? Genki Study Resources can be used offline as well! Head on over to the <a href="' + getPaths() + 'download/">download page</a> to get the latest release.'
+        },
+
+        {
+          content : 'If you found this tool helpful for studying with Genki, please consider making <a href="' + getPaths() + 'donate/">a donation</a> to help support my work. Thank you!'
+        }
+      ],
+
+      index : 0,
+      list : document.getElementById('announce-list'),
+
+
+      // shows the next announcement
+      next : function (n, manual) {
+        // hide old message
+        GenkiAnn.msg[GenkiAnn.index].className += ' announce-hidden';
+
+        // add +1 or -1 depending on the button press
+        if (typeof n == 'number') {
+          GenkiAnn.index += n;
+
+          if (GenkiAnn.index == -1) {
+            GenkiAnn.index = GenkiAnn.msg.length - 1;
+          }
+        } 
+
+        // for automatic rotation increase index by 1
+        else {
+          GenkiAnn.index++;
+        }
+
+        // reset index if it exceeds the current announcements
+        if (!GenkiAnn.msg[GenkiAnn.index]) {
+          GenkiAnn.index = 0;
+        }
+
+        // show new message
+        GenkiAnn.msg[GenkiAnn.index].className = GenkiAnn.msg[GenkiAnn.index].className.replace(' announce-hidden', '');
+
+        // reset rotation if messages were moved manually
+        if (GenkiAnn.rotation && manual) {
+          window.clearInterval(GenkiAnn.rotator);
+          GenkiAnn.rotate();
+        }
+      },
+
+
+      // start announcement rotation
+      rotate : function () {
+        GenkiAnn.rotator = window.setInterval(GenkiAnn.next, 15000);
+      },
+
+
+      // sets up the announcements
+      init : function () {
+        // set up if more than 1 announcement
+        if (GenkiAnn.msg.length > 1) {
+          document.getElementById('announcement-controls').style.display = '';
+
+          // parse announcements
+          for (var i = 0, j = GenkiAnn.msg.length, ann = '', first = true; i < j; i++) {
+            if (!GenkiAnn.msg[i].edition || GenkiAnn.msg[i].edition.toLowerCase() == GenkiAnn.edition) {
+              ann += '<div class="announcement' + (first ? '' : ' announce-hidden') + '">'+
+                (GenkiAnn.msg[i].date ? '<span class="date">' + GenkiAnn.msg[i].date + '</span>' : '')+
+                GenkiAnn.msg[i].content+
+              '</div>';
+
+              // first announcement is shown, so hide the rest
+              first && (first = false);
+            }
+          }
+
+          // add announcements to the document
+          GenkiAnn.list.insertAdjacentHTML('beforeend', ann);
+          GenkiAnn.msg = document.querySelectorAll('.announcement');
+
+          // commence rotation if enabled
+          if (GenkiAnn.rotation) {
+            GenkiAnn.rotate();
+          }
+        }
+      }
+    };
+    
+    // holiday easter eggs/messages
+    var date = new Date(),
+        month = date.getMonth() + 1,
+        day = date.getDate();
+    
+    // christmas
+    if (month == 12 && day == 25) {
+      GenkiAnn.msg.splice(0, 0, {
+        content : "<ruby>今日<rt>きょう</rt></ruby>はクリスマスだよ。メリークリスマス！"
+      });
+      
+      // decoration
+      var ann = document.getElementById('announcement');
+      ann.style.position = 'relative';
+      ann.style.paddingBottom = '25px';
+      ann.style.marginBottom = '75px';
+      ann.insertAdjacentHTML('beforeend', '<div id="holiday-deco" style="height:100px;width:100%;position:absolute;left:0;bottom:-70px;background-image:url(\'' + getPaths() + ('resources/images/holiday/xmas.png') + '\');background-size:auto 100%;pointer-events:none;"></div>');
+    }
+    
+    // halloween
+    else if (month == 10 && day == 31) {
+      GenkiAnn.msg.splice(0, 0, {
+        content : "ハッピーハロウィン！お<ruby>菓子<rt>かし</rt></ruby>をくれないとイタズラしちゃうぞ！"
+      });
+      
+      // decoration
+      window._scrollSpider = {
+
+        config : {
+          side : 'right',
+          offset : '0px',
+
+          tooltip : 'Squash..?',
+          image : getPaths() + '/resources/images/holiday/halloween.png',
+          web : 'background-color:#000;width:2px;height:999em;position:absolute;right:42%;bottom:95%;'
+        },
+
+        // move the spider based on the percentage the document has been scrolled
+        move : function() {
+          _scrollSpider.spider.style.top = ((document.body.scrollTop + document.documentElement.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100) + '%';
+        },
+
+        // scroll the page to the top
+        goingUp : false,
+        toTop : function() {
+          if (!_scrollSpider.goingUp && (document.body.scrollTop || document.documentElement.scrollTop)) {
+            var body = document.body.scrollTop ? document.body : document.documentElement;
+
+            _scrollSpider.goingUp = true;
+            _scrollSpider.scroll = {
+              top : body.scrollTop, // cached scroll position
+              body : body,
+              by : (document.documentElement.scrollHeight - document.documentElement.clientHeight) / 100, // scroll by 1% of the total document height
+
+              // interval for scrolling the document ( and spider ) back to the top
+              window : window.setInterval(function() {
+                if (_scrollSpider.scroll.top > 0) {
+                  _scrollSpider.scroll.body.scrollTop = _scrollSpider.scroll.top -= _scrollSpider.scroll.by;
+                  _scrollSpider.move();
+                } else {
+                  window.clearInterval(_scrollSpider.scroll.window); 
+                  _scrollSpider.goingUp = false;
+                }
+              }, 10)
+            };
+
+          }
+        },
+
+        // offset the spider based on the height of the image
+        // this is so it's visible when the document is scrolled to 100%
+        applyOffset : function() {
+          var img = _scrollSpider.spider.getElementsByTagName('IMG')[0];
+
+          if (img && img.complete) {
+            _scrollSpider.spider.style.marginTop = '-' + img.height + 'px';
+            _scrollSpider.spider.style.display = ''; // show spider after offset has been applied (should be properly hidden now)
+          } else {
+            window.addEventListener('load', _scrollSpider.applyOffset);
+          }
+        },
+
+        // initial setup of the scrolling spider element
+        init : function() {
+          var spider = document.createElement('DIV');
+
+          spider.id = 'scrollSpider';
+          spider.innerHTML = '<div style="' + _scrollSpider.config.web + '"></div><img src="' + _scrollSpider.config.image + '" onclick="_scrollSpider.toTop();" style="cursor:pointer;" title="' + _scrollSpider.config.tooltip + '">';
+          spider.style.position = 'fixed';
+          spider.style[/left|right/i.test(_scrollSpider.config.side) ? _scrollSpider.config.side : 'right'] = _scrollSpider.config.offset;
+          spider.style.top = '0%';
+          spider.style.display = 'none'; // keeps spider hidden until image has been loaded (otherwise it'll be briefly visible until the offset is applied)
+
+          document.body.appendChild(spider);
+
+          _scrollSpider.spider = spider;
+          _scrollSpider.move();
+          _scrollSpider.applyOffset();
+
+          window.addEventListener('scroll', _scrollSpider.move);
+        }
+
+      };
+
+      document.addEventListener('DOMContentLoaded', _scrollSpider.init); // perform initialization when the DOM is loaded
+    }
+    
+    // new year's
+    else if (month == 1 && day == 1) {
+      GenkiAnn.msg.splice(0, 0, {
+        content : "<ruby>皆<rt>みな</rt></ruby>さん、あけましておめでとうございます！<ruby>今年<rt>ことし</rt></ruby>も<ruby>頑張<rt>がんば</rt></ruby>りましょう！"
+      });
+    }
+    
+    // initialize the announcement module
+    GenkiAnn.init();
+  }
+  
   
   // # OFFLINE LINK MODIFICATIONS #
   // appends index.html to links if this project is hosted on the local file system

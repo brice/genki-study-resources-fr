@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -63,7 +76,7 @@
     <script>Genki.generateQuiz({
       format : 'practice',
       type : ['multi', 'fill'],
-      info : 'Items 1-7 are near you, and items 8-14 are near your friend. Your friend asks what these things are called in Japanese. Pay attention to これ and それ as you answer the questions.',
+      info : 'Items 1-7 are near you, and items 8-14 are near your friend. Your friend asks what these things are called in Japanese. Pay attention to {!GRI|これ and それ|l2-p1} as you answer the questions.',
 
       quizlet : [
         [

@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,10 +75,10 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using honorific expressions.',
+      info : 'Complete the following problems using {!GRI|honorific expressions|l19-p1}.',
       
       quizlet : 
-      '<p class="sectionDesc3rd"><span class="sectionNumber3rd fa">&#xf054;</span>Rewrite the underlined verbs, using honorific expressions.</p>'+
+      '<p class="sectionDesc3rd"><span class="sectionNumber3rd fa">&#xf054;</span>Rewrite the underlined verbs, using {!GRI|honorific expressions|l19-p1}.</p>'+
       '<div class="count-problems valign-top">'+
         '<div class="problem"><ruby>先生<rt>せんせい</rt></ruby>はご<ruby>飯<rt>はん</rt></ruby>を<u class="ul-double"><ruby>食<rt>た</rt></ruby>べました</u>。 　　　　　<i class="fa">&#xf061;</i> {召し上がりました|めしあがりました|answer}</div>'+
         

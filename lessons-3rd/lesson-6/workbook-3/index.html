@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,10 +75,10 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～てください.',
+      info : 'Complete the following problems using {!GRI|～てください|l6-p2}.',
 
       quizlet : 
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Write what each person says using ～てください</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Write what each person says using {!GRI|～てください|l6-p2}.</p>'+
         '<div class="count-problems">'+
           '<div class="center inline-columns">'+
             '<div class="problem">'+
@@ -129,7 +142,7 @@
         '</div><br>'+
         
         '<div class="count-problems">'+
-          '<p class="sectionDesc3rd"><span class="sectionNumber3rd">II</span>Translate the following sentences using ～てください.</p>'+
+          '<p class="sectionDesc3rd"><span class="sectionNumber3rd">II</span>Translate the following sentences using {!GRI|～てください|l6-p2}.</p>'+
           
           '<div class="problem">'+
             'Please help me with homework.<br>'+

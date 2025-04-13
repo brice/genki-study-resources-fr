@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,7 +75,7 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Review the Vocabulary section (Genki I: p.148-149) and the Grammar 1 (p.150-151) and fill in the following table.',
+      info : 'Review the Vocabulary section (Genki I: p.148-149) and {!GRI|Grammar 1|l6-p1} (p.150-151) and fill in the following table.',
       
       quizlet : 
       '<p class="section-desc">Ru-verbs</p>'+
@@ -70,8 +83,8 @@
         '<tr>'+
           '<td></td>'+
           '<td>dictionary form</td>'+
-          '<td>te-form</td>'+
-          '<td>long form (～ます)</td>'+
+          '<td>{!GRI|te-form|l6-p1}</td>'+
+          '<td>{!GRI|long form|l3-p1} (～ます)</td>'+
         '</tr>'+
         
         '<tr>'+
@@ -143,8 +156,8 @@
         '<tr>'+
           '<td></td>'+
           '<td>dictionary form</td>'+
-          '<td>te-form</td>'+
-          '<td>long form (～ます)</td>'+
+          '<td>{!GRI|te-form|l6-p1}</td>'+
+          '<td>{!GRI|long form|l3-p1} (～ます)</td>'+
         '</tr>'+
         
         '<tr>'+
@@ -244,8 +257,8 @@
         '<tr>'+
           '<td></td>'+
           '<td>dictionary form</td>'+
-          '<td>te-form</td>'+
-          '<td>long form (～ます)</td>'+
+          '<td>{!GRI|te-form|l6-p1}</td>'+
+          '<td>{!GRI|long form|l3-p1} (～ます)</td>'+
         '</tr>'+
         
         '<tr>'+

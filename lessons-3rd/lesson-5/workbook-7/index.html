@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,11 +75,11 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～ましょう／～ましょうか.',
+      info : 'Complete the following problems using {!GRI|～ましょう／～ましょうか|l5-p5}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>You and your friend will spend one day together. Complete the conversation with ～ましょう by translating the given cues.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>You and your friend will spend one day together. Complete the conversation with {!GRI|～ましょう|l5-p5} by translating the given cues.</p>'+
         '<div class="inline-columns">'+
           '<span class="sm-label"><ruby>友<rt>とも</rt></ruby>だち：</span>どこに<ruby>行<rt>い</rt></ruby>きますか。<br>'+
           '<span class="sm-label"><ruby>私<rt>わたし</rt></ruby>：</span><div class="problem">{浅草に行きましょう|あさくさにいきましょう|' + Genki.getAlts('{浅草}に{行}きましょう', 'あさくさ|い') + 'answer;hint:(Let\'s go to Asakusa);width:200}。</div>'+

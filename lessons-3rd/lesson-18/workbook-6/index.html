@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,11 +75,11 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～ながら.',
+      info : 'Complete the following problems using {!GRI|～ながら|l18-p5}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Create a description from the two actions, using ～ながら.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Create a description from the two actions, using {!GRI|～ながら|l18-p5}.</p>'+
         '<div class="problem">'+
           'look at smart phone, cook<br>'+
           '{スマホを見ながら、料理します|料理しながら、スマホを見ます|' + Genki.getAlts('スマホを{見}ながら、{料理}します', 'み|りょうり') + Genki.getAlts('{料理}しながら、スマホを{見}ます', 'りょうり|み') + 'answer;width:300}。'+

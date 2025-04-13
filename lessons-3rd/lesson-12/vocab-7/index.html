@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -66,14 +79,14 @@
       info : [Genki.lang.std_drag, Genki.lang.vocab_multi, Genki.lang.vocab_writing, Genki.lang.vocab_fill],
       
       quizlet : {
-        '内科|ないか' : 'physician',
-        '皮膚科|ひふか' : 'dermatologist',
-        '外科|げか' : 'surgeon',
-        '産婦人科|さんふじんか' : 'obstetrician and gynecologist',
-        '整形外科|せいけいげか' : 'orthopedic surgeon',
-        '眼科／目医者|がんか／めいしゃ' : 'ophthalmologist',
-        '歯科／歯医者|しか／はいしゃ' : 'dentist',
-        '耳鼻科|じびか' : 'otorhinolaryngologist; ENT doctor',
+        '内科医|ないかい' : 'physician',
+        '皮膚科医|ひふかい' : 'dermatologist',
+        '外科医|げかい' : 'surgeon',
+        '産婦人科医|さんふじんかい' : 'obstetrician and gynecologist',
+        '整形外科医|せいけいげかい' : 'orthopedic surgeon',
+        '眼科医／目医者|がんかい／めいしゃ' : 'ophthalmologist',
+        '歯科医／歯医者|しかい／はいしゃ' : 'dentist',
+        '耳鼻科医|じびかい' : 'otorhinolaryngologist; ENT doctor',
         '抗生物質|こうせいぶっしつ' : 'antibiotic',
         'レントゲン' : 'X-ray',
         '手術|しゅじゅつ' : 'operation',

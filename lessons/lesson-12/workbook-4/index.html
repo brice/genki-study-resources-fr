@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,11 +75,11 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Answer the questions using ～ので.',
+      info : 'Answer the questions using {!GRI|～ので|l12-p4}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="section-desc">Translate the following sentences, using ～ので. Note that [the reason + ので] precedes the result.</p>'+
+        '<p class="section-desc">Translate the following sentences, using {!GRI|～ので|l12-p4}. Note that [the reason + ので] precedes the result.</p>'+
         '<div class="problem">'+
           'I am tired, because I am busy every day.<br>'+
           '{毎日忙しいので、疲れています|まいにちいそがしいので、つかれています|' + Genki.getAlts('{毎日}{忙}しいので、{疲}れています', 'まいにち|いそが|つか') + 'answer}。'+
@@ -97,7 +110,7 @@
           '{都合が悪いので、あしたパーティーに行きません|つごうがわるいので、あしたパーティーにいきません|' + Genki.getAlts('{都合}が{悪}いので、{明日}パーティーに{行}きません', 'つごう|わる|あした|い') + 'answer}。'+
         '</div>'+
         
-        '<p class="section-desc">Answer the questions, using ～ので by translating the cues.</p>'+
+        '<p class="section-desc">Answer the questions, using {!GRI|～ので|l12-p4} by translating the cues.</p>'+
         '<div class="problem">'+
           'Q：きのう勉強しましたか。<br>'+
           '(No, I didn\'t study, because there was no homework.)<br>'+

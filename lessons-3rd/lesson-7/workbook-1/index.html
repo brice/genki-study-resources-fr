@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,7 +75,7 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Exercice identifying and conjugating the following verbs.',
+      info : 'Practice identifying and conjugating the following verbs. {!GRI|Click here|l6-p1} to review Te-form conjugation.',
       
       quizlet : 
       '<p class="sectionDesc3rd"><span class="sectionNumber3rd fa">&#xf054;</span>Identify the verbs as u, ru, or irregular verbs and fill in the table below.</p>'+
@@ -70,8 +83,8 @@
         '<tr class="center">'+
           '<td></td>'+
           '<td>u/ru/irregular</td>'+
-          '<td>long form</td>'+
-          '<td>te-form</td>'+
+          '<td>{!GRI|long form|l3-p1}</td>'+
+          '<td>{!GRI|te-form|l6-p1}</td>'+
         '</tr>'+
         
         '<tr>'+

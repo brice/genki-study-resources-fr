@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,24 +75,24 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～てあげる／～てくれる／～てもらう.',
+      info : 'Complete the following problems using {!GRI|～てあげる／～てくれる／～てもらう|l16-p1}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Describe the situations, using ～てあげる, ～てくれる, and ～てもらう.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">I</span>Describe the situations, using {!GRI|～てあげる, ～てくれる, and ～てもらう|l16-p1}.</p>'+
         '<div class="problem">'+
           'My older sister sometimes lends me her car.<br>'+
-          '{姉は時々%(私に/)車を貸してくれます|%(私は/)時々姉に車を貸してもらいます|' + Genki.getAlts('{姉}は{時々}{私}に{車}を{貸}してくれます', 'いもうと|ときどき|わたし|くるま|か') + Genki.getAlts('{姉}は{時々}{車}を{貸}してくれます', 'いもうと|ときどき|くるま|か') + Genki.getAlts('{私}は{時々}{姉}に{車}を{貸}してもらいます', 'わたし|ときどき|いもうと|くるま|か') + Genki.getAlts('{時々}{姉}に{車}を{貸}してもらいます', 'ときどき|いもうと|くるま|か') + 'answer;width:500}。'+
+          '{姉が時々%(私に/)車を貸してくれます|%(私は/)時々姉に車を貸してもらいます|' + Genki.getAlts('{姉}が{時々}{私}に{車}を{貸}してくれます', 'あね|ときどき|わたし|くるま|か') + Genki.getAlts('{姉}が{時々}{車}を{貸}してくれます', 'あね|ときどき|くるま|か') + Genki.getAlts('{私}は{時々}{姉}に{車}を{貸}してもらいます', 'わたし|ときどき|あね|くるま|か') + Genki.getAlts('{時々}{姉}に{車}を{貸}してもらいます', 'ときどき|あね|くるま|か') + 'answer;width:500}。'+
         '</div>'+
         
         '<div class="problem">'+
           'My friend took me to the hospital.<br>'+
-          '{友だちは%(私を/)病院に連れていってくれました|%(私は/)友だちに病院に連れていってもらいました|' + Genki.getAlts('{友}{達}は{私}を{病院}に{連}れていってくれました', 'とも|だち|わたし|びょういん|つ') + Genki.getAlts('{友}{達}は{病院}に{連}れていってくれました', 'とも|だち|びょういん|つ') + Genki.getAlts('{私}は{友}{達}に{病院}に{連}れていってもらいました', 'わたし|とも|だち|びょういん|つ') + Genki.getAlts('{友}{達}に{病院}に{連}れていってもらいました', 'とも|だち|びょういん|つ') + 'answer;width:500}。'+
+          '{友だちが%(私を/)病院に連れていってくれました|%(私は/)友だちに病院に連れていってもらいました|' + Genki.getAlts('{友}{達}{は}{私}を{病院}に{連}れていってくれました', 'とも|だち|が|わたし|びょういん|つ') + Genki.getAlts('{友}{達}は{病院}に{連}れていってくれました', 'とも|だち|びょういん|つ') + Genki.getAlts('{私}は{友}{達}に{病院}に{連}れていってもらいました', 'わたし|とも|だち|びょういん|つ') + Genki.getAlts('{友}{達}に{病院}に{連}れていってもらいました', 'とも|だち|びょういん|つ') + 'answer;width:500}。'+
         '</div>'+
         
         '<div class="problem">'+
           'My friend treated me to a dinner.<br>'+
-          '{友だちは%(私に/)晩ご飯をおごってくれました|%(私は/)友だちに晩ご飯をおごってもらいました|' + Genki.getAlts('{友}{達}は{私}に{晩}ご{飯}をおごってくれました', 'とも|だち|わたし|ばん|はん') + Genki.getAlts('{友}{達}は{晩}ご{飯}をおごってくれました', 'とも|だち|ばん|はん') + Genki.getAlts('{友}{達}に{晩}ご{飯}をおごってもらいました', 'とも|だち|ばん|はん') + 'answer;width:500}。'+
+          '{友だちが%(私に/)晩ご飯をおごってくれました|%(私は/)友だちに晩ご飯をおごってもらいました|' + Genki.getAlts('{友}{達}{は}{私}に{晩}ご{飯}をおごってくれました', 'とも|だち|が|わたし|ばん|はん') + Genki.getAlts('{友}{達}は{晩}ご{飯}をおごってくれました', 'とも|だち|ばん|はん') + Genki.getAlts('{友}{達}に{晩}ご{飯}をおごってもらいました', 'とも|だち|ばん|はん') + 'answer;width:500}。'+
         '</div>'+
         
         '<div class="problem">'+
@@ -94,7 +107,7 @@
       '</div><br>'+
         
       '<div class="count-problems valign-top">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">II</span>Read the following paragraph carefully and fill in the blanks with あげます, くれます, or もらいます.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd">II</span>Read the following paragraph carefully and fill in the blanks with {!GRI|あげます, くれます, or もらいます|l16-p1}.</p>'+
         '<div>ぼくは<ruby>今<rt>いま</rt></ruby>、<ruby>日本<rt>にほん</rt></ruby>に<ruby>留学<rt>りゅうがく</rt></ruby>して、<ruby>日本人<rt>にほんじん</rt></ruby>の<ruby>家族<rt>かぞく</rt></ruby>と<ruby>住<rt>す</rt></ruby>んでいます。<ruby>家族<rt>かぞく</rt></ruby>はとても<ruby>親切<rt>しんせつ</rt></ruby>です。</div><br>'+
         '<div class="problem">お<ruby>母<rt>かあ</rt></ruby>さんは、おいしい<ruby>料理<rt>りょうり</rt></ruby>を<ruby>作<rt>つく</rt></ruby>って({くれます})。</div>'+
         '<div class="problem">お<ruby>父<rt>とう</rt></ruby>さんは、よく<ruby>駅<rt>えき</rt></ruby>まで<ruby>迎<rt>むか</rt></ruby>えに<ruby>来<rt>き</rt></ruby>て({くれます})。</div>'+

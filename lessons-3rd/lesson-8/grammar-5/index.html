@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -63,7 +76,7 @@
     <script>Genki.generateQuiz({
       format : 'practice',
       type : ['multi', 'fill'],
-      info : 'Make a guess about Mary, using ～と思います.',
+      info : 'Make a guess about Mary, using {!GRI|～と思います|l8-p3}.',
 
       quizlet : [
         [
@@ -141,10 +154,10 @@
           {
             question : 'often cooks',
             answers : [
-              'Aメアリーさんはよく<ruby>料理<rt>りょうり</rt></ruby>をすると<ruby>思<rt>おも</rt></ruby>います。',
-              'メアリーさんはよく<ruby>料理<rt>りょうり</rt></ruby>をしますと<ruby>思<rt>おも</rt></ruby>います。',
-              'メアリーさんはよく<ruby>料理<rt>りょうり</rt></ruby>をしてと<ruby>思<rt>おも</rt></ruby>います。',
-              'メアリーさんはよく<ruby>料理<rt>りょうり</rt></ruby>をしと<ruby>思<rt>おも</rt></ruby>います。'
+              'Aメアリーさんはよく<ruby>料理<rt>りょうり</rt></ruby>すると<ruby>思<rt>おも</rt></ruby>います。',
+              'メアリーさんはよく<ruby>料理<rt>りょうり</rt></ruby>しますと<ruby>思<rt>おも</rt></ruby>います。',
+              'メアリーさんはよく<ruby>料理<rt>りょうり</rt></ruby>してと<ruby>思<rt>おも</rt></ruby>います。',
+              'メアリーさんはよく<ruby>料理<rt>りょうり</rt></ruby>しと<ruby>思<rt>おも</rt></ruby>います。'
             ]
           },
 
@@ -262,7 +275,7 @@
             
             '<div class="problem">'+
               'often cooks<br>'+
-              '{メアリーさんはよく料理をすると思います|メアリーさんはよくりょうりをするとおもいます|' + Genki.getAlts('メアリーさんは{よ}く{料理}をすると{思}います', '良|りょうり|おも') + 'answer}。'+
+              '{メアリーさんはよく料理をすると思います|メアリーさんはよくりょうりをするとおもいます|' + Genki.getAlts('メアリーさんは{よ}く{料理}{を}すると{思}います', '良|りょうり||おも') + 'answer}。'+
             '</div>'+
           '</div>'+
 

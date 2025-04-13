@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -63,7 +76,7 @@
     <script>Genki.generateQuiz({
       format : 'practice',
       type : ['multi', 'fill'],
-      info : ['Look at the information about Professor Yamashita 25 years ago and answer the questions.<br><br>'+
+      info : ['Look at the information about Professor Yamashita 25 years ago and answer the questions using the {!GRI|Past Tense of です|l4-p3}.<br><br>'+
       '<table><tr><td>'+
         'Twenty-five years ago, Professor Yamashita was...'+
         '<ul>'+
@@ -72,7 +85,7 @@
           '<li>good student</li>'+
           '<li>his major: Japanese history</li>'+
         '</ul>'+
-      '</td></tr></table>', 'Look at the information about Professor Yamashita 25 years ago and answer the questions.'],
+      '</td></tr></table>', 'Look at the information about Professor Yamashita 25 years ago and answer the questions using the {!GRI|Past Tense of です|l4-p3}.'],
 
       quizlet : [
         [

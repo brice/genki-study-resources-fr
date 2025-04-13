@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,12 +75,12 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～てすみませんでした.',
+      info : 'Complete the following problems using {!GRI|～てすみませんでした|l16-p5}.',
       
       quizlet : 
       '<div class="count-problems">'+
         // I
-        '<p class="section-desc">Make an apology in each of the situations below, using ～てすみませんでした (formal) or ～てごめん (casual).</p>'+
+        '<p class="section-desc">Make an apology in each of the situations below, using {!GRI|～てすみませんでした|l16-p5} (formal) or {!GRI|～てごめん|l16-p5} (casual).</p>'+
         '<div class="problem">'+
           'You did not listen to the professor\'s lecture (話;はなし).<br>'+
           '{先生の話を聞かなくてすみませんでした|せんせいのはなしをきかなくてすみませんでした|' + Genki.getAlts('{先生}の{話}を{聞}かなくてすみませんでした', 'せんせい|はなし|き') + 'answer}。'+

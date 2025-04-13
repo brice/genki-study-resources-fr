@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,48 +75,48 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～でしょうか.',
+      info : 'Complete the following problems using {!GRI|～でしょうか|l12-p6}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="sectionDesc3rd"><span class="sectionNumber3rd fa">&#xf054;</span>You live in a dormitory and you will get a new roomate. Ask the coordinator what that person is like, using ～でしょうか.</p>'+
+        '<p class="sectionDesc3rd"><span class="sectionNumber3rd fa">&#xf054;</span>You live in a dormitory and you will get a new roomate. Ask the coordinator what that person is like, using {!GRI|～でしょうか|l12-p6}.</p>'+
         '<div class="problem">'+
-          'Are they Japanese?<br>'+
+          'Is she/he Japanese?<br>'+
           '{日本人でしょうか|にほんじんでしょうか|answer}。'+
         '</div>'+
         
         '<div class="problem">'+
-          'What is their major?<br>'+
+          'What is her/his major?<br>'+
           '{専攻は何でしょうか|せんこうはなんでしょうか|' + Genki.getAlts('{専攻}は{何}でしょうか', 'せんこう|なん') + 'answer}。'+
         '</div>'+
         
         '<div class="problem">'+
-          'Are they a quiet person?<br>'+
+          'Is she/he a quiet person?<br>'+
           '{静かな人でしょうか|しずかなひとでしょうか|answer}。'+
         '</div>'+
         
         '<div class="problem">'+
-          'What kind of music do they like?<br>'+
+          'What kind of music does she/he like?<br>'+
           '{どんな音楽が好きでしょうか|どんなおんがくがすきでしょうか|' + Genki.getAlts('どんな{音楽}が{好}きでしょうか', 'おんがく|す') + 'answer}。'+
         '</div>'+
         
         '<div class="problem">'+
-          'Do they smoke?<br>'+
+          'Does she/he smoke?<br>'+
           '{たばこを吸うでしょうか|たばこをすうでしょうか|' + Genki.getAlts('{たばこ}を{吸}うでしょうか', 'タバコ|す') + 'answer}。'+
         '</div>'+
         
         '<div class="problem">'+
-          'Do they have many friends?<br>'+
+          'Does she/he have many friends?<br>'+
           '{友だちがたくさんいるでしょうか|ともだちがたくさんいるでしょうか|' + Genki.getAlts('{友}{だち}がたくさんいるでしょうか', 'とも|達') + 'answer}。'+
         '</div>'+
         
         '<div class="problem">'+
-          'What kind of food do they like?<br>'+
+          'What kind of food does she/he like?<br>'+
           '{どんな食べ物が好きでしょうか|どんなたべものがすきでしょうか|' + Genki.getAlts('どんな{食べ物}が{好}きでしょうか', 'たべもの|す') + 'answer}。'+
         '</div>'+
         
         '<div class="problem">'+
-          'Do they have a car?<br>'+
+          'Does she/he have a car?<br>'+
           '{車があるでしょうか|くるまがあるでしょうか|answer}。'+
         '</div>'+
       '</div>'

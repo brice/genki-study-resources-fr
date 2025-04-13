@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,12 +75,12 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using ～てしまう.',
+      info : 'Complete the following problems using {!GRI|～てしまう|l18-p3}.',
       
       quizlet : 
       '<div class="count-problems">'+
         // I
-        '<p class="section-desc">Translate the sentences, using ～てしまう.</p>'+
+        '<p class="section-desc">Translate the sentences, using {!GRI|～てしまう|l18-p3}.</p>'+
         '<div class="problem">'+
           'I already finished writing a paper.<br>'+
           '{もうレポートを書いてしまいました|もうレポートをかいてしまいました|answer}。'+
@@ -99,7 +112,7 @@
         '</div>'+
         
         // II
-        '<p class="section-desc">Complete the dialogue by translating the given cues, using ～ちゃった／じゃった, the casual version of ～てしまった.</p>'+
+        '<p class="section-desc">Complete the dialogue by translating the given cues, using ～ちゃった／じゃった, the casual version of {!GRI|～てしまった|l18-p3}.</p>'+
         '<div class="problem">'+
           'A：冷蔵庫の牛乳がないんだけど……。<br>'+
           'B：ごめん。{飲んじゃった|のんじゃった|answer;hint:(I drank it)}。'+

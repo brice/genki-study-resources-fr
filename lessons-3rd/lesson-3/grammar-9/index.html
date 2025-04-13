@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -63,7 +76,7 @@
     <script>Genki.generateQuiz({
       format : 'practice',
       type : ['multi', 'fill'],
-      info : ['How often do you do the following activities? Answer the questions using the expressions and cues below.<br><br>'+
+      info : ['How often do you do the following activities? Answer the questions using the {!GRI|frequency adverbs|l3-p6} and cues below.<br><br>'+
       '<table class="center" style="width:200px;">'+
         '<tr>'+
           '<td>'+
@@ -83,7 +96,7 @@
           
           '<td>～ません</td>'+
         '</tr>'+
-      '</table>', 'How often do you do the following activities? Answer the questions using the expressions and cues below.'],
+      '</table>', 'How often do you do the following activities? Answer the questions using the {!GRI|frequency adverbs|l3-p6} and cues below.'],
 
       questionsAlignLeft : true,
       quizlet : [

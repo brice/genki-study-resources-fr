@@ -166,7 +166,9 @@
       // various settings and their selected||default values
       var fontSize = +localStorage.genkiFontSize || 100,
           pageWidth = +localStorage.genkiPageWidth || 100,
+          genkiTheme = localStorage.genkiTheme || 'genki1',
           darkMode = localStorage.darkMode || 'off',
+          adverts = localStorage.adverts || 'on',
           customCSS = localStorage.genkiCustomCSS || '',
           furigana = localStorage.furiganaVisible || 'true',
           spoilerMode = localStorage.spoilerMode || 'false',
@@ -177,7 +179,8 @@
           jishoLookUp = localStorage.genkiJishoLookUp || 'true',
           strokeOrder = localStorage.strokeOrderVisible || 'true',
           tracingGuide = localStorage.tracingGuideVisible || 'true',
-          timerAutoPause = localStorage.timerAutoPause || 'true';
+          timerAutoPause = localStorage.timerAutoPause || 'true',
+          dataBackupReminder = localStorage.dataBackupReminder || 'true';
       
       // create stylesheet for settings
       if (!GenkiSettings.stylesheet) {
@@ -187,11 +190,11 @@
       // open settings popup
       GenkiModal.open({
         title : 'Settings Manager',
-        content : '<p>Here you can manage your settings for Genki Study Resources. To learn more about a setting, hover over its label for a short description.</p>'+
+        content : '<p>You can manage your settings for Genki Study Resources in this window.<br>※ Please note that all data is saved locally to the browser, so clearing your browser\'s cache will reset your settings.</p>'+
         '<div class="section-title">Display</div>'+
         '<ul class="genki-settings-list">'+
           '<li>'+
-            '<span class="label" title="Increases the font size for the site (increase this if you have trouble reading -- page width may require an increase as well)">Font Size:</span>'+
+            '<span class="label" title="Increases the font size for the site.">Font Size:</span>'+
             '<input id="font-size-range" type="range" min="100" max="500" value="' + fontSize + '" oninput="GenkiSettings.updateFontSize(this);" onchange="GenkiSettings.updateFontSize(this, true);"><span id="font-size-value">' + fontSize + '%</span>'+
           '</li>'+
         
@@ -201,9 +204,22 @@
           '</li>'+
         
           '<li>'+
-            '<span class="label" title="Enable or disable Dark Mode (great for late night studying!)">Dark Mode:</span>'+
+            '<span class="label" title="Changes the main color of the website.">Theme:</span>'+
+            '<select id="settings-vocab-mode" onchange="GenkiSettings.updateTheme(this);">'+
+              '<option value="genki1"' + ( genkiTheme == 'genki1' ? ' selected' : '' ) + '>Genki I</option>'+
+              '<option value="genki2"' + ( genkiTheme == 'genki2' ? ' selected' : '' ) + '>Genki II</option>'+
+            '</select>'+
+          '</li>'+
+        
+          '<li>'+
+            '<span class="label" title="Enable or disable Dark Mode.">Dark Mode:</span>'+
             '<button id="settings-dark-mode" class="button' + (darkMode == 'on' ? '' : ' opt-off') + '" onclick="GenkiSettings.updateDarkMode(this);">' + (darkMode == 'on' ? 'ON' : 'OFF') + '</button>'+
           '</li>'+
+        
+          (window.location.protocol == 'file:' ? '' : '<li>'+
+            '<span class="label" title="Enable or disable Ads.\nAds help support the developer, but if they\'re annoying or distracting, you can turn them off with this option.">Ads:</span>'+
+            '<button id="settings-dark-mode" class="button' + (adverts == 'on' ? '' : ' opt-off') + '" onclick="GenkiSettings.updateAdverts(this);">' + (adverts == 'on' ? 'ON' : 'OFF') + '</button>'+
+          '</li>')+
         
           '<li>'+
             '<span class="label" title="Use your own CSS to customize the design of the site to your liking">Custom CSS:<br><a href="https://www.w3schools.com/css/css_intro.asp" target="_blank" style="font-weight:normal;"><small>What is CSS?</small></a></span>'+
@@ -214,7 +230,7 @@
         '<div class="section-title">Exercises</div>'+
         '<ul class="genki-settings-list">'+
           '<li>'+
-            '<span class="label" title="Enable or disable furigana (reading aid) for kanji (challenge your brain and memorize those kanji!)">Furigana:</span>'+
+            '<span class="label" title="Enable or disable furigana (reading aid) for kanji.">Furigana:</span>'+
             '<button id="settings-furigana" class="button' + (furigana == 'true' ? '' : ' opt-off') + '" onclick="GenkiSettings.updateFurigana(this);">' + (furigana == 'true' ? 'ON' : 'OFF') + '</button>'+
           '</li>'+
         
@@ -271,6 +287,11 @@
           '<li>'+
             '<span class="label" title="Enable or disable pausing timer when you leave or hide the exercise page">Pause Timer Automatically:</span>'+
             '<button id="settings-timer-auto-pause" class="button' + (timerAutoPause == 'true' ? '' : ' opt-off') + '" onclick="GenkiSettings.updateTimerAutoPause(this);">' + (timerAutoPause == 'true' ? 'ON' : 'OFF') + '</button>'+
+          '</li>'+
+        
+          '<li>'+
+            '<span class="label" title="Shows a reminder every 10 exercises to backup your exercise score data.">Exercise Data Backup Reminder:</span>'+
+            '<button id="settings-data-backup-reminder" class="button' + (dataBackupReminder == 'true' ? '' : ' opt-off') + '" onclick="GenkiSettings.updateDataBackupReminder(this);">' + (dataBackupReminder == 'true' ? 'ON' : 'OFF') + '</button>'+
           '</li>'+
 
           '<li>'+
@@ -503,10 +524,58 @@
     },
     
     
+    // updates theme state
+    updateTheme : function (caller) {
+      var theme = document.getElementById('website-theme');
+      
+      // remove current theme
+      if (theme) {
+        theme.parentNode.removeChild(theme);
+      }
+      
+      // apply new theme
+      if (caller.value != 'genki1') {
+        var theme = document.createElement('LINK');
+        theme.id = 'website-theme';
+        theme.href = getPaths() + 'resources/css/theme-' + caller.value + '.min.css';
+        theme.rel = 'stylesheet';
+        document.head.appendChild(theme);
+      }
+      
+      // save preference to cache
+      if (storageOK) {
+        localStorage.genkiTheme = caller.value;
+      }
+    },
+    
+    
     // updates dark mode state
     updateDarkMode : function (caller) {
       document.getElementById('light-switch-checkbox').click();
       GenkiSettings.updateButton(caller);
+    },
+    
+    
+    // updates adverts state
+    updateAdverts : function (caller) {
+      GenkiSettings.updateButton(caller, function (state) {
+        localStorage.adverts = state == 'ON' ? 'on' : 'off';
+        
+        GenkiModal.open({
+          title : 'Reload Required',
+          content : 'The page needs to be reloaded for this setting to take effect. Do you want to reload now?',
+          buttonText : 'Reload',
+          closeButtonText : 'Return to Settings',
+          
+          callback : function () {
+            window.location.reload();
+          },
+          
+          closeCallback : function () {
+            setTimeout(GenkiSettings.manager, 10);
+          }
+        });
+      });
     },
     
     
@@ -665,6 +734,13 @@
         }
       });
     },
+    
+    // updates data backup reminder
+    updateDataBackupReminder : function (caller) {
+      GenkiSettings.updateButton(caller, function (state) {
+        localStorage.dataBackupReminder = state == 'ON' ? 'true' : 'false';
+      });
+    },
 
     // updates timer auto pause preference
     updateTimerAutoPause : function (caller) {
@@ -729,6 +805,15 @@
   }
   
   
+  // # THEME #
+  // applies the selected theme on page load
+  if (storageOK) {
+    if (localStorage.genkiTheme && localStorage.genkiTheme != 'genki1') {
+      document.write('<link id="website-theme" href="' + getPaths() + 'resources/css/theme-' + localStorage.genkiTheme + '.min.css" rel="stylesheet">');
+    }
+  }
+  
+  
   // # FONT PRE-LOADING #
   // pre-loads fonts for kanji canvases
   window.preLoadFonts = function () {
@@ -774,5 +859,28 @@
   if (!navigator.cookieEnabled) {
     console.warn('Cookies are not available either due to host or browser settings. Genki Study Resources will function in limited mode where settings are not remembered and certain features are unavailable. This issue can commonly be resolved by enabling third-party cookies. Please see the following page for help.\nhttps://sethclydesdale.github.io/genki-study-resources/help/stuck-loading/\n\nIf the issue still occurs after enabling third-party cookies, please contact the developer for further assistance.\nhttps://github.com/SethClydesdale/genki-study-resources/issues');
   }
+  
+  
+  // AJAX page getter
+  window.Get = function (url, callback, type) {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        callback(this.response); // callback on success
+      }
+    };
+
+    // set response type
+    if (typeof type != 'undefined') {
+      xhttp.responseType = type;
+    }
+
+    // open and send the request
+    xhttp.open('get', url, true);
+    xhttp.send();
+
+    return xhttp;
+  };
   
 }(window, document));

@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,11 +75,11 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the problems below using ～てみる.',
+      info : 'Complete the problems below using {!GRI|～てみる|l13-p4}.',
       
       quizlet : 
       '<div class="count-problems">'+
-        '<p class="section-desc">Reply to A, using ～てみます.</p>'+
+        '<p class="section-desc">Reply to A, using {!GRI|～てみます|l13-p4}.</p>'+
         '<div class="problem">'+
           'A：あの映画は感動しました。<br>'+
           '(I\'ll try watching it)<br>'+
@@ -91,7 +104,7 @@
           'B：じゃあ、{食べてみます|たべてみます|answer}。'+
         '</div>'+
         
-        '<p class="section-desc">Write about three places you have never been to and things you want to try there, using ～てみたい.</p>'+
+        '<p class="section-desc">Write about three places you have never been to and things you want to try there, using {!GRI|～てみたい|l13-p4}.</p>'+
         '<div class="problem">'+
           'I would like to go to Mongolia (モンゴル). I want to try riding a horse (馬；うま) there.<br>'+
           '{モンゴルに行ってみたいです。そこで馬に乗ってみたいです。|モンゴルにいってみたいです。そこでうまにのってみたいです。|' + Genki.getAlts('モンゴルに{行}ってみたいです。そこで{馬}に{乗}ってみたいです。', 'い|うま|の') + 'answer}'+

@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -62,7 +75,7 @@
     <script src="../../../resources/javascript/all.min.js"></script>
     <script>Genki.generateQuiz({
       type : 'fill',
-      info : 'Complete the following problems using Adjective + する.',
+      info : 'Complete the following problems using {!GRI|Adjective + する|l21-p4}.',
       
       quizlet : 
       '<div class="count-problems">'+
@@ -92,7 +105,7 @@
           '{同僚が私の部屋に来て、部屋をめちゃくちゃにしました|どうりょうがわたしのへやにきて、へやをめちゃくちゃにしました|' + Genki.getAlts('{同僚}が{私}の{部屋}に{来}て、{部屋}をめちゃくちゃにしました', 'どうりょう|わたし|へや|き|へや') + 'answer}。'+
         '</div>'+
         
-        '<p class="section-desc">What would you want to do if you were the following people? Make sentences by translating the given cues, using adjective + する.</p>'+
+        '<p class="section-desc">What would you want to do if you were the following people? Make sentences by translating the given cues, using {!GRI|adjective + する|l21-p4}.</p>'+
         '<div class="problem">'+
           'a teacher<br>'+
           '(If I were a Japanese teacher, I would want to make a lot more homework.)<br>'+

@@ -26,6 +26,9 @@
     // tells us the student's preferred feedback mode for multi-choice quizzes (instant || classic)
     feedbackMode : storageOK && localStorage.feedbackMode ? localStorage.feedbackMode : 'classic',
     
+    // counter for displaying the data backup reminder
+    dataBackupReminderCount : storageOK && localStorage.dataBackupReminderCount ? +localStorage.dataBackupReminderCount : 0,
+    
     // tells us if text selection mode is enabled (for multi-choice quizzes)
     textSelectMode : false,
     
@@ -144,7 +147,7 @@
     },
     
     // exercise list
-    exercises : GenkiExercises,
+    exercises : window.GenkiExercises || null,
 
     // scroll to the specified element: Genki.scrollTo('#lesson-3')
     // scrolling can be delayed by passing a value that evaluates to true (true; 1; '.') to the second param; delay
@@ -478,6 +481,14 @@
       
       // log current type
       Genki.active.type = o.type;
+      
+      // format grammar index links in the quiz info
+      if (/\!GRI/.test(o.info)) {
+        o.info = o.info.replace(/\{.*?\}/g, function (match) {
+          var data = match.slice(1, match.length - 1).split('|'), hint, flag, sub, width, placeholder;
+          return '<a href="' + getPaths() + 'lessons-3rd/appendix/grammar-index/' + Genki.local + '#' + data[2] + '" target="_blank"' + ((Genki.local && !Genki.debug) ? '' : ' onclick="Genki.getGrammarPoint(this, \'' + data[2] + '\'); return false;"') + '>' + data[1] + '</a>';
+        });
+      }
 
       // # 1. DRAG AND DROP #
       if (o.type == 'drag') {
@@ -636,7 +647,7 @@
 
       // # 4. MULTIPLE CHOICE #
       else if (o.type == 'multi') {
-        var quiz = '<div id="quiz-info">' + o.info + '<br><b style="color:#6F6;">NEW:</b> You can now choose between "Instant" and "Classic" Feedback Mode for multiple choice quizzes in the <a href="#genki-site-settings" onclick="GenkiSettings.manager(); return false;">Site Settings</a>.' + '</div><div id="question-list">',
+        var quiz = '<div id="quiz-info">' + o.info + '</div><div id="question-list">',
             answers = '<div id="answer-list">',
             option = 65, // used for tagging answers as A(65), B(66), C(67)..
             isAnswer = false,
@@ -734,6 +745,9 @@
           
           if (data[0] == '!IMG') {
             return Genki.parse.image(data);
+            
+          } else if (data[0] == '!GRI') { // Grammar Index links
+            return '<a href="' + getPaths() + 'lessons-3rd/appendix/grammar-index/' + Genki.local + '#' + data[2] + '" target="_blank"' + ((Genki.local && !Genki.debug) ? '' : ' onclick="Genki.getGrammarPoint(this, \'' + data[2] + '\'); return false;"') + '>' + data[1] + '</a>';
             
           } else if (data[0] == '!AUDIO') { // audio tracks
             return '<div class="audio-block center">'+
@@ -1367,7 +1381,7 @@
       '</div>';
 
       // save results in local storage
-      if (Genki.active.exercise.length > 0 && !/appendix|study-tools/.test(Genki.active.exercise[0])) {
+      if (storageOK && Genki.active.exercise.length > 0 && !/appendix|study-tools/.test(Genki.active.exercise[0])) {
         var lesson = Genki.active.exercise[0],
             genkiEdition = localStorage.GenkiEdition,
             lessonsResults = JSON.parse(localStorage.Results);
@@ -1382,6 +1396,36 @@
         // refresh the exercise list with the new results
         Genki.create.removeExerciseList();
         Genki.create.exerciseList();
+        
+        // shows data backup reminder if 10 or more exercises were completed
+        if (localStorage.dataBackupReminder == 'true' || localStorage.dataBackupReminder == undefined) {
+          if (++Genki.dataBackupReminderCount >= 10) {
+            Genki.dataBackupReminderCount = 0;
+            setTimeout(function() {
+              GenkiModal.open({
+                title : 'Backup Exercise Score Data?',
+                content : 'You\'ve recently completed 10 exercises. Would you like to backup your exercise score data?<br><br>'+
+                '<div class="center">'+
+                  '<a id="save-exercise-data" class="button" download="Genki Exercise Score Data" href="data:,' + (storageOK && localStorage.Results ? encodeURIComponent(localStorage.Results.replace(/\n/g, '\r\n')) : '') + '"><i class="fa">&#xf019;</i>Save Data</a><br><br>'+
+                  '<div title="Stops this popup from showing every 10 exercises.\nYou can re-enable the data backup reminder via the settings manager.">'+
+                    '<input id="modal-data-backup-reminder" class="genki_input_hidden" type="checkbox" onchange="localStorage.dataBackupReminder = this.checked == true ? false : true;">'+
+                    '<span tabindex="0" class="genki_pseudo_checkbox" onclick="this.previousSibling.click();" onkeypress="event.key == \'Enter\' && this.previousSibling.click();"></span>'+
+                    '<label class="checkbox-label" for="modal-data-backup-reminder">Disable Data Backup Reminders</label><br><br>'+
+                
+                    '<div class="donate-box clear">'+
+                      '<div class="donate-icon"><i class="fa">&#xf004;</i></div>'+
+                      '<div class="donate-text">If Genki Study Resources has helped you with your studies, please also consider <a href="' + getPaths() + 'donate/' + Genki.local + '" target="_blank">making a donation <i class="fa">&#xf08e;</i></a> if you can, to help support the continued development and maintenance of these resources. Your support is greatly appreciated!</div>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>',
+                zIndex : 'low',
+                focus : '#save-exercise-data'
+              });
+            }, 100);
+          }
+          // save count for other pages
+          localStorage.dataBackupReminderCount = Genki.dataBackupReminderCount;
+        }
       }
       
       // changes display over certain buttons
@@ -1802,27 +1846,20 @@
                 for (k in data) {
                   if (/answer/.test(k)) {
                     answer = Genki.toHalfWidth(data[k]).toLowerCase().replace(/。|、|^\s+|\s+$|\n/g, '');
-
+                    
                     // check if there's alternative answers in the answer
                     // alternative answers are given as %(alt1/alt2/etc.)
                     if (/%\(.*?\)/.test(answer)) {
                       alt = answer.replace(/.*?%\((.*?)\).*/, '$1').split('/');
 
                       // loop through alternatives
-                      if (k == 'answer' || k == 'answer2') {
-                        while (alt.length) {
-                          if (val == answer.replace(/%\(.*?\)/, alt[0])) {
-                            correct = true;
-                            break; // break out if correct answer is found
-                          }
-
-                          alt.splice(0, 1); // remove the checked answer
+                      while (alt.length) {
+                        if (val == answer.replace(/%\(.*?\)/, alt[0])) {
+                          correct = true;
+                          break; // break out if correct answer is found
                         }
-                      }
 
-                      // search hidden mixed kana/kanji alternatives
-                      else if ((k == 'answer3' || k == 'answer4' || k == 'answer5' || k == 'answer6' || k == 'answer7' || k == 'answer8' || k == 'answer9' || k == 'answer10') && alt.indexOf(val) != -1) {
-                        correct = true;
+                        alt.splice(0, 1); // remove the checked answer
                       }
                     } 
 
@@ -2167,96 +2204,130 @@
 
       // creates the exercise list
       exerciseList : function () {
-        var attrs = 'class="lesson-title" onclick="Genki.toggle.list(this);" onkeydown="event.key == \'Enter\' && Genki.toggle.list(this);" tabindex="0"', // lesson-title attrs
-            list = 
-            '<nav id="exercise-list">'+
-              '<h3 class="main-title">Exercise List</h3>'+
-              '<button id="random-exercise" class="button" onclick="Genki.randomExercise();" title="Random Exercise"><i class="fa">&#xf074;</i></button>'+
-              '<div id="lessons-list"><h4 ' + attrs + '>Page links</h4><ul id="page-links">',
-            lesson = '\\.\\.\\/',
-            i = 0,
-            j = Genki.exercises.length,
-            linkData,
-            active,
-            
-            // vars for grouping sub-sections
-            currentGroup,
-            group = '',
-            groups = /workbook-\d+|literacy-\d+|literacy-wb-\d+/,
-            groupTitles = {
-              workbook : 'Workbook',
-              literacy : 'Reading and Writing',
-              'literacy-wb' : 'Workbook: Reading and Writing'
-            };
+        var main = 
+          '<div id="link-list" class="normal-block indent-block">'+
+            '<div><a id="link-home" class="button" href="' + (getPaths() + (storageOK && localStorage.GenkiEdition == '3rd' ? 'lessons-3rd/' : '') + Genki.local) + '"><i class="fa">&#xf015;</i>Home</a></div>'+
+            '<div><a id="link-grammar" href="' + getPaths() + 'lessons-3rd/appendix/grammar-index/' + Genki.local + '"><i class="fa">&#xf02d;</i>Grammar Index</a></div>'+
+            '<div><a id="link-anki" href="' + getPaths() + 'help/anki-decks/' + Genki.local + '"><i class="fa">&#xf005;</i>Anki Decks</a></div>'+
+            '<div><a id="link-help" href="' + getPaths() + 'help/' + Genki.local + '"><i class="fa">&#xf059;</i>Help &amp; FAQ</a></div>'+
+            '<div><a id="link-report" href="' + getPaths() + 'report/' + Genki.local + '"><i class="fa">&#xf188;</i>Reports &amp; Feedback</a></div>'+
+            '<div><a id="link-download" href="' + getPaths() + 'download/' + Genki.local + '"><i class="fa">&#xf019;</i>Download</a></div>'+
+            '<div><a id="link-donate" href="' + getPaths() + 'donate/' + Genki.local + '"><i class="fa">&#xf004;</i>Donate</a></div>'+
+            '<div><a id="link-github" href="https://github.com/SethClydesdale/genki-study-resources"><i class="fa">&#xf09b;</i>GitHub</a></div>'+
+            '<div><a id="link-settings" href="#genki-site-settings" onclick="GenkiSettings.manager(); return false;"><i class="fa">&#xf013;</i>Settings</a></div>'+
+          '</div>'+
+          '<div id="related" class="indent-block">'+
+            '<h3>Related Projects</h3>'+
+            '<a href="https://sethclydesdale.github.io/tobira-study-resources/" title="Tobira Study Resources"><img src="' + getPaths() + 'resources/images/tobira-img.png" alt="Tobira Study Resources"></a>'+
+            '<a href="https://sethclydesdale.github.io/colloquial-kansai-dictionary/" title="Colloquial Kansai Japanese"><img src="' + getPaths() + 'resources/images/kansai-img.png" alt="Colloquial Kansai Japanese"></a>'+
+          '</div>';
+        
+        if (Genki.exercises) {
+          var attrs = 'class="lesson-title" onclick="Genki.toggle.list(this);" onkeydown="event.key == \'Enter\' && Genki.toggle.list(this);" tabindex="0"', // lesson-title attrs
+              list = 
+              '<nav id="exercise-list">'+
+                '<h3 class="main-title">Exercise List</h3>'+
+                '<button id="random-exercise" class="button" onclick="Genki.randomExercise();" title="Random Exercise"><i class="fa">&#xf074;</i></button>'+
+                '<div id="lessons-list"><h4 ' + attrs + '>Page links</h4><ul id="page-links">' + main + '</ul>',
+              lesson = '\\.\\.\\/',
+              i = 0,
+              j = Genki.exercises.length,
+              linkData,
+              active,
+
+              // vars for grouping sub-sections
+              currentGroup,
+              group = '',
+              groups = /workbook-\d+|literacy-\d+|literacy-wb-\d+/,
+              groupTitles = {
+                workbook : 'Workbook',
+                literacy : 'Reading and Writing',
+                'literacy-wb' : 'Workbook: Reading and Writing'
+              };
 
 
-        if (storageOK) {
-          localStorage.GenkiEdition = /lessons-3rd/.test(window.location.pathname) ? '3rd' : '2nd';
+          if (storageOK) {
+            localStorage.GenkiEdition = /lessons-3rd/.test(window.location.pathname) ? '3rd' : '2nd';
 
-          // Create storage for lessons results for specific edition
-          if (!localStorage.Results || !new RegExp(localStorage.GenkiEdition).test(localStorage.Results)) {
-            var results = localStorage.Results ? JSON.parse(localStorage.Results) : {};
-            results[localStorage.GenkiEdition] = {};
-            localStorage.Results = JSON.stringify(results);
+            // Create storage for lessons results for specific edition
+            if (!localStorage.Results || !new RegExp(localStorage.GenkiEdition).test(localStorage.Results)) {
+              var results = localStorage.Results ? JSON.parse(localStorage.Results) : {};
+              results[localStorage.GenkiEdition] = {};
+              localStorage.Results = JSON.stringify(results);
+            }
+          }
+
+          // loop over all the exercises and place them into their respectice lesson group
+          for (; i < j; i++) {
+            linkData = Genki.exercises[i].split('|');
+            currentGroup = linkData[0].replace(/^lesson-\d+\/|-\d+$/g, '');
+
+            // if the lesson group is different create a new group
+            if (!new RegExp(lesson).test(linkData[0])) {
+              lesson = /^appendix/.test(linkData[0]) ? 'appendix' : 
+                       /^study-tools/.test(linkData[0]) ? 'study-tools' :
+                       linkData[0].replace(/(lesson-\d+)\/.*/, '$1');
+
+              list += '</ul><h4 ' + attrs + '>' + lesson.charAt(0).toUpperCase() + lesson.replace(/-/, ' ').slice(1) + '</h4><ul id="' + lesson + '">';
+              group = '';
+            }
+
+            // add a header to separate the workbook from the textbook exercises and grammar from reading and writing
+            if (groups.test(linkData[0]) && group != currentGroup) {
+              group = currentGroup;
+              list += '<li><h4 class="sub-lesson-title">' + groupTitles[group] + '</h4></li>';
+            }
+
+            // add the exercise link to the group and display results
+            var resultsStorage = JSON.parse(localStorage.Results),
+                editionResultStorage = resultsStorage[localStorage.GenkiEdition],
+
+                lessonResult = editionResultStorage ? parseInt(editionResultStorage[linkData[0]]) : null,
+                resultSpans = {
+                  perfect: '<span class="exercise-results result--perfect" title="Exercise score"><i class="fa">&#xf005;</i> ',
+                  good: '<span class="exercise-results result--good" title="Exercise score"><i class="fa">&#xf00c;</i> ',
+                  average: '<span class="exercise-results result--average" title="Exercise score"><i class="fa">&#xf10c;</i> ',
+                  low: '<span class="exercise-results result--low" title="Exercise score"><i class="fa">&#xf00d;</i> ',
+                },
+
+                resultSpan =  lessonResult == 100 ? resultSpans.perfect : lessonResult >= 70 ? resultSpans.good : lessonResult >= 50 ? resultSpans.average : resultSpans.low,
+                prevScore = lessonResult > -1 ? resultSpan + lessonResult +'%' +'</span>' : '';
+
+            list += '<li class="menu-item-list"><a href="' + (lesson == '\\.\\.\\/' ? linkData[0] : '../../../' + Genki.ed + '/' + linkData[0] + '/') + Genki.local +
+              Genki.debug + '" ' + (linkData[2] ? 'data-page="Genki ' + (+linkData[0].replace(/lesson-(\d+).*/, '$1') < 13 ? 'I' : 'II') +
+              (/workbook-|wb-/.test(linkData[0]) ? ' Workbook' : '') + ': ' + linkData[2] + '"' : '') + ' title="' + linkData[1] + '">'+ linkData[1] +'</a>'+ " "+  prevScore +'</li>';
+          }
+
+          // add the exercise list to the document
+          document.getElementById('content').insertAdjacentHTML('afterbegin', '<a href="#toggle-exercises" id="toggle-exercises" onclick="Genki.toggle.exerciseList(this); return false;" title="Toggle exercise list"></a>' + list + '</ul></div></nav>');
+
+          // open the current lesson and scroll to the active exercise
+          if (Genki.active.exercise) {
+            // open the active lesson
+            Genki.toggle.list(document.getElementById(/^appendix/.test(Genki.active.exercise[0]) ? 'appendix' : /^study-tools/.test(Genki.active.exercise[0]) ? 'study-tools' : Genki.active.exercise[0].replace(/(lesson-\d+)\/.*/, '$1')).previousSibling);
+
+            // highlight the active exercise and scoll to it
+            active = document.querySelector('a[href*="' + Genki.active.exercise[0] + '"]:not(#link-grammar)');
+            active.className += ' active-lesson';
+            active = active.parentNode;
+
+            // jump to the active exercise
+            document.getElementById('lessons-list').scrollTop = active.offsetTop - (active.getBoundingClientRect().height + (window.matchMedia && matchMedia('(pointer:coarse)').matches ? 0 : 6));
           }
         }
-
-        // loop over all the exercises and place them into their respectice lesson group
-        for (; i < j; i++) {
-          linkData = Genki.exercises[i].split('|');
-          currentGroup = linkData[0].replace(/^lesson-\d+\/|-\d+$/g, '');
-
-          // if the lesson group is different create a new group
-          if (!new RegExp(lesson).test(linkData[0])) {
-            lesson = /^appendix/.test(linkData[0]) ? 'appendix' : 
-                     /^study-tools/.test(linkData[0]) ? 'study-tools' :
-                     linkData[0].replace(/(lesson-\d+)\/.*/, '$1');
-            
-            list += '</ul><h4 ' + attrs + '>' + lesson.charAt(0).toUpperCase() + lesson.replace(/-/, ' ').slice(1) + '</h4><ul id="' + lesson + '">';
-            group = '';
-          }
-
-          // add a header to separate the workbook from the textbook exercises and grammar from reading and writing
-          if (groups.test(linkData[0]) && group != currentGroup) {
-            group = currentGroup;
-            list += '<li><h4 class="sub-lesson-title">' + groupTitles[group] + '</h4></li>';
-          }
-
-          // add the exercise link to the group and display results
-          var resultsStorage = JSON.parse(localStorage.Results),
-              editionResultStorage = resultsStorage[localStorage.GenkiEdition],
-              
-              lessonResult = editionResultStorage ? parseInt(editionResultStorage[linkData[0]]) : null,
-              resultSpans = {
-                perfect: '<span class="exercise-results result--perfect" title="Exercise score"><i class="fa">&#xf005;</i> ',
-                good: '<span class="exercise-results result--good" title="Exercise score"><i class="fa">&#xf00c;</i> ',
-                average: '<span class="exercise-results result--average" title="Exercise score"><i class="fa">&#xf10c;</i> ',
-                low: '<span class="exercise-results result--low" title="Exercise score"><i class="fa">&#xf00d;</i> ',
-              },
-
-              resultSpan =  lessonResult == 100 ? resultSpans.perfect : lessonResult >= 70 ? resultSpans.good : lessonResult >= 50 ? resultSpans.average : resultSpans.low,
-              prevScore = lessonResult > -1 ? resultSpan + lessonResult +'%' +'</span>' : '';
-          
-          list += '<li class="menu-item-list"><a href="' + (lesson == '\\.\\.\\/' ? linkData[0] : '../../../' + Genki.ed + '/' + linkData[0] + '/') + Genki.local +
-            Genki.debug + '" ' + (linkData[2] ? 'data-page="Genki ' + (+linkData[0].replace(/lesson-(\d+).*/, '$1') < 13 ? 'I' : 'II') +
-            (/workbook-|wb-/.test(linkData[0]) ? ' Workbook' : '') + ': ' + linkData[2] + '"' : '') + ' title="' + linkData[1] + '">'+ linkData[1] +'</a>'+ " "+  prevScore +'</li>';
-        }
-
-        // add the exercise list to the document
-        document.getElementById('content').insertAdjacentHTML('afterbegin', '<a href="#toggle-exercises" id="toggle-exercises" onclick="Genki.toggle.exerciseList(this); return false;" title="Toggle exercise list"></a>' + list + '</ul></div></nav>');
-
-        // open the current lesson and scroll to the active exercise
-        if (Genki.active.exercise) {
-          // open the active lesson
-          Genki.toggle.list(document.getElementById(/^appendix/.test(Genki.active.exercise[0]) ? 'appendix' : /^study-tools/.test(Genki.active.exercise[0]) ? 'study-tools' : Genki.active.exercise[0].replace(/(lesson-\d+)\/.*/, '$1')).previousSibling);
-
-          // highlight the active exercise and scoll to it
-          active = document.querySelector('a[href*="' + Genki.active.exercise[0] + '"]');
-          active.className += ' active-lesson';
-          active = active.parentNode;
-
-          // jump to the active exercise
-          document.getElementById('lessons-list').scrollTop = active.offsetTop - (active.getBoundingClientRect().height + (window.matchMedia && matchMedia('(pointer:coarse)').matches ? 0 : 6));
+        
+        // creates quick nav for non-exercise pages
+        else {
+          var nav = 
+              '<a href="#toggle-navigation" id="toggle-exercises" onclick="Genki.toggle.exerciseList(this); return false;" title="Toggle quick navigation"></a>'+
+              '<nav id="exercise-list">'+
+                '<h3 class="main-title">Quick Navigation</h3>'+
+                '<div id="lessons-list">'+
+                  main+
+                '</div>'+
+              '</nav>';
+          // add the quick nav to the document
+          document.getElementById('content').insertAdjacentHTML('afterbegin', nav);
         }
       },
       
@@ -2369,14 +2440,17 @@
         box.id = 'quick-jisho-window';
         box.className = 'quick-jisho-hidden';
         box.innerHTML = 
-          '<h3 id="quick-jisho-title" class="main-title">Quick Dictionary <span id="quick-jisho-hits"></span></h3>'+
-          '<div id="quick-jisho-content">'+
-            '<div class="quick-jisho-row center">'+
-              '<input tabindex="0" id="quick-jisho-search" type="text" placeholder="Search..." oninput="Genki.quickJisho.search(this.value);">'+
-            '</div>'+
-            '<div class="quick-jisho-row">'+
-              '<ul id="quick-jisho-results"></ul>'+
-            '</div>'+
+          '<div class="quick-jisho-header">' +
+            '<h3 id="quick-jisho-title" class="main-title"> Quick Dictionary <span id="quick-jisho-hits"></span> </h3> ' +
+            '<i class="fa fa-hover" tabindex="0" onclick="Genki.quickJisho.toggle();" onkeydown="event.key == \'Enter\' && Genki.quickJisho.toggle();" title="Minimize">&#xf2d1;</i>  ' +
+          '</div>' +
+          '<div id="quick-jisho-content">' +
+            '<div class="quick-jisho-row center">' +
+              '<input tabindex="0" id="quick-jisho-search" type="text" placeholder="Search..." oninput="Genki.quickJisho.search(this.value);">' +
+            '</div>' +
+            '<div class="quick-jisho-row">' +
+              '<ul id="quick-jisho-results"></ul>' +
+            '</div>' +
           '</div>';
         
         // selection button
@@ -2647,6 +2721,80 @@
     },
     
     
+    // returns the specified grammar point in a popup window
+    getGrammarPoint : function (caller, id) {
+      // check if grammar point is being opened in the popup window, to cache the currently opened grammar point
+      var parent = caller.parentNode;
+      while (parent) {
+        if (parent.id == 'genki-modal-content') {
+          // push new history entry
+          Genki.grammarPointHistory.push(parent.innerHTML);
+          break;
+          
+        } else if (parent.tagName == 'BODY' || !parent) {
+          break;
+          
+        } else {
+          parent = parent.parentNode;
+        }
+      }
+      
+      // open modal
+      GenkiModal.open({
+        title : 'Quick Grammar Review',
+        content : '<div id="appendix-tool" class="loading"></div>',
+        customButton : 
+        (Genki.grammarPointHistory.length ? '<button id="genki-modal-back" class="button" onclick="Genki.grammarPointBack(this);" title="Go back to previous grammar point."><i class="fa">&#xf112;</i>Back</button>' : '')+
+        '<a href="' + caller.href + '" class="button" target="_blank"><i class="fa">&#xf08e;</i>View in Grammar Index</a>',
+        customSize : {
+          top : '10%',
+          left : '20%',
+          bottom : '10%',
+          right : '20%'
+        },
+        zIndex : 'low',
+        
+        // clears grammar history when closed
+        closeCallback : function () {
+          Genki.grammarPointHistory = [];
+        }
+      });
+      
+      Get(caller.href, function (data) {
+        var zone = document.querySelector('#genki-modal #appendix-tool'),
+            grammar = data.match(new RegExp('(<h3 id="' + id + '"[\\s\\S]*?<\/table><br>)', 'm')), // should return h3 title and table right below it
+            style = data.match(new RegExp('(<style>[\\s\\S]*?</style>)', 'm')), // grammar index specific styles
+            url = caller.href.replace(/#.*$/, ''); // clean grammar index url for use in anchor links
+        
+        if (grammar && grammar[0] && style && style[0]) {
+          if (zone) {
+            // trim out grammar point number and format anchor links for use with the quick grammar review modal
+            zone.innerHTML = style[0] + grammar[0].replace(/\d+\. /, '').replace(/href="#(.*?)"/g, 'onclick="Genki.getGrammarPoint(this, \'$1\'); return false;" target="_blank" href="' + url + '#$1"');
+            zone.className = Genki.ed == 'lessons' ? 'second-ed' : 'third-ed';
+          }
+        } else if (zone) {
+          zone.innerHTML = '<br><b>Failed to retrieve grammar point. Click "View in Grammar Index" to try viewing the grammar point directly.</b>';
+          zone.className = 'center';
+        }
+      });
+    },
+    
+    // return to a previously viewed grammar point in the quick grammar review window
+    grammarPointHistory : [],
+    grammarPointBack : function (button) {
+      if (Genki.grammarPointHistory.length) {
+        var content = document.getElementById('genki-modal-content');
+        content.innerHTML = Genki.grammarPointHistory.pop();
+        content.scrollTop = 0;
+        
+        // hide button if no more history entries
+        if (!Genki.grammarPointHistory.length) {
+          button.style.display = 'none';
+        }
+      }
+    },
+    
+    
     // takes the user to a random exercise
     randomExercise : function () {
       // random exercise preference (current lesson)
@@ -2709,60 +2857,63 @@
 
     // initial setup for exercise functionality
     init : function () {
-      // finds the currently active exercise in the exercise list and sets up essential data for following statements
-      var i = 0,
-          j = Genki.exercises.length,
-          result = document.getElementById('quiz-result'),
-          lesson;
+      if (Genki.exercises) {
+        // finds the currently active exercise in the exercise list and sets up essential data for following statements
+        var i = 0,
+            j = Genki.exercises.length,
+            result = document.getElementById('quiz-result'),
+            lesson;
 
-      for (; i < j; i++) {
-        if (Genki.active.path == Genki.exercises[i].split('|')[0]) {
-          Genki.active.exercise = Genki.exercises[i] ? Genki.exercises[i].split('|') : null;
-          Genki.active.index = i;
-          break;
-        }
-      }
-
-      // add exercise title to the document
-      if (Genki.active.exercise) {
-        lesson = /^appendix/.test(Genki.active.exercise[0]) ? 'appendix' : /^study-tools/.test(Genki.active.exercise[0]) ? 'study-tools' : +Genki.active.exercise[0].replace(/lesson-(\d+).*/, '$1'); // current lesson
-        
-        result.insertAdjacentHTML('beforebegin', '<h2 id="exercise-title" class="center" ' + (Genki.active.exercise[2] ? 'data-page="Genki ' + (lesson < 13 ? 'I' : 'II') + (/workbook-|wb-/.test(Genki.active.exercise[0]) ? ' Workbook' : '') + ': ' + Genki.active.exercise[2] + '"' : '') + '>' + (
-          lesson == 'appendix' ? '巻末' :
-          lesson == 'study-tools' ? 'ツール' :
-          '第' + lesson + '課'
-        ) + ' - ' + Genki.active.exercise[1] + '</h2>');
-        
-      } else {
-        result.insertAdjacentHTML('beforebegin', '<h2 id="exercise-title" class="center">' + document.querySelector('TITLE').innerText.replace(/\s\|.*/, '') + '</h2>');
-      }
-      
-      
-      // touch listeners for touch screen events
-      if (Genki.isTouch) {
-        document.ontouchstart = function () {
-          Genki.isTouching = true;
-        }
-        
-        // extra fallback for preventing page scroll while dragging objects
-        document.addEventListener('touchmove', function (e) {
-          if (Genki.isTouching && /hidden/i.test(document.body.style.overflow)) {
-            e.preventDefault();
+        for (; i < j; i++) {
+          if (Genki.active.path == Genki.exercises[i].split('|')[0]) {
+            Genki.active.exercise = Genki.exercises[i] ? Genki.exercises[i].split('|') : null;
+            Genki.active.index = i;
+            break;
           }
-        }, { passive : false });
-        
-        document.ontouchend = function () {
-          Genki.isTouching = false;
         }
-        
-        document.ontouchcancel = function () {
-          Genki.isTouching = false;
+
+        // add exercise title to the document
+        if (Genki.active.exercise) {
+          lesson = /^appendix/.test(Genki.active.exercise[0]) ? 'appendix' : /^study-tools/.test(Genki.active.exercise[0]) ? 'study-tools' : +Genki.active.exercise[0].replace(/lesson-(\d+).*/, '$1'); // current lesson
+
+          result.insertAdjacentHTML('beforebegin', '<h2 id="exercise-title" class="center" ' + (Genki.active.exercise[2] ? 'data-page="Genki ' + (lesson < 13 ? 'I' : 'II') + (/workbook-|wb-/.test(Genki.active.exercise[0]) ? ' Workbook' : '') + ': ' + Genki.active.exercise[2] + '"' : '') + '>' + (
+            lesson == 'appendix' ? '巻末' :
+            lesson == 'study-tools' ? 'ツール' :
+            '第' + lesson + '課'
+          ) + ' - ' + Genki.active.exercise[1] + '</h2>');
+
+        } else {
+          result.insertAdjacentHTML('beforebegin', '<h2 id="exercise-title" class="center">' + document.querySelector('TITLE').innerText.replace(/\s\|.*/, '') + '</h2>');
         }
+
+
+        // touch listeners for touch screen events
+        if (Genki.isTouch) {
+          document.ontouchstart = function () {
+            Genki.isTouching = true;
+          }
+
+          // extra fallback for preventing page scroll while dragging objects
+          document.addEventListener('touchmove', function (e) {
+            if (Genki.isTouching && /hidden/i.test(document.body.style.overflow)) {
+              e.preventDefault();
+            }
+          }, { passive : false });
+
+          document.ontouchend = function () {
+            Genki.isTouching = false;
+          }
+
+          document.ontouchcancel = function () {
+            Genki.isTouching = false;
+          }
+        }
+
+
+        // setup navigational objects
+        Genki.create.exerciseButtons();
       }
       
-
-      // setup navigational objects
-      Genki.create.exerciseButtons();
       Genki.create.exerciseList();
       
       // define Genki in the global namespace
@@ -2775,41 +2926,44 @@
   // prevent progress loss on page change
   window.onbeforeunload = function () {
     var lossDetected = false,
-        type = document.getElementById('exercise').className;
+        type = document.getElementById('exercise');
     
-    // determine exercise type and find if the user may incur progress loss for the current exercise
-    if (/quiz-over/.test(type) || document.querySelector('.review-mode')) { // ignore this check completely if the quiz is over or student is in review mode
-      lossDetected = false;
-    } 
-    
-    // check if any of the inputs have been filled in for a written quiz
-    else if (/fill-quiz|writing-quiz/.test(type)) {
-      for (var a = document.querySelectorAll('.writing-zone-input'), i = 0, j = a.length; i < j; i++) {
-        if (a[i].value != '') { // mark as a "loss" if an input is filled in and break out of the loop
-          lossDetected = true;
-          break;
+    if (type) {
+      type = type.className;
+      // determine exercise type and find if the user may incur progress loss for the current exercise
+      if (/quiz-over/.test(type) || document.querySelector('.review-mode')) { // ignore this check completely if the quiz is over or student is in review mode
+        lossDetected = false;
+      } 
+
+      // check if any of the inputs have been filled in for a written quiz
+      else if (/fill-quiz|writing-quiz/.test(type)) {
+        for (var a = document.querySelectorAll('.writing-zone-input'), i = 0, j = a.length; i < j; i++) {
+          if (a[i].value != '') { // mark as a "loss" if an input is filled in and break out of the loop
+            lossDetected = true;
+            break;
+          }
         }
       }
-    }
-    
-    // check if any of the canvases have been drawn on
-    else if (/drawing-quiz|stroke-quiz/.test(type)) {
-      for (var a = document.querySelectorAll('.kanji-canvas'), i = 0, j = a.length; i < j; i++) {
-        if (KanjiCanvas['recordedPattern_' + a[i].id].length) { // mark as a "loss" if a canvas has been drawn on and break out of the loop
-          lossDetected = true;
-          break;
+
+      // check if any of the canvases have been drawn on
+      else if (/drawing-quiz|stroke-quiz/.test(type)) {
+        for (var a = document.querySelectorAll('.kanji-canvas'), i = 0, j = a.length; i < j; i++) {
+          if (KanjiCanvas['recordedPattern_' + a[i].id].length) { // mark as a "loss" if a canvas has been drawn on and break out of the loop
+            lossDetected = true;
+            break;
+          }
         }
       }
-    }
-    
-    // check if progress has been made in the following quizzes
-    else if (/multi-quiz|drag-quiz|kana-quiz/.test(type) && Genki.stats.solved > 0) {
-      lossDetected = true;
-    }
-    
-    // return warning about progress loss
-    if (lossDetected) {
-      return 'Your progress will be lost. Do you want to continue?';
+
+      // check if progress has been made in the following quizzes
+      else if (/multi-quiz|drag-quiz|kana-quiz/.test(type) && Genki.stats.solved > 0) {
+        lossDetected = true;
+      }
+
+      // return warning about progress loss
+      if (lossDetected) {
+        return 'Your progress will be lost. Do you want to continue?';
+      }
     }
   };
   

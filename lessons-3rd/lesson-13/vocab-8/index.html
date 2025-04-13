@@ -33,6 +33,19 @@
       <a id="fork-me" href="https://github.com/SethClydesdale/genki-study-resources">Fork Me</a>
     </header>
     
+    <div id="announcement">
+      <div id="announce-inner">
+        <h3><i class="fa">&#xf0a1;</i> News and Info</h3>
+        <div id="announce-list">
+          <div id="announcement-controls" style="display:none;">
+            <button class="button announce-controls button-left" onclick="GenkiAnn.next(-1, true);"><i class="fa">&#xf060;</i></button>
+            <button class="button announce-controls button-right" onclick="GenkiAnn.next(+1, true);"><i class="fa">&#xf061;</i></button>
+          </div>
+          <noscript><div class="announcement">Please enable JavaScript to get the latest news and info.</div></noscript>
+        </div>
+      </div>
+    </div>
+    
     <div id="content">
       <div id="exercise" class="content-block">
         <div id="quiz-result"></div>
@@ -66,12 +79,12 @@
       info : [Genki.lang.std_drag, Genki.lang.vocab_multi, Genki.lang.vocab_writing, Genki.lang.vocab_fill],
       
       quizlet : {
-        '口座を開きたいんですが。|こうざをひらきたいんですが。' : 'Je voudrais ouvrir un compte.',
-        '口座を閉じたいんですが。|こうざをとじたいんですが。' : 'Je voudrais fermer un compte.',
-        'ドルを円にかえてください。|ドルを円にかえてください。' : 'Veuillez changer les dollars en yens.',
-        '口座にお金を振り込みたいんですが。|こうざにおかねをふりこみたいんですが。' : 'Je voudrais déposer de l\'argent sur mon compte.',
-        '一万円札を千円札十枚に両替できますか。|いちまんえんさつをせんえんさつじゅうまいにりょうがえできますか。' : 'Pouvez-vous échanger un billet de 10 000 yens contre dix billets de 1 000 yens ?',
-        'お金をおろします。|おかねをおろします。' : 'Je vais retirer de l\'argent.',
+        '口座を開きたいんですが。|こうざをひらきたいんですが。' : 'I would like to open an account.',
+        '口座を閉じたいんですが。|こうざをとじたいんですが。' : 'I would like to close an account.',
+        'ドルを円にかえてください。|ドルをえんにかえてください。' : 'Please change dollars into yen.',
+        '口座にお金を振り込みたいんですが。|こうざにおかねをふりこみたいんですが。' : 'I would like to deposit money into the account.',
+        '一万円札を千円札十枚に両替できますか。|いちまんえんさつをせんえんさつじゅうまいにりょうがえできますか。' : 'Can you change a 10,000-yen bill into ten 1,000-yen bills?',
+        'お金をおろします。|おかねをおろします。' : 'I will withdraw money.'
       }
     });</script>
   </body>
