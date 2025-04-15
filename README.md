@@ -2,7 +2,7 @@
 
 Vous pouvez faire un don à Seth Clydesdale [ici](https://sethclydesdale.github.io/genki-study-resources/donate/).
 
-L'objectif de ce projet, initié par [Damien Baudet]( est de traduire les exercices en français, et de les rendre accessibles à un public francophone. Pour plus de détails sur la localisation, l'avancé de ce projet et la façon dont vous pouvez y contribuer, merci de consulter [ce document](TRANSLATION_FR.md) Vous pouvez également participer à la discussion sur le sujet [ici](https://github.com/SethClydesdale/genki-study-resources/discussions/160)
+L'objectif de ce projet, initié par [Damien Baudet](https://github.com/damienBAUDET/genki-study-resources-fr) est de traduire les exercices en français, et de les rendre accessibles à un public francophone. Pour plus de détails sur la localisation, l'avancé de ce projet et la façon dont vous pouvez y contribuer, merci de consulter [ce document](TRANSLATION_FR.md) Vous pouvez également participer à la discussion sur le sujet [ici](https://github.com/SethClydesdale/genki-study-resources/discussions/160).
 
 # Ressources d'études pour Genki
 Ressources d'études pour Genki est un site web qui offre une vaste collection d'exercices pour pratiquer ce qui est enseigné dans [Genki: An Integrated Course in Elementary Japanese](http://genki.japantimes.co.jp/index_en). Il a été principalement créé pour aider à l'auto-apprentissage, et vous pouvez donc l'utiliser en ligne ou hors ligne selon vos besoins. Choisissez l'un des liens ci-dessous pour commencer à tester le japonais que vous avez appris dans Genki !
