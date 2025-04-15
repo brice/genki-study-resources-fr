@@ -2,12 +2,12 @@
 
 Vous pouvez faire un don à Seth Clydesdale [ici](https://sethclydesdale.github.io/genki-study-resources/donate/).
 
-Mon objectif est de traduire les exercices en français, et de les rendre accessibles à un public francophone. Si vous souhaitez contribuer à la traduction, n'hésitez pas à ouvrir une issue ou à me contacter.
+L'objectif de ce projet, initié par [Damien Baudet]( est de traduire les exercices en français, et de les rendre accessibles à un public francophone. Pour plus de détails sur la localisation, l'avancé de ce projet et la façon dont vous pouvez y contribuer, merci de consulter [ce document](TRANSLATION_FR.md) Vous pouvez également participer à la discussion sur le sujet [ici](https://github.com/SethClydesdale/genki-study-resources/discussions/160)
 
-# Genki Study Resources
-Genki Study Resources est un site web qui offre une vaste collection d'exercices pour pratiquer ce qui est enseigné dans [Genki: An Integrated Course in Elementary Japanese](http://genki.japantimes.co.jp/index_en). Il a été principalement créé pour aider à l'auto-apprentissage, et vous pouvez donc l'utiliser en ligne ou hors ligne selon vos besoins. Choisissez l'un des liens ci-dessous pour commencer à tester le japonais que vous avez appris dans Genki !
+# Ressources d'études pour Genki
+Ressources d'études pour Genki est un site web qui offre une vaste collection d'exercices pour pratiquer ce qui est enseigné dans [Genki: An Integrated Course in Elementary Japanese](http://genki.japantimes.co.jp/index_en). Il a été principalement créé pour aider à l'auto-apprentissage, et vous pouvez donc l'utiliser en ligne ou hors ligne selon vos besoins. Choisissez l'un des liens ci-dessous pour commencer à tester le japonais que vous avez appris dans Genki !
 
-**Version en ligne :** [2ème édition](https://sethclydesdale.github.io/genki-study-resources/) | [3ème édition](https://sethclydesdale.github.io/genki-study-resources/lessons-3rd/)
+**Version en ligne :** [2ème édition (en)](https://sethclydesdale.github.io/genki-study-resources/) | [3ème édition(fr)](https://brice.github.io/genki-study-resources-fr/lessons-3rd/)
 
 **Version hors ligne :** [télécharger](https://github.com/SethClydesdale/genki-study-resources/archive/master.zip)
 
@@ -69,7 +69,7 @@ Si vous avez des suggestions, des commentaires, des questions ou des bugs à sig
 
 ### Ressources pour étudier le japonais
 
-##### Tools
+##### Tools (en)
 - [Anki - SRS Flashcard App](https://apps.ankiweb.net/) (great for memorizing vocab; you can find decks for Genki [here](https://sethclydesdale.github.io/genki-study-resources/help/anki-decks/))
 - [Jisho - Online Japanese Dictionary](http://jisho.org/) (extremely useful for looking up words, kanji, etc.)
 - [Jotoba - Japanese Dictionary website](https://jotoba.de/) (another very useful dictionary with search suggestions, pitch accent support and many other helpful features for learning Japanese)
@@ -78,6 +78,19 @@ Si vous avez des suggestions, des commentaires, des questions ou des bugs à sig
 - [KanjiTomo](https://www.kanjitomo.net/) (useful for reading manga, LNs, etc.)
 - [Genki xlsx Vocab Lists](https://github.com/SethClydesdale/genki-study-resources/tree/master/resources/tools/wordlist_E-J) (these are based on the vocab in Genki/on the site -- useful for printing out/using as a quick reference)
 - [Useful Tools List](https://sethclydesdale.github.io/genki-study-resources/help/japanese-guide/#tools) (more in-depth list of tools for Japanese study)
+
+### Outils 
+
+- [Anki - Application de cartes mémoire SRS](https://apps.ankiweb.net/) (excellent pour mémoriser le vocabulaire ; vous pouvez trouver des decks pour Genki [ici](https://sethclydesdale.github.io/genki-study-resources/help/anki-decks/))
+- [Jisho - Dictionnaire japonais en ligne](http://jisho.org/) (extrêmement utile pour chercher des mots, des kanjis, etc.)
+- [Jotoba - Site de dictionnaire japonais](https://jotoba.de/) (un autre dictionnaire très utile avec des suggestions de recherche, un support pour l'accentuation tonale et de nombreuses autres fonctionnalités utiles pour apprendre le japonais)
+- [Dictionnaire de grammaire japonaise](https://core6000.neocities.org/dojg/) (indispensable pour chercher rapidement des points de grammaire)
+- [Référence maîtresse de la grammaire de Itazuraneko](https://kenrick95.github.io/itazuraneko/grammar/masterreference) (une autre excellente ressource pour chercher des points de grammaire)
+- [Capture2Text](http://capture2text.sourceforge.net/) (très utile pour copier et chercher des kanjis dans les jeux, images, etc.)
+- [Yomichan](https://foosoft.net/projects/yomichan/) (pour chercher rapidement des mots pendant la lecture, ou pour utiliser la page de recherche en tandem avec Capture2Text)
+- [KanjiTomo](https://www.kanjitomo.net/) (utile pour lire des mangas, LN, etc.)
+- [Listes de vocabulaire Genki xlsx](https://github.com/SethClydesdale/genki-study-resources/tree/master/resources/tools/wordlist_E-J) (basées sur le vocabulaire dans Genki/sur le site -- utile pour imprimer/à utiliser comme référence rapide)
+- [Liste d'outils utiles](https://sethclydesdale.github.io/genki-study-resources/help/japanese-guide/#tools) (liste plus détaillée d'outils pour l'étude du japonais)
 
 ##### Sites web
 - [Salle d'auto-apprentissage Genki](https://genki3.japantimes.co.jp/en/student/) | [Genki Online](https://genki3.japantimes.co.jp/) (sites/références officiels de Genki)
