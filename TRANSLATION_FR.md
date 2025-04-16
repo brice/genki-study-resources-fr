@@ -13,31 +13,32 @@ Cette traduction est ouverte aux contributions. Vous trouverez, dans le chapitre
 * [X] Fork du [projet de Damien Baudet](https://github.com/damienBAUDET/genki-study-resources-fr)
 * [X] Intégration des modifications commités depuis le fork.
 * [ ] Traduction de la troisième édition (en cours)
-  * [ ] Study Guide/Guide d'étude (en cours)
-  * [ ] Lesson 0: Writing System, Greetings, and Numbers
-  * [ ] Lesson 1: New Friends
-  * [ ] Lesson 2: Shopping
-  * [ ] Lesson 3: Making a Date
-  * [ ] Lesson 4: The First Date
-  * [ ] Lesson 5: A Trip to Okinawa
-  * [ ] Lesson 6: A Day in Robert's Life
-  * [ ] Lesson 7: Family Picture
-  * [ ] Lesson 8: Barbecue
-  * [ ] Lesson 9: Kabuki
-  * [ ] Lesson 10: Winter Vacation Plans
-  * [ ] Lesson 11: After the Vacation
-  * [ ] Lesson 12: Feeling Ill
-  * [ ] Lesson 13: Looking for a Part-time Job
-  * [ ] Lesson 14: Valentine's Day
-  * [ ] Lesson 15: A Trip to Nagano
-  * [ ] Lesson 16: Lost and Found
-  * [ ] Lesson 17: Grumble and Gossip
-  * [ ] Lesson 18: John's Part-time Job
-  * [ ] Lesson 19: Meeting the Boss
-  * [ ] Lesson 20: Mary Goes Shopping
-  * [ ] Lesson 21: Burglar
-  * [ ] Lesson 22: Education in Japan
-  * [ ] Lesson 23: Good-bye
+  * [ ] Study Guide/Guide d'étude [(en cours)](https://github.com/brice/genki-study-resources-fr/pull/1)
+  * [ ] Mémorisation du vocabulaire 
+  * [ ] Leçon 0: Writing System, Greetings, and Numbers
+  * [ ] Leçon 1: New Friends
+  * [ ] Leçon 2: Shopping
+  * [ ] Leçon 3: Making a Date
+  * [ ] Leçon 4: The First Date
+  * [ ] Leçon 5: A Trip to Okinawa
+  * [ ] Leçon 6: A Day in Robert's Life
+  * [ ] Leçon 7: Family Picture
+  * [ ] Leçon 8: Barbecue
+  * [ ] Leçon 9: Kabuki
+  * [ ] Leçon 10: Winter Vacation Plans
+  * [ ] Leçon 11: After the Vacation
+  * [ ] Leçon 12: Feeling Ill
+  * [ ] Leçon 13: Looking for a Part-time Job
+  * [ ] Leçon 14: Valentine's Day
+  * [ ] Leçon 15: A Trip to Nagano
+  * [ ] Leçon 16: Lost and Found
+  * [ ] Leçon 17: Grumble and Gossip
+  * [ ] Leçon 18: John's Part-time Job
+  * [ ] Leçon 19: Meeting the Boss
+  * [ ] Leçon 20: Mary Goes Shopping
+  * [ ] Leçon 21: Burglar
+  * [ ] Leçon 22: Education in Japan
+  * [ ] Leçon 23: Good-bye
   * [ ] Appendix
   * [ ] Study Tools
 * [ ] Autres ressources : scripts, deck anki... (A l'étude)
