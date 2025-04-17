@@ -12,9 +12,12 @@ Cette traduction est ouverte aux contributions. Vous trouverez, dans le chapitre
 
 * [X] Fork du [projet de Damien Baudet](https://github.com/damienBAUDET/genki-study-resources-fr)
 * [X] Intégration des modifications commités depuis le fork.
+* [X] Study Guide/Guide d'étude (à relire)
+* [ ] Comment taper en Japonais
+* [ ] Page d'aides
 * [ ] Traduction de la troisième édition (en cours)
-  * [ ] Study Guide/Guide d'étude [(en cours)](https://github.com/brice/genki-study-resources-fr/pull/1)
-  * [ ] Mémorisation du vocabulaire 
+  * [ ] Mémorisation du vocabulaire
+  * [ ] Page 
   * [ ] Leçon 0: Writing System, Greetings, and Numbers
   * [ ] Leçon 1: New Friends
   * [ ] Leçon 2: Shopping
@@ -44,9 +47,8 @@ Cette traduction est ouverte aux contributions. Vous trouverez, dans le chapitre
 * [ ] Autres ressources : scripts, deck anki... (A l'étude)
 * [ ] Traduction de la deuxième édition (en attente de contribution)
 
-
 ## Termes courants 
 
 Retrouver ici des termes propre au guide pour assurer une cohérence entre les pages.
 
-- Study Guide Resources : Documentation du guide d'études  
+- Study Guide Resources : Ressources pédagogiques Genki
