@@ -12,7 +12,7 @@ Cette traduction est ouverte aux contributions. Vous trouverez, dans le chapitre
 
 * [X] Fork du [projet de Damien Baudet](https://github.com/damienBAUDET/genki-study-resources-fr)
 * [X] Intégration des modifications commités depuis le fork.
-* [X] Study Guide/Guide d'étude (à relire)
+* [X] Guide d'étude (à relire)
 * [ ] Comment taper en Japonais
 * [ ] Page d'aides
 * [ ] Traduction de la troisième édition (en cours)
@@ -21,8 +21,8 @@ Cette traduction est ouverte aux contributions. Vous trouverez, dans le chapitre
   * [ ] Leçon 0: Writing System, Greetings, and Numbers
   * [ ] Leçon 1: New Friends
   * [ ] Leçon 2: Shopping
-  * [ ] Leçon 3: Making a Date
-  * [ ] Leçon 4: The First Date
+  * [ ] Leçon 3: Rendez-vous amoureux [(en cours)](https://github.com/brice/genki-study-resources-fr/pull/3) 
+  * [ ] Leçon 4: Le premier rendez-vous
   * [ ] Leçon 5: A Trip to Okinawa
   * [ ] Leçon 6: A Day in Robert's Life
   * [ ] Leçon 7: Family Picture
