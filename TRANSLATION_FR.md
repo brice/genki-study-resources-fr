@@ -12,9 +12,11 @@ Cette traduction est ouverte aux contributions. Vous trouverez, dans le chapitre
 
 * [X] Fork du [projet de Damien Baudet](https://github.com/damienBAUDET/genki-study-resources-fr)
 * [X] Intégration des modifications commités depuis le fork.
-* [X] Guide d'étude (à relire)
+* [ ] Aide (en cours)
+  * [X] [Guide d'étude](https://brice.github.io/genki-study-resources-fr/help/study-guide/) (à relire)
+  * [ ] Astuces de mémorisation du vocabulaire (en cours)
+  * [ ] Autres
 * [ ] Comment taper en Japonais
-* [ ] Page d'aides
 * [ ] Traduction de la troisième édition (en cours)
   * [ ] Mémorisation du vocabulaire
   * [ ] Page 
