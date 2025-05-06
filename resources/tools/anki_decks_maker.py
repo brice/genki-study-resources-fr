@@ -126,7 +126,7 @@ ruby:hover rt {
 }""")
 
     combined_deck = genanki.Deck(
-        1810167044,  # Random hardcoded id
+        1443802639,  # Random hardcoded id
         f'Genki')
     combined_deck.add_model(my_model)
 
@@ -135,7 +135,7 @@ ruby:hover rt {
                                 key=lambda path: lesson_sort_key(path.name)):
         lesson_number = lesson_folder.name.split('-')[-1]
         my_deck = genanki.Deck(
-            1810167044 + int(lesson_number),  # Random hardcoded id
+            1443802639 + int(lesson_number),  # Random hardcoded id
             f'Genki FR L{lesson_number}')
         my_deck.add_model(my_model)
         decks.append(my_deck)
