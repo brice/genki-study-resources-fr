@@ -54,6 +54,7 @@ Raccourcis qui peuvent être utilisés n'importe où.
 | -------- | ----------- |
 | <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>D</kbd> | Activer/désactiver le mode sombre |
 | <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>M</kbd> | Ouvrir le gestionnaire de paramètres |
+| <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>L</kbd> | Toggle interface language between English and Japanese |
 
 #### Exercices
 Raccourcis qui peuvent uniquement être utilisés dans les exercices.
@@ -92,7 +93,7 @@ Si vous avez des suggestions, des commentaires, des questions ou des bugs à sig
 - [Genki xlsx Vocab Lists](https://github.com/SethClydesdale/genki-study-resources/tree/master/resources/tools/wordlist_E-J) (these are based on the vocab in Genki/on the site -- useful for printing out/using as a quick reference)
 - [Useful Tools List](https://sethclydesdale.github.io/genki-study-resources/help/japanese-guide/#tools) (more in-depth list of tools for Japanese study)
 
-### Outils 
+### Outils
 - [Anki - Application de cartes mémoire SRS](https://apps.ankiweb.net/) (excellent pour mémoriser le vocabulaire ; vous pouvez trouver des decks pour Genki [ici](https://sethclydesdale.github.io/genki-study-resources/help/anki-decks/))
 - [Jisho - Dictionnaire japonais en ligne](http://jisho.org/) (extrêmement utile pour chercher des mots, des kanjis, etc.)
 - [Jotoba - Site de dictionnaire japonais](https://jotoba.de/) (un autre dictionnaire très utile avec des suggestions de recherche, un support pour l'accentuation tonale et de nombreuses autres fonctionnalités utiles pour apprendre le japonais)
