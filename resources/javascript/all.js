@@ -22,6 +22,16 @@
       // edition: [OPTIONAL] restricts the announcement to a specific edition, possible values are: 3rd || 2nd, announcements are global by default
       msg : [
         {
+          date : '5/22/25',
+          content : "From today on, I will be streaming the development progress of Quartet Study Resources on Twitch each day to share the process of building these websites. <a href=\"https://ko-fi.com/post/About-Development-Streams-Z8Z61FDRV3\" target=\"_blank\">Click here</a> for more information, such as my schedule."
+        },
+        
+        {
+          date : '5/13/25',
+          content : "You can now choose what exercises you want to practice for the Random Exercise Button via the settings manager! <a href=\"https://ko-fi.com/post/New-Custom-Random-Exercise-Range-for-GenkiTobira-U6U41EXQ3G\" target=\"_blank\">Click here</a> to learn more about this new setting."
+        },
+        
+        {
           date : '5/9/25',
           content : "You can now change the interface language of the website to 日本語 via the settings manager! <a href=\"https://ko-fi.com/post/New-Language-Option-for-GenkiTobira-A0A41EQV3C\" target=\"_blank\">Click here</a> to learn more about this new setting."
         },
@@ -158,6 +168,53 @@
           if (GenkiAnn.rotation) {
             GenkiAnn.rotate();
           }
+        }
+        
+        // Live Stream announcement (only shows when stream is active)
+        if (window.location.protocol != 'file:') {
+          window.onload = function () {
+            var script = document.createElement('SCRIPT'),
+                stream = document.createElement('DIV');
+
+            stream.id = 'stream';
+            stream.style.display = 'none';
+
+            script.src = 'https://player.twitch.tv/js/embed/v1.js';
+            script.async = true;
+            script.onload = function () {
+              var options = {
+                width: 300,
+                height: 300,
+                channel: "sethc95",
+                parent: ["sethclydesdale.github.io"],
+                muted: true,
+                autoplay: false
+              };
+
+              var player = new Twitch.Player("stream", options);
+
+              // offline; do nothing except kill the iframe
+              player.addEventListener(Twitch.Player.OFFLINE, function () {
+                stream.querySelector('iframe').src = 'about:blank';
+              });
+
+              // online; show live stream announcement and kill the iframe
+              player.addEventListener(Twitch.Player.ONLINE, function () {
+                stream.querySelector('iframe').src = 'about:blank';
+                document.querySelector('.announcement:not(.announce-hidden)').className += ' announce-hidden';
+                GenkiAnn.list.insertAdjacentHTML('afterBegin',
+                  '<div class="announcement">'+
+                    '<span class="date"><span class="t-red" style="margin-right:1px;">●</span>LIVE</span>'+
+                    'Come hang out and watch the development progress of Quartet Study Resources on <a href="https://www.twitch.tv/sethc95" target="_blank">Twitch</a>.'+
+                  '</div>'
+                );
+                GenkiAnn.msg = document.querySelectorAll('.announcement');
+              });
+            };
+
+            document.body.appendChild(script);
+            document.body.appendChild(stream);
+          };
         }
       }
     };
