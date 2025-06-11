@@ -22,6 +22,11 @@
       // edition: [OPTIONAL] restricts the announcement to a specific edition, possible values are: 3rd || 2nd, announcements are global by default
       msg : [
         {
+          date : '6/6/25',
+          content : "Quartet Study Resources is now available! <a href=\"https://ko-fi.com/post/Quartet-Study-Resources-is-Now-Available-Y8Y61G3093\" target=\"_blank\">Click here</a> to learn more about this new Japanese practice website."
+        },
+        
+        {
           date : '5/22/25',
           content : "From today on, I will be streaming the development progress of Quartet Study Resources on Twitch each day to share the process of building these websites. <a href=\"https://ko-fi.com/post/About-Development-Streams-Z8Z61FDRV3\" target=\"_blank\">Click here</a> for more information, such as my schedule."
         },
@@ -172,7 +177,7 @@
         
         // Live Stream announcement (only shows when stream is active)
         if (window.location.protocol != 'file:') {
-          window.onload = function () {
+          window.addEventListener('load', function () {
             var script = document.createElement('SCRIPT'),
                 stream = document.createElement('DIV');
 
@@ -185,22 +190,25 @@
               var options = {
                 width: 300,
                 height: 300,
-                channel: "sethc95",
-                parent: ["sethclydesdale.github.io"],
+                channel: 'sethc95',
+                parent: ['sethclydesdale.github.io'],
                 muted: true,
                 autoplay: false
               };
 
-              var player = new Twitch.Player("stream", options);
+              var player = new Twitch.Player('stream', options);
 
               // offline; do nothing except kill the iframe
               player.addEventListener(Twitch.Player.OFFLINE, function () {
                 stream.querySelector('iframe').src = 'about:blank';
+                document.body.removeChild(stream);
               });
 
               // online; show live stream announcement and kill the iframe
               player.addEventListener(Twitch.Player.ONLINE, function () {
                 stream.querySelector('iframe').src = 'about:blank';
+                document.body.removeChild(stream);
+                
                 document.querySelector('.announcement:not(.announce-hidden)').className += ' announce-hidden';
                 GenkiAnn.list.insertAdjacentHTML('afterBegin',
                   '<div class="announcement">'+
@@ -212,9 +220,9 @@
               });
             };
 
-            document.body.appendChild(script);
+            document.head.appendChild(script);
             document.body.appendChild(stream);
-          };
+          });
         }
       }
     };
