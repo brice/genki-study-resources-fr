@@ -226,11 +226,12 @@
 
           '<li>'+
             '<span class="label">'+
-              '<span class="en">Interface Language:</span><span class="ja">引用仕様の言語：</span>'+
-              '<span class="desc"><small class="en">Changes the language of buttons, popups, etc. on the website. Try changing the language to 日本語 for some extra immersion!</small><small class="ja">ボタン、ポップアップなどの言語が変更できます。</small></span>'+
+              '<span class="en">Interface Language:</span><span class="fr">Langue de l\'interface:</span><span class="ja">引用仕様の言語：</span>'+
+              '<span class="desc"><small class="en">Changes the language of buttons, popups, etc. on the website. Try changing the language to 日本語 for some extra immersion!</small><small class="fr">Change la langue des boutons, popups, etc. sur le site web. Essayer de changer la langue en 日本語 pour plus d\'immersion!</small><small class="ja">ボタン、ポップアップなどの言語が変更できます。</small></span>'+
             '</span>'+
             '<select id="settings-lang" onchange="GenkiSettings.updateLang(this);">'+
               '<option value="en"' + ( genkiLang == 'en' ? ' selected' : '' ) + '>English</option>'+
+              '<option value="fr"' + ( genkiLang == 'fr' ? ' selected' : '' ) + '>Français</option>'+
               '<option value="ja"' + ( genkiLang == 'ja' ? ' selected' : '' ) + '>日本語</option>'+
             '</select>'+
           '</li>'+
