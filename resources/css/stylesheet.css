@@ -861,7 +861,7 @@ a.jump-arrow:hover, a.jump-arrow:focus { color:#C60; }
 }
 
 .lesson-summary:before {
-  content:"In this lesson, we will learn how to...";
+  content:"Dans cette leçon, nous allons...";
   font-weight:bold;
   color:#F93;
 }
@@ -992,7 +992,7 @@ footer li:first-child:before { display:none; }
 /* timer styles */
 #quiz-timer, #check-answers, #change-exercise-type-container { margin-top:10px; }
 #quiz-timer:before {
-  content:"Time Elapsed";
+  content:"Temps écoulé";
   display:block;
 }
 .lang-ja #quiz-timer:before { content:"かかった時間"; }

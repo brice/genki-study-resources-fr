@@ -1,10 +1,10 @@
 // # FUNCTIONALITY FOR EXERCISES #
 (function (window, document) {
   'use strict';
-  
+
   // primary object for functionality of Genki exercises
   var Genki = {
-    
+
     // exercise statistics
     stats : {
       problems : 0, // number of problems to solve in the lesson
@@ -13,130 +13,130 @@
          score : 0, // the student's score
        exclude : 0  // answers to exclude, mostly for text-only segments in multi-choice quizzes
     },
-    
+
     canNotify : 'Notification' in window,
-    
+
     // checks if touchscreen controls
     isTouch : 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0,
     isTouching : false,
 
     // tells us if timer is paused by popup
     isTimerPausedByPopup: false,
-    
+
     // tells us the student's preferred feedback mode for multi-choice quizzes (instant || classic)
     feedbackMode : storageOK && localStorage.feedbackMode ? localStorage.feedbackMode : 'classic',
-    
+
     // counter for displaying the data backup reminder
     dataBackupReminderCount : storageOK && localStorage.dataBackupReminderCount ? +localStorage.dataBackupReminderCount : 0,
-    
+
     // tells us if text selection mode is enabled (for multi-choice quizzes)
     textSelectMode : false,
-    
+
     // tells us if stroke numbers are visible (for stroke order exercises)
     strokeNumberDisplay : false,
 
     // tells us if a quiz item is marked in a drag and drop quiz
     markedItem : null,
-    
+
     // tells us what edition of Genki the student is using so we can change the URLs accordingly
     ed : 'lessons' + (/lessons-3rd/.test(window.location.pathname) ? '-3rd' : ''),
-    
+
     // tells us if Genki is being used on a local file system so we can append index.html to URLs
     local : window.location.protocol == 'file:' ? 'index.html' : '',
-    
+
     // tells us if debug mode is active so we can append ?debug to exercise URLs
     debug : /debug/.test(window.location.search) ? '?debug' : '',
 
     // frequently used/generic strings
     lang : {
-      std_drag : '<span class="en">Drag the English expression to the Japanese expression that has the same meaning.<br>TIP: Click an expression to mark it, then click an empty field to drop the answer there.</span><span class="ja">英語の言葉を同じ意味を持つ日本語の言葉にドラッグしなさい。<br>ヒント：言葉をクリックすると選択になります。空のフィールドをクリックすると選択した言葉をドロップします。</span>',
-      std_kana : '<span class="en">Drag the Kana to the matching Romaji.<br>TIP: Click the kana to mark it, then click an empty field to drop the answer there.</span><span class="ja">仮名をローマ字にドラッグしなさい。<br>ヒント：言葉をクリックすると選択になります。空のフィールドをクリックすると選択した言葉をドロップします。</span>',
-      std_num : '<span class="en">Drag the Numbers to the matching Kana.<br>TIP: Click a number to mark it, then click an empty field to drop the answer there.</span><span class="ja">数を仮名にドラッグしなさい。<br>ヒント：言葉をクリックすると選択になります。空のフィールドをクリックすると選択した言葉をドロップします。</span>',
+      std_drag : '<span class="fr">Faites glisser l\'expression anglaise vers l\'expression japonaise qui a la même signification.<br>CONSEIL : Cliquez sur une expression pour la marquer, puis cliquez sur un champ vide pour déposer la réponse.</span><span class="ja">英語の言葉を同じ意味を持つ日本語の言葉にドラッグしなさい。<br>ヒント：言葉をクリックすると選択になります。空のフィールドをクリックすると選択した言葉をドロップします。</span>',
+      std_kana : '<span class="fr">Faites glisser le Kana vers le Romaji correspondant.<br>CONSEIL : Cliquez sur le kana pour le marquer, puis cliquez sur un champ vide pour déposer la réponse.</span><span class="ja">仮名をローマ字にドラッグしなさい。<br>ヒント：言葉をクリックすると選択になります。空のフィールドをクリックすると選択した言葉をドロップします。</span>',
+      std_num : '<span class="fr">Faites glisser les chiffres vers le Kana correspondant.<br>CONSEIL : Cliquez sur un chiffre pour le marquer, puis cliquez sur un champ vide pour déposer la réponse.</span><span class="ja">数を仮名にドラッグしなさい。<br>ヒント：言葉をクリックすると選択になります。空のフィールドをクリックすると選択した言葉をドロップします。</span>',
       std_multi : '<span class="en">Solve the problems by choosing the correct answers.</span><span class="ja">正解の答えを選択しなさい。</span>',
-      std_questions : '<span class="en">Answer the questions as best as you can.</span><span class="ja">質問に答えなさい。</span>',
-      std_written : '<span class="en">Complete the following problems.</span><span class="ja">次の質問に答えなさい。</span>',
-      std_culture : '<span class="en">Answer the questions about Japanese culture as best as you can.</span><span class="ja">日本の文化について質問に答えなさい。</span>',
-      std_stroke_order : '<span class="en">Practice drawing each kanji by following the stroke order.</span><span class="ja">それぞれの漢字の書き順を練習しなさい。</span>',
-      std_drawing : '<span class="en">Practice drawing the following kanji multiple times.</span><span class="ja">それぞれの漢字を何度も書きなさい。</span>',
-      
+      std_questions : '<span class="fr">Résolvez les problèmes en choisissant les bonnes réponses.</span><span class="ja">問題を答えなさい。</span>',
+      std_written : '<span class="en">Complete the following problems.</span><span class="ja">次の問題を解きなさい。</span>',
+      std_culture : '<span class="fr">Répondez aux questions sur la culture japonaise du mieux que vous pouvez.</span><span class="ja">日本の文化について問題を答えなさい。</span>',
+      std_stroke_order : '<span class="fr">Entraînez-vous à dessiner chaque kanji en suivant l\'ordre des traits.</span><span class="ja">それぞれの漢字の書き順を練習しなさい。</span>',
+      std_drawing : '<span class="en">Entraînez-vous à dessiner les kanji suivants plusieurs fois.</span><span class="ja">それぞれの漢字を何度も書きなさい。</span>',
+
       // additional vocab info
-      vocab_multi : '<span class="en">Choose the correct definition for each Japanese expression.</span><span class="ja">それぞれの言葉の正解の定義を選択しなさい。</span>',
-      vocab_writing : '<span class="en">Practice spelling the following words/expressions.</span><span class="ja">それぞれの言葉を何度も書きなさい。</span>',
-      vocab_fill : '<span class="en">Write the Japanese definition for the following words/expressions.</span><span class="ja">日本語でそれぞれの言葉の定義を書きなさい。</span>',
+      vocab_multi : 'Choisissez la définition correcte pour chaque expression japonaise.',
+      vocab_writing : 'Entraînez-vous à épeler les mots/expressions suivants.',
+      vocab_fill : 'Écrivez la définition japonaise des mots/expressions suivants.',
 
       // additional kana info
-      kana_multi : '<span class="en">Choose the correct Romaji for the %{KANA}.</span><span class="ja">%{KANA}のローマ字を選択しなさい。</span>',
-      kana_writing : '<span class="en">Practice writing the following %{KANA}.</span><span class="ja">%{KANA}を書きなさい。</span>',
-      kana_fill : '<span class="en">Complete the chart by filling in the Romaji.</span><span class="ja">チャートでローマ字を書き込みなさい。</span>',
+      kana_multi : 'Choisissez le Romaji correct pour le %{KANA}.',
+      kana_writing : 'Entraînez-vous à écrire le %{KANA} suivant.',
+      kana_fill : 'Complétez le tableau en remplissant le Romaji.',
 
       // addition number info
-      num_multi : '<span class="en">Read the Japanese and choose the correct numbers.</span><span class="ja">日本語を読んで正解の数を選択しなさい。</span>',
-      num_writing : '<span class="en">Practice spelling the following numbers.</span><span class="ja">それぞれの数を書きなさい。</span>',
-      num_fill : '<span class="en">Write the following numbers in Japanese (hiragana).</span><span class="ja">平仮名でそれぞれの数を書きなさい。</span>',
-      
-      kanji_readings_multi : '<span class="en">Choose the correct readings for each kanji.</span><span class="ja">それぞれの漢字の正解の読み方を選択しなさい。</span>',
-      kanji_readings_drag : '<span class="en">Match each kanji with their readings.</span><span class="ja">それぞれの漢字を正解の読み方に合わせなさい。</span>',
-      kanji_yomikata : '</div><p class="text-block en" style="margin:10px 0;">▶ indicates the <em>on-yomi</em> (pronunciation originally borrowed from Chinese).<br>▷ indicates the <em>kun-yomi</em> (native Japanese reading).</p><p class="text-block ja" style="margin:10px 0;">「▶」は音読み（中国の読み方）<br>「▷」は訓読み（日本の読み方）</p>',
+      num_multi : 'Lisez le japonais et choisissez les bons chiffres.',
+      num_writing : 'Entraînez-vous à épeler les chiffres suivants.',
+      num_fill : 'Écrivez les chiffres suivants en japonais (hiragana).',
 
-      kanji_meanings_multi : '<span class="en">Choose the correct meanings for each kanji.</span><span class="ja">それぞれの漢字の正解の意味を選択しなさい。</span>',
-      kanji_meanings_drag : '<span class="en">Match each kanji with their meanings.</span><span class="ja">それぞれの漢字を正解の意味に合わせなさい。</span>',
-      
+      kanji_readings_multi : 'Choisissez les lectures correctes pour chaque kanji.',
+      kanji_readings_drag : 'Associez chaque kanji à ses lectures.',
+      kanji_yomikata : '</div><p class="text-block" style="margin:10px 0;">▶ indique le <em>on-yomi</em> (prononciation empruntée à l\'origine du chinois).<br>▷ indique le <em>kun-yomi</em> (lecture japonaise native).</p>',
+
+      kanji_meanings_multi : 'Choisissez les significations correctes pour chaque kanji.',
+      kanji_meanings_drag : 'Associez chaque kanji à ses significations.',
+
       // options for exercise variations
       opts : {
         kana : {
-          kana : 'Drag and Drop',
-          multi : 'Multiple Choice',
-          writing : 'Writing Practice',
-          fill : 'Fill in the Chart'
+          kana : 'Glisser-Déposer',
+          multi : 'Choix Multiple',
+          writing : 'Pratique d\'Écriture',
+          fill : 'Compléter le Tableau'
         },
-        
+
         numbers : {
-          drag : 'Drag and Drop',
-          multi : 'Multiple Choice',
-          writing : 'Spelling Practice',
-          fill : 'Write the Numbers'
+          drag : 'Glisser-Déposer',
+          multi : 'Choix Multiple',
+          writing : 'Pratique d\'Orthographe',
+          fill : 'Écrire les Chiffres'
         },
-        
+
         kanji : {
-          multi : 'Multiple Choice',
-          drag : 'Drag and Drop'
+          multi : 'Choix Multiple',
+          drag : 'Glisser-Déposer'
         },
-        
+
         vocab : {
-          drag : 'Drag and Drop',
-          multi : 'Multiple Choice',
-          writing : 'Spelling Practice',
-          fill : 'Write the Definition'
+          drag : 'Glisser-Déposer',
+          multi : 'Choix Multiple',
+          writing : 'Pratique d\'Orthographe',
+          fill : 'Écrire la Définition'
         },
-        
+
         practice : {
-          multi : 'Multiple Choice',
-          fill : 'Written',
-          drag : 'Drag and Drop'
+          multi : 'Choix Multiple',
+          fill : 'Écrit',
+          drag : 'Glisser-Déposer'
         },
-        
+
         hirakata : {
-          fill : 'Written',
-          stroke : 'Stroke Order Practice',
-          drawing : 'Drawing Practice'
+          fill : 'Écrit',
+          stroke : 'Pratique de l\'Ordre des Traits',
+          drawing : 'Pratique de Dessin'
         }
       },
-      
-      mistakes : '<span class="en">The items outlined in <span class="t-red t-bold">red</span> were answered wrong before finding the correct answer. Review these problems before trying again.</span><span class="ja"><span class="t-red t-bold">赤い</span>問題は不正確です。この問題を復習してやり直してください。</span>',
-      writing_mistakes : '<span class="en">The items outlined in <span class="t-red t-bold">red</span> were answered wrong. Review these problems before trying again.</span><span class="ja"><span class="t-red t-bold">赤い</span>問題は不正確です。この問題を復習してやり直してください。</span>',
-      multi_mistakes : '<span class="en">The answers you selected that were wrong are outlined in <span class="t-red t-bold">red</span>. The correct answers are outlined in <span class="t-blue t-bold">blue</span>. Review these problems before trying again.</span><span class="ja"><span class="t-red t-bold">赤い</span>問題は不正確で、正解の答えは<span class="t-blue t-bold">青い</span>です。この問題を復習してやり直してください。</span>',
-      stroke_mistakes : '<span class="en">The characters you drew that were wrong are outlined in <span class="t-red t-bold">red</span>. Please review the stroke order and number of strokes for these characters before trying again.</span><span class="ja"><span class="t-red t-bold">赤い</span>漢字は不正解です。書き順を復習してやり直してください。</span><br><br><b>Note:</b> Sometimes answers may be marked wrong by mistake, due to a mismatch in the recognition algorithm.<br>Please use your own discretion if this occurs.',
-      fill_mistakes : '<span class="en">The items underlined in <span class="t-red t-bold">red</span> were answered wrong, the correct answers are listed underneath in <span class="t-green t-bold">green</span>. Review these problems before trying again.</span><span class="ja"><span class="t-red t-bold">赤い</span>下線の問題は不正解で、正解の答えは<span class="t-green t-bold">緑色</span>で赤い下線の問題の下です。この問題を復習してやり直してください。</span>',
-      sub_answers : '<b>Note:</b> Answers inside <span class="t-blue t-bold">blue</span> parentheses separated by "<span class="alt-phrase-sep">/</span>" are a list of possible sub-answers; only one can be used.<br>For example.. <span class="t-green"><span class="alt-phrase">(</span>あの<span class="alt-phrase-sep">/</span>その<span class="alt-phrase">)</span>ねこ</span>: そのねこ or あのねこ <span class="t-green">(good)</span> vs あの/そのねこ <span class="t-red">(bad)</span><br><span class="t-green"><span class="alt-phrase">(</span>この<span class="alt-phrase-sep">/</span><span class="alt-phrase">)</span>ねこ</span> means the sub-answer is optional; it can be left out.',
-      
-      // buttons
-      // review button for drag/drop exercises
-      review : '<div id="review-exercise" class="center clearfix"><button id="review-button" class="button" onclick="Genki.review();"><i class="fa">&#xf02d;</i><span class="en">Review</span><span class="ja">復習する</span></button></div>',
-      // furigana toggle for vocab exercises
-      toggle_furigana : '<button id="toggle-furigana" class="button" onclick="Genki.toggle.furigana(this);"><i class="fa">&#xf2a8;</i><span class="en">' + ((storageOK && localStorage.furiganaVisible == 'false') ? 'Show' : 'Hide') + ' Furigana</span><span class="ja">振り仮名を' + ((storageOK && localStorage.furiganaVisible == 'false') ? '' : '非') + '表示する</span></button>',
-      // check answers button for written exercises
-      check_answers : '<div id="check-answers" class="center"><button id="check-answers-button" class="button" onclick="Genki.check.answers();"><i class="fa">&#xf00c;</i><span class="en">Check Answers</span><span class="ja">答え合わせをする</span></button></div>',
-      back_to_dict : '<button class="button" onclick="Genki.reset();"><i class="fa">&#xf021;</i><span class="en">Back to Dictionary</span><span class="ja">辞書に戻る</span></button>'
+
+      mistakes : 'Les éléments entourés en <span class="t-red t-bold">rouge</span> ont été mal répondus avant de trouver la bonne réponse. Revoyez ces problèmes avant d\'essayer à nouveau.',
+      writing_mistakes : 'Les éléments entourés en <span class="t-red t-bold">rouge</span> ont été mal répondus. Revoyez ces problèmes avant d\'essayer à nouveau.',
+      multi_mistakes : 'Les réponses que vous avez sélectionnées qui étaient incorrectes sont entourées en <span class="t-red t-bold">rouge</span>. Les réponses correctes sont entourées en <span class="t-blue t-bold">bleu</span>. Revoyez ces problèmes avant d\'essayer à nouveau.',
+      stroke_mistakes : 'Les caractères que vous avez dessinés incorrectement sont entourés en <span class="t-red t-bold">rouge</span>. Veuillez revoir l\'ordre des traits et le nombre de traits pour ces caractères avant d\'essayer à nouveau.<br><br><b>Remarque :</b> Parfois, les réponses peuvent être marquées comme incorrectes par erreur, en raison d\'un décalage dans l\'algorithme de reconnaissance.<br>Veuillez utiliser votre propre jugement si cela se produit.',
+      fill_mistakes : 'Les éléments soulignés en <span class="t-red t-bold">rouge</span> ont été mal répondus, les réponses correctes sont listées en dessous en <span class="t-green t-bold">vert</span>. Revoyez ces problèmes avant d\'essayer à nouveau.',
+      sub_answers : '<b>Remarque :</b> Les réponses entre parenthèses <span class="t-blue t-bold">bleues</span> séparées par "<span class="alt-phrase-sep">/</span>" sont une liste de sous-réponses possibles ; une seule peut être utilisée.<br>Par exemple.. <span class="t-green"><span class="alt-phrase">(</span>あの<span class="alt-phrase-sep">/</span>その<span class="alt-phrase">)</span>ねこ</span> : そのねこ ou あのねこ <span class="t-green">(bon)</span> contre あの/そのねこ <span class="t-red">(mauvais)</span><br><span class="t-green"><span class="alt-phrase">(</span>この<span class="alt-phrase-sep">/</span><span class="alt-phrase">)</span>ねこ</span> signifie que la sous-réponse est optionnelle ; elle peut être omise.',
+
+      // boutons
+      // bouton de révision pour les exercices de glisser-déposer
+      review : '<div id="review-exercise" class="center clearfix"><button id="review-button" class="button" onclick="Genki.review();"><i class="fa">&#xf02d;</i>Réviser</button></div>',
+      // bouton de bascule pour les furigana dans les exercices de vocabulaire
+      toggle_furigana : '<button id="toggle-furigana" class="button" onclick="Genki.toggle.furigana(this);"><i class="fa">&#xf2a8;</i>' + ((storageOK && localStorage.furiganaVisible == 'false') ? 'Afficher' : 'Masquer') + ' les Furigana</button>',
+      // bouton de vérification des réponses pour les exercices écrits
+      check_answers : '<div id="check-answers" class="center"><button id="check-answers-button" class="button" onclick="Genki.check.answers();"><i class="fa">&#xf00c;"></i>Vérifier les Réponses</button></div>',
+      back_to_dict : '<button class="button" onclick="Genki.reset();"><i class="fa">&#xf021;"></i>Retour au Dictionnaire</button>'
     },
 
     // info about the currently active exercise
@@ -146,7 +146,7 @@
       index : 0, // index where active.exercise is located
       path : window.location.pathname.replace(/.*?\/lessons.*?\/(.*?\/.*?)\/.*/g, '$1'), // current exercise path
     },
-    
+
     // exercise list
     exercises : window.GenkiExercises || null,
 
@@ -173,7 +173,7 @@
       }
     },
 
-    
+
     // quiz types
     // feel free to use as a reference for selecting types or within code as Genki.QuizType.TYPE
     QuizType : {
@@ -185,14 +185,14 @@
       STROKE: 'stroke',
       DRAWING: 'drawing'
     },
-    
+
     // To generate a quiz simply pass an object with the necessary data (see vocab-1/index.html and other quiz files for examples)
     generateQuiz : function (o) {
       // cache exercise data for resetting exercises
       if (!Genki.exerciseData && window.JSON) {
         Genki.exerciseData = JSON.stringify(o);
       }
-      
+
       /********************************
       ========# EXERCISE TYPES #=======
       *********************************
@@ -206,7 +206,7 @@
       ** 7. DRAWING PRACTICE         **
       *********************************/
       var zone = document.getElementById('quiz-zone'); // area where quizzes are inserted
-      
+
       // # 0. EXERCISE TYPE SELECTION #
       // mainly for exercises that provide multiple exercise variations
       // handles switching and conversion of exercises
@@ -216,19 +216,19 @@
         // `begin` or `start` may be used equally, whichever is preferred.
         var begin = /(?:begin|start)=\d/.test(window.location.search) ? window.location.search.replace(/.*?(?:begin|start)=(\d).*/, '$1') : false,
             i = 0, j = o.type.length, opts = '', modal;
-        
+
         // parse options
         for (; i < j; i++) {
           opts += '<option value="' + i + '"' + (begin !== false ? (i == begin ? ' selected' : '') : storageOK && localStorage['genki_pref_' + o.format] == o.type[i] ? ' selected' : '') + '>' + Genki.lang.opts[o.format][o.type[i]] + '</option>';
         }
-        
+
         // japanese language for exercise types
         if (GenkiLang == 'ja') {
           opts = opts.replace('Drag and Drop', 'ドラッグ＆ドロップ')
                      .replace('Multiple Choice', '選択式')
                      .replace('Writing Practice', '書き練習')
-                     .replace('Spelling Practice', 'スペルの練習') 
-                     .replace('Write the Definition', '言葉を書く') 
+                     .replace('Spelling Practice', 'スペルの練習')
+                     .replace('Write the Definition', '言葉を書く')
                      .replace('Written', '筆記テスト')
                      .replace('Stroke Order Practice', '書き順の練習')
                      .replace('Extended Drawing Practice', '連続の書き順の練習')
@@ -259,6 +259,7 @@
           '<div class="center">'+
             (/\/vocabulary-index\/|\/custom-vocab\//.test(window.location) ? '' : '<div>'+
               '<b><span class="en">Current Exercise</span><span class="ja">今の練習</span><span class="en">Exercice en cours</span></b><br>'+
+
               document.title.replace(/ \| Genki Study Resources.*$/, '')+
             '</div><br>')+
 
@@ -277,44 +278,44 @@
           buttonHTML : '<span class="en">Begin</span><span class="ja">始める</span><span class="fr">Démarrer</span>',
           noClose : 1,
           zIndex : 'low',
-          
+
           // generate quiz with selected type
           callback : function () {
             var type = document.getElementById('exercise-type').value;
-            
+
             o.type = o.type[type];
             o.info = typeof o.info == 'object' && o.info[type] ? o.info[type] : o.info;
-            
+
             // store exercise preference
             if (storageOK) {
               localStorage['genki_pref_' + o.format] = o.type;
             }
-            
+
             // convert the quizlet to the selected type
             // vocab, kana, and number conversions
             if (/vocab|kana|numbers|kanji/.test(o.format)) {
-              
+
               // reformats the quizlet for kana exercises, so that they can be converted to other exercise types
               if (o.format == 'kana' && o.type != 'kana') {
                 var kana = {}, i, k;
-                
+
                 for (i in o.quizlet) {
                   for (k in o.quizlet[i]) {
                     kana[k] = o.quizlet[i][k];
                   }
                 }
-                
+
                 o.quizlet = kana;
-                
+
                 // also change the info description
                 o.info = o.info.replace(/%\{KANA\}/g, Genki.active.exercise[1].replace(/.*?(Hiragana|Katakana).*/, function ($1) {
                   return GenkiLang == 'ja' ? (/Hiragana/i.test($1) ? 'ひらがな' : 'カタカナ') : $1;
                 }));
               }
-              
+
               // formats kanji for readings quizzes
               if (o.format == 'kanji') {
-                
+
                 // kanji readings modifications
                 if (o.readings) {
                   var i;
@@ -322,7 +323,7 @@
                   // add on and kun arrows to the readings
                   for (i in o.quizlet) {
                     var yomikata = o.quizlet[i].split('|');
-                    o.quizlet[i] = 
+                    o.quizlet[i] =
                       (yomikata[0] ? '<span class="yomikata" title="' + ( GenkiLang == 'ja' ? '音読み' : 'on-yomi' ) + '">▶</span>' + yomikata[0] + '<br>' : '')+
                       (yomikata[1] ? '<span class="yomikata" title="' + ( GenkiLang == 'ja' ? '訓読み' : 'kun-yomi' ) + '">▷</span>' + yomikata[1] : '');
                   }
@@ -330,31 +331,31 @@
                   // add on/kun after the info box
                   o.info += Genki.lang.kanji_yomikata;
                 }
-                
+
                 // special classes for kanji readings and meanings
                 if (o.type == 'drag') {
                   document.getElementById('exercise').className += o.readings ? ' kanji-readings' : o.meanings ? ' kanji-meanings' : '';
                 }
               }
-              
+
               // BEGIN conversion conditions for vocab or kana
               // multi-choice conversion
               if (o.type == 'multi') {
                 var quizlet = [], keys = [], keys2 = [], currentAnswer, sentence, answer, answers, def, i, j, k, n, n2;
-                
+
                 // get keys for randomization of the vocabulary
                 for (i in o.quizlet) {
                   keys.push(i);
                   keys2.push(i);
                 }
-                
+
                 // randomly sort the vocab
                 for (i = 0, j = keys.length; i < j; i++) {
                   n = Math.floor(Math.random() * keys.length);
                   def = keys[n].split('|');
                   currentAnswer = o.quizlet[keys[n]].replace(/\|.*?$/, '');
                   sentence = /\|/.test(o.quizlet[keys[n]]) ? o.quizlet[keys[n]].replace(/.*?\|(.*?$)/, '$1') : '';
-                  
+
                   // push the question data
                   quizlet.push({
                     question : '<div class="multi-vocab">'+
@@ -363,17 +364,17 @@
                     '</div>',
                     answers : ['A' + currentAnswer]
                   });
-                  
+
                   // randomly assign answers
                   answers = keys2.slice();
                   answers.splice(n, 1);
                   k = 3;
-                  
+
                   while (k --> 0) {
                     if (answers.length) {
                       n2 = Math.floor(Math.random() * answers.length);
                       answer = o.quizlet[answers[n2]].replace(/\|.*?$/, '');
-                      
+
                       // prevent identical answers from showing
                       if (answer == currentAnswer) {
                         k++; // increment to try another
@@ -382,27 +383,27 @@
                       else {
                         quizlet[i].answers.push(answer.charAt(0) == 'A' ? '!' + answer : answer);
                       }
-                      
+
                       answers.splice(n2, 1);
                     } else {
                       break; // break out if there's no more answers, to prevent errors
                     }
                   }
-                  
+
                   // remove the key
                   keys.splice(n, 1);
                 }
-                
+
                 o.quizlet = quizlet;
               }
-              
+
               // spelling practice conversion
               else if (o.type == 'writing') {
                 var quizlet = {}, split, i;
-                
+
                 for (i in o.quizlet) {
                   split = i.split('|');
-                  
+
                   // words which contain '／' have multiple variations, as such we should loop through and add these separately
                   for (var a = split[0].split('／'), b = 0, c = a.length, furi; b < c; b++) {
                     furi = split[1] ? split[1] : o.format == 'kana' ? o.quizlet[i] : '';
@@ -414,11 +415,11 @@
                     }
                   }
                 }
-                
+
                 o.quizlet = quizlet;
                 o.columns = 6;
               }
-              
+
               // write the definition conversion
               else if (o.type == 'fill') {
                 // written format for vocab
@@ -434,7 +435,7 @@
                   // parse written quiz
                   for (i = 0, j = keys.length, n = Math.ceil(j/2); i < j; i++) {
                     def = keys[i].split('|');
-                    
+
                     problem = ('{'+
                       // filter: /。|～/g (4 below)
                       // cannot be cached to a variable due to this bug: http://blog.stevenlevithan.com/archives/es3-regexes-broken
@@ -445,76 +446,76 @@
                       // additional parsing
                     '}').replace(/\((.*?)\)/g, '%($1/)').replace(/（(.*?)）/g, '%($1/)') // adds optional sub-answers
                         .replace(/／/g, '|'); // adds additional answers
-                    
-                    quizlet += 
+
+                    quizlet +=
                     (i == n ? '</div><div>' : '')+ // changes columns
                     '<div class="problem">'+
                       o.quizlet[keys[i]].replace(/\|.*?$/, '') + '<br>'+
                       // add '|answer' flag to problem if it contains a horizontal bar
                       // the horizontal bar indicates multiple answers in this instance
-                      (/\|/.test(problem) ? problem.replace('}', '|answer}') : problem)+ 
-                    '</div>'; 
-                    
+                      (/\|/.test(problem) ? problem.replace('}', '|answer}') : problem)+
+                    '</div>';
+
                   }
-                  
+
                   o.quizlet = quizlet + '</div></div>';
                 }
-                
+
                 // written format for kana
                 else if (o.format == 'kana') {
                   o.quizlet = o.chart;
                 }
               }
             }
-            
+
             // practice exercise variations, typically multiple choice
             // switches to either multi or fill (written test)
             else if (o.format == 'practice') {
               o.quizlet = o.quizlet[type]; // variations are handled file-side for better control
-              
+
               var img = document.querySelector('.multi-quiz-image');
-              
+
               // hide multi-choice images if written test is chosen
               if (o.type == 'fill' && img) {
                 img.style.display = 'none';
               }
-              
+
               // show multi-choice images if multiple choice is chosen
               else if (o.type == 'multi' && img) {
                 img.style.display = '';
               }
             }
-            
+
             // for hiragana/katakana writing/stroke order workbooks
             // switches between the workbook format and stroke order format
             else if (o.format == 'hirakata') {
               o.quizlet = o.quizlet[type] ? o.quizlet[type] : o.quizlet[o.quizlet.length - 1];
             }
-            
+
             // finally, launch the quiz
             Genki.generateQuiz(o);
-            
+
             // set exercise type changing to false so exercises will automatically start on retry if genkiSkipExType is enabled
             Genki.changingExType = false;
           }
         });
-        
+
         // auto start the exercise if "begin=NUMBER" is specified in the URL. OR Exercise Type Selection Skipping is Enabled
         // NUMBER should be the index of the drop down exercise types, starting at 0 for the first, 1 for the second, and so on..
         if (!Genki.changingExType && (begin !== false || (storageOK && localStorage.genkiSkipExType == 'true'))) {
           modal.callback();
           GenkiModal.close();
         }
-        
+
         // create button to change exercise type (eliminates the need to press refresh or F5)
         Genki.create.exerciseTypeButton();
-        
+
         return false;
       }
-      
+
       // log current type
       Genki.active.type = o.type;
-      
+
       // format grammar index links in the quiz info
       if (/\!GRI/.test(o.info)) {
         o.info = o.info.replace(/\{.*?\}/g, function (match) {
@@ -542,20 +543,20 @@
         // generate the questions
         while (keysQ.length) {
           i = Math.floor(Math.random() * keysQ.length);
-          
+
           // | is used to separate a word from a helper
           helper = /\|/.test(keysQ[i]) ? 'data-helper="' + keysQ[i].split('|').pop() + '"' : null;
-          
+
           // add the quiz items and drop zones
           quiz += '<div class="quiz-item-group">'+
             '<div class="quiz-item" ' + (helper || '') + '>' + (helper ? keysQ[i].replace(/(.*?)\|(.*)/, '$1<span class="hidden-text">$2</span>') : keysQ[i]) + '</div>'+
           '</div>';
-          
+
           dropList += '<div tabindex="0" class="quiz-answer-zone' + (/\|/.test(keysQ[i]) ? ' helper-answer' : '') + '" data-text="' + keysQ[i].replace(/\|.*?$/, '') + '" data-mistakes="0"></div>';
           keysQ.splice(i, 1);
-          
+
           ++Genki.stats.problems;
-          
+
           // indicate that a helper, such as furigana, is present
           if (!helperPresent && helper) {
             helperPresent = true;
@@ -567,7 +568,7 @@
         if (helperPresent) {
           zone.className += ' helper-' + ((storageOK && localStorage.furiganaVisible == 'false') ? 'hidden' : 'present');
         }
-        
+
         // generate the answers
         quiz += '<div id="answer-list">';
         while (keysA.length) {
@@ -576,10 +577,10 @@
           keysA.splice(i, 1);
         }
         quiz += '</div>'; // close the answer list
-        
+
         // add the quiz to the document
         zone.innerHTML = quiz + Genki.lang.review.replace('</div>', Genki.lang.toggle_furigana + '<button id="toggle-orientation" class="button" onclick="Genki.toggle.vocabOrientation(this);"><i class="fa" style="position:relative;transform:rotate(90deg);">&#xf0db;</i><span class="en">Horizontal Mode</span><span class="ja">水平モード</span></button>' + '</div>');
-        
+
         // if selected, change the vocab orientation so that it's horizontal
         if (storageOK && localStorage.vocabHorizontal == 'true') {
           Genki.toggle.vocabOrientation(document.getElementById('toggle-orientation'), 'false');
@@ -602,7 +603,7 @@
 
           // insert the romaji and empty container for dropping the kana
           for (k in kana[i]) {
-            quiz += 
+            quiz +=
             '<div class="quiz-item-row">'+
               '<div tabindex="0" class="quiz-answer-zone" data-text="' + kana[i][k] + '" data-mistakes="0"></div>'+
               '<div class="quiz-item">' + kana[i][k] + '</div>'+
@@ -630,7 +631,7 @@
 
       // # 3. WRITING PRACTICE #
       else if (o.type == 'writing') {
-        var quiz = '<div id="quiz-info">' + o.info + '<br><span class="en">If you don\'t know how to type in Japanese on your computer, please visit our help page by <a href="../../../help/writing/' + Genki.local + '" target="_blank">clicking here</a>.</span><span class="ja">パソコンで日本語を入力する方法がわからない場合は、<a href="../../../help/writing/' + Genki.local + '" target="_blank">ヘルプページ</a>をご覧ください。</span></div><div id="question-list">',
+        var quiz = '<div id="quiz-info">' + o.info + '<br><span class="en">Si vous ne savez pas comment taper en japonais sur votre ordinateur, veuillez visiter notre page d\'aide en <a href="../../../help/writing/' + Genki.local + '" target="_blank">cliquant ici</a>.</span><span class="ja">パソコンで日本語を入力する方法がわからない場合は、<a href="../../../help/writing/' + Genki.local + '" target="_blank">ヘルプページ</a>をご覧ください。</span></div><div id="question-list">',
             columns = o.columns,
             width = 'style="width:' + (100 / (columns + 1)) + '%;"',
             index = 0,
@@ -651,7 +652,7 @@
           quiz += '</div>'; // close the row
           columns = o.columns; // reset column value for next iteration
         }
-        
+
         // check if furigana is present and add a toggle button
         if (/data-helper/.test(quiz)) {
           helper = true;
@@ -660,19 +661,19 @@
 
         // add the quiz to the document
         zone.innerHTML = quiz + '</div>' + Genki.lang.check_answers.replace('</div>', helper ? Genki.lang.toggle_furigana + '</div>' : '</div>');
-        
+
         // add a class for non-practice writing exercises
         // this will remove helpers, forcing the student to recall what they learned
         if (o.quiz) {
           zone.className += ' no-helper';
         }
-        
+
         // input field data
         Genki.input = {
           map : document.querySelectorAll('.writing-zone-input'),
           index : 0
         };
-        
+
         // auto-focus the first input field
         Genki.input.map[0].autofocus = true;
       }
@@ -695,7 +696,7 @@
         for (; i < j; i++) {
           quiz += '<div id="quiz-q' + i + '" class="question-block" data-qid="' + (i + 1) + '" style="display:none;"><div class="quiz-multi-question">' + (o.questionsAlignLeft ? '<div class="quiz-question-inner-text">' : '') + (typeof q[i].question != 'undefined' ? q[i].question.replace(/\{.*?\}/g, function (match) {
             var data = match.slice(1, match.length - 1).split('|');
-          
+
             if (data[0] == '!IMG') {
               return Genki.parse.image(data);
             }
@@ -736,13 +737,13 @@
           option = 65; // resets the option id so the next answers begin with A, B, C..
           ++Genki.stats.problems; // increment problems number
         }
-        
+
         // check if furigana is present and add a toggle button
         if (/class="furigana"|class="inline-furi"|<ruby>/.test(quiz)) {
           helper = true;
           zone.className += ' helper-' + ((storageOK && localStorage.furiganaVisible == 'false') ? 'hidden' : 'present');
         }
-        
+
         // enables the vocab spoiler for multi-choice if preferred
         if (vocab && storageOK && localStorage.spoilerMode == 'true') {
           zone.className += ' spoiler-mode';
@@ -752,44 +753,44 @@
         zone.innerHTML = quiz + '</div>'+
           '<div id="next-button" class="quiz-multi-row" style="margin-top:-20px; visibility:hidden;' + (Genki.feedbackMode == 'classic' ? 'display:none;' : '') + '"><div tabindex="0" class="quiz-multi-answer next-question" onclick="Genki.showNextQuestion(this);" onkeypress="event.key == \'Enter\' && Genki.showNextQuestion(this);">NEXT</div></div>'+
           '<div id="quiz-progress"><div id="quiz-progress-bar"></div></div>'+
-          '<div id="review-exercise" class="center clearfix">'+ 
+          '<div id="review-exercise" class="center clearfix">'+
             (Genki.appendix ? '' : '<button class="button text-selection-mode-button" onclick="Genki.toggle.textSelection(this);"><i class="fa">&#xf246;</i> <span class="en">Enable Text Selection</span><span class="ja">テキスト選択モードを有効にする</span></button>')+
             (helper ? Genki.lang.toggle_furigana : '')+
           '</div>';
-        
+
         // begin the quiz
         Genki.progressQuiz('init');
       }
-      
-      
+
+
       // # 5. FILL IN THE BLANKS #
       else if (o.type == 'fill') {
         var helper = false;
-        
+
         // check if furigana is present and add a toggle button
         if (/class="furigana"|class="inline-furi"|<ruby>/.test(o.quizlet)) {
           helper = true;
           zone.className += ' helper-' + ((storageOK && localStorage.furiganaVisible == 'false') ? 'hidden' : 'present');
         }
-        
+
         // add the quiz to the document
         zone.innerHTML = '<div id="quiz-info">' + o.info + '<br><span class="en">If you don\'t know how to type in Japanese on your computer, please visit our help page by <a href="../../../help/writing/' + Genki.local + '" target="_blank">clicking here</a>.</span><span class="ja">パソコンで日本語を入力する方法がわからない場合は、<a href="../../../help/writing/' + Genki.local + '" target="_blank">ヘルプページ</a>をご覧ください。</span></div><div class="text-block">' + o.quizlet.replace(/\{.*?\}/g, function (match) {
           var data = match.slice(1, match.length - 1).split('|'), hint, flag, sub, width, placeholder;
-          
+
           if (data[0] == '!IMG') {
             return Genki.parse.image(data);
-            
+
           } else if (data[0] == '!GRI') { // Grammar Index links
             return '<a href="' + getPaths() + 'lessons-3rd/appendix/grammar-index/' + Genki.local + '#' + data[2] + '" target="_blank"' + ((Genki.local && !Genki.debug) ? '' : ' onclick="Genki.getGrammarPoint(this, \'' + data[2] + '\'); return false;"') + '>' + data[1] + '</a>';
-            
+
           } else if (data[0] == '!AUDIO') { // audio tracks
             return '<div class="audio-block center">'+
               '<audio id="' + data[1] + '" controls><source src="' + getPaths() + 'resources/audio/' + (Genki.ed == 'lessons-3rd' ? '3rd-edition/' : '2nd-edition/') + data[1] + '.mp3" type="audio/mpeg"></audio>'+
             '</div>';
-            
+
           } else if (data[0] == '!PLAY') { // buttons for playing specific points of audio
             return '<button class="button play-button" onclick="Genki.playAudio(\'' + data[1] + '\', ' + data[2] + ');"><i class="fa">&#xf04b;</i></button>';
-            
+
           } else {
             // Split the answer from the hint.
             // Syntax is {ANSWER|HINT|HIDE_HINT} HINT and HIDE_HINT is optional.
@@ -799,7 +800,7 @@
             // to show a hint along with a secondary answer, use this syntax: {ANSWER1|ANSWER2|answer;hint:HINT_TEXT}
             hint = data[1] ? data[1] : '',
             flag = ((data[10] || data[9] || data[8] || data[7] || data[6] || data[5] || data[4] || data[3] || data[2]) ? (data[10] || data[9] || data[8] || data[7] || data[6] || data[5] || data[4] || data[3] || data[2]) : '').split(';');
-            
+
             // sub answer matches for answer 1 & 2 (used for calculating answer area width)
             if (/\%\((.*?)\)/.test(hint) || /\%\((.*?)\)/.test(data[0])) {
               sub = [
@@ -809,7 +810,7 @@
             }
 
             ++Genki.stats.problems; // increment problems number
-            
+
             // get problem width
             width =
               // manual width definition
@@ -828,13 +829,13 @@
                 ([hint.replace(/\%\((.*?)\)/g, ''), data[0].replace(/\%\((.*?)\)/g, '')].sort(function (a, b) {
                   return b.length - a.length;
                 })[0].length * (14 / (/[a-z]/i.test(hint || data[0]) && !/[\u3000-\u30FF]/.test(hint || data[0]) ? 2 : 1)))
-              ) : 
+              ) :
 
               // automatic width calculation between answer1 and answer2/hint
               (([hint, data[0]].sort(function (a, b) {
                 return b.length - a.length;
               })[0].length * (14 / (/[a-z]/i.test(hint || data[0]) && !/[\u3000-\u30FF]/.test(hint || data[0]) ? 2 : 1))) + 14);
-            
+
             placeholder =
               /placeholder:/.test(flag[0]) ? flag[0].split(':')[1] :
               flag[1] && /placeholder:/.test(flag[1]) ? flag[1].split(':')[1] :
@@ -863,19 +864,19 @@
                 'style="width:' + (width * (storageOK && localStorage.genkiFontSize ? (+localStorage.genkiFontSize / 100) : 1)) + 'px;"'+
               '>'+
               ((hint && !/answer|furigana|placeholder/.test(flag[0]) || flag[1] && /hint:/.test(flag[1]) || flag[2] && /hint:/.test(flag[2])) ? '<span class="problem-hint">' + (
-                flag[1] && /hint:/.test(flag[1]) ? flag[1].split(':')[1] : 
+                flag[1] && /hint:/.test(flag[1]) ? flag[1].split(':')[1] :
                 flag[2] && /hint:/.test(flag[2]) ? flag[2].split(':')[1] : hint
               ) + '</span>' : '')+
             '</span>';
           }
-          
+
         }) + '</div>' + Genki.lang.check_answers.replace('()', '(false, \'fill\')').replace('</div>', helper ? Genki.lang.toggle_furigana + '</div>' : '</div>');
-        
+
         // auto-focus the first input field
         document.querySelector('.writing-zone-input').autofocus = true;
       }
-      
-      
+
+
       // # 6. STROKE ORDER #
       else if (o.type == 'stroke') {
         var quiz = '<div id="quiz-info">' + o.info + '</div><div id="question-list">',
@@ -890,9 +891,9 @@
         for (; i < j; i++) {
           if (q[i].kana) q[i].kanji = q[i].kana; // applies kana character to kanji property
           if (o.kanaType) o.kanaType = o.kanaType.charAt(0).toUpperCase() + o.kanaType.slice(1).toLowerCase();
-          
+
           img = getPaths() + 'resources/images/stroke-order/' + q[i].order + '.png';
-          
+
           // start question block
           quiz += '<div id="quiz-q' + i + '" class="question-block" data-qid="' + (i + 1) + '" style="display:none;">'+
             // kanji
@@ -903,7 +904,7 @@
                 '<a href="' + img + '" target="_blank" title="' + (GenkiLang == 'ja' ? 'クリックして画像を見る' : 'Click to view image') + '"><img src="' + img + '" alt="' + ( GenkiLang == 'ja' ? '書き順' : 'stroke order' ) + '"/></a>'+
               '</div>'+
             '</div>'+
-            
+
             // drawing area + buttons
             '<div class="quiz-multi-row">'+
               '<canvas class="kanji-canvas" data-kanji="' + q[i].kanji + '" data-strokes="' + q[i].strokes + '" data-guide="' + (guideHidden ? false : true) + '"' + (q[i].kana && !q[i].font ? ' data-font="NotoSansJP, SawarabiGothic, MS Gothic, Yu Gothic, Meiryo"' : q[i].font ? ' data-font="' + q[i].font + '"' : '') + ' id="canvas-' + i + '" width="200" height="200"' + (q[i].kana ? 'data-kana="true"' : '') + '></canvas>'+
@@ -919,28 +920,28 @@
             '</div>'+
           // end question block
           '</div>';
-          
+
           ++Genki.stats.problems; // increment problems number
         }
 
         // add the multi-choice quiz to the quiz zone
         zone.innerHTML = quiz + '</div><div id="quiz-progress"><div id="quiz-progress-bar"></div></div>'+
-          '<div id="review-exercise" class="center clearfix">'+ 
+          '<div id="review-exercise" class="center clearfix">'+
             '<button id="toggle-stroke-order" class="button" onclick="Genki.toggle.strokeOrder(this);"><i class="fa">&#xf1fc;</i><span class="en">' + (strokeOrderHidden ? 'Show' : 'Hide') + ' Stroke Order</span><span class="ja">書き順を' + (strokeOrderHidden ? '表示' : '非表示') + 'する</span></button>'+
             '<button id="toggle-tracing-guide" class="button" onclick="Genki.toggle.tracingGuide(this);"><i class="fa">&#xf031;</i><span class="en">' + (guideHidden ? 'Show' : 'Hide') + ' Tracing Guide</span><span class="ja">トレースのガイドを' + (guideHidden ? '表示' : '非表示') + 'する</span></button>'+
             '<button id="toggle-stroke-numbers" class="button" onclick="Genki.toggle.strokeNumbers(this);" style="display:none;"><i class="fa">&#xf162;</i><span class="en">Show Stroke Numbers</span><span class="ja">画数を表示する</span></button>'+
           '</div>';
-        
+
         // hide stroke order based on preferences
         if (strokeOrderHidden) {
           zone.className += ' stroke-order-hidden';
         }
-        
+
         // begin the quiz
         Genki.progressQuiz('init', false, 'stroke');
       }
-      
-      
+
+
       // # 7. DRAWING PRACTICE #
       else if (o.type == 'drawing') {
         var quiz = '<div id="quiz-info">' + o.info + '</div><div id="question-list">',
@@ -951,7 +952,7 @@
 
         for (; i < j; i++) {
           if (q[i].kana) q[i].kanji = q[i].kana; // applies kana character to kanji property
-          
+
           // create a new row
           quiz += '<div class="quiz-answer-row">'+
           '<div class="drawing-zone" ' + width + '>'+
@@ -980,18 +981,18 @@
         }
 
         // add the quiz to the document
-        zone.innerHTML = quiz + '</div>' + Genki.lang.check_answers.replace('()', '(false, \'drawing\')').replace('</div>', 
+        zone.innerHTML = quiz + '</div>' + Genki.lang.check_answers.replace('()', '(false, \'drawing\')').replace('</div>',
           '<button id="toggle-tracing-guide" class="button" onclick="Genki.toggle.tracingGuide(this);"><i class="fa">&#xf031;</i><span class="en">' + (guideHidden ? 'Show' : 'Hide') + ' Tracing Guide</span><span class="ja">トレースのガイドを' + (guideHidden ? '表示' : '非表示') + 'する</span></button>'+
           '<button id="toggle-stroke-numbers" class="button" onclick="Genki.toggle.strokeNumbers(this);" style="display:none;"><i class="fa">&#xf162;</i><span class="en">Show Stroke Numbers</span><span class="ja">画数を表示する</span></button>' + '</div>'
         );
-        
+
         // initialize all canvases
         for (var c = document.querySelectorAll('.kanji-canvas'), i = 0, j = c.length; i < j; i++) {
           KanjiCanvas.init(c[i].id);
         }
       }
-      
-      
+
+
       // restore prior answers for written quizzes, if selected
       if (Genki.currentAnswers) {
         if (o.type == Genki.currentAnswers.type) { // only apply answers for same type!
@@ -999,7 +1000,7 @@
             a[i].value = Genki.currentAnswers.list[i];
           }
         }
-        
+
         // delete the freshly applied answers to prevent reapplication, if not selected or all answers were correct
         delete Genki.currentAnswers;
       }
@@ -1013,7 +1014,7 @@
             return el.classList.contains('quiz-answer-zone');
           }
         });
-        
+
         // events during drag
         drake.on('drag', function (el) {
           // hide overflow during drag for touch screens
@@ -1026,12 +1027,12 @@
             Genki.markedItem.className = Genki.markedItem.className.replace(' markedItem', '');
             Genki.markedItem = null;
           }
-          
+
           // mark the draggable element
           Genki.markedItem = el;
           el.className += ' markedItem';
         });
-        
+
         if (Genki.isTouch) {
           // restore overflow on drag cancel (touchscreens only)
           drake.on('cancel', function () {
@@ -1047,16 +1048,16 @@
             // if the answer is wrong we'll send the item back to the answer list
             if (el.dataset.answer != target.dataset.text) {
               document.getElementById('answer-list').appendChild(el);
-              
+
               // global mistakes are incremented along with mistakes specific to problems
               target.dataset.mistakes = ++target.dataset.mistakes;
-              
+
               // allows to see how many times target was gotten wrong while overall answers wrong number isn't bloated
               target.dataset.mistakes > 1 ? Genki.stats.mistakes : ++Genki.stats.mistakes;
 
             } else {
               target.className += ' answer-correct';
-              
+
               // unmark the marked item that was dropped
               if (Genki.markedItem) {
                 Genki.markedItem.className = 'quiz-item';
@@ -1072,11 +1073,11 @@
         });
 
         Genki.drake = drake;
-        
+
         // event listeners for marking and dropping answers with either a click or the 'Enter' key being pressed
-        if (!Genki.globalEventListenersSet) { 
+        if (!Genki.globalEventListenersSet) {
           Genki.globalEventListenersSet = true; // prevents duplication of event listeners on Genki.reset();
-          
+
           ['click', 'keypress'].forEach(function (eventName) {
             document.addEventListener(eventName, function (e) {
               // if the event was a keypress and the key was not enter, bail out (same if the quiz is over)
@@ -1089,7 +1090,7 @@
               var target = e.target, n = 4, m = n - 1;
               while (n --> 0) {
                 if (n < m) target = target.parentNode ? target.parentNode : target;
-                
+
                 // break out if match found
                 if (/quiz-item$|quiz-answer-zone/.test(target.className)) break;
               }
@@ -1130,7 +1131,7 @@
                   target.dataset.mistakes = ++target.dataset.mistakes;
                   ++Genki.stats.mistakes;
 
-                } 
+                }
 
                 // correct answer
                 else {
@@ -1190,33 +1191,33 @@
 
       // jump to the exercise title
       Genki.scrollTo('#exercise-title', true);
-      
+
       // add dictionary for looking up words, but not for vocab exercises, since that would be cheating!
-      // also disabled in the appendix 
+      // also disabled in the appendix
       if (Genki.debug || (!/drag|kana|drawing/.test(o.type) && !Genki.appendix)) {
         if (Genki.debug || (o.format && !/vocab|kana|numbers/.test(o.format)) || !o.format) {
           Genki.quickJisho.create();
         }
       }
-      
+
       // autofocus fallback (temp until Chromium fixes the autofocus bug)
       if (o.type == 'fill' || o.type == 'writing') {
         var autofocus = document.querySelector('[autofocus]');
-        
+
         if (autofocus && autofocus != document.activeElement) {
           autofocus.focus();
-          
+
           // lets us know if the fallback is still being used
           Genki.debug && console.warn('autofocus failed: HTMLElement.focus() will be used as a fallback.');
         }
       }
-      
+
       // autofocus answer options
       if (o.type == 'multi') {
         var q = document.querySelector(document.querySelector('.spoiler-mode') ? '.vocab-spoiler-toggle' : '.quiz-multi-answer');
         if (q) q.focus();
       }
-      
+
       // audio events
       for (var a = document.querySelectorAll('AUDIO'), i = 0, j = a.length; i < j; i++) {
         // pause all audio elements that are current playing and only plays the one that was just clicked
@@ -1227,7 +1228,7 @@
             }
           }
         };
-        
+
         // logs time to console for debugging; mainly used for adding time stamps to the play buttons in listening exercises
         if (Genki.debug) { // debug mode only
           a[i].ontimeupdate = function () {
@@ -1254,7 +1255,7 @@
       if (Genki.textSelectMode || Genki.quizOver) {
         return false;
       }
-      
+
       // standard quiz progression
       if (answer == 'init') {
         document.getElementById('quiz-q' + Genki.stats.solved).style.display = '';
@@ -1264,19 +1265,19 @@
         // set the canvas as the answer if doing a stroke order exercise
         if (answer && flag == 'stroke') {
           var kanji = KanjiCanvas.recognize(answer.dataset.canvas), index; // find kanji with the given strokes
-          
+
           // set the answer item as the canvas
           answer = answer.parentNode.parentNode.querySelector('.kanji-canvas');
-          
+
           // debugging (logs info about matched kanji, match index, and whether the answer was correct or not)
           Genki.debug && console.log('toDraw: ' + answer.dataset.kanji);
           Genki.debug && console.log('Results: ' + kanji);
           Genki.debug && console.log('Correct: ' + (new RegExp(answer.dataset.kanji).test(kanji) && answer.dataset.strokesAnswer == answer.dataset.strokes).toString());
-          
+
           // mark the answer as correct or incorrect depending on: 1. the kanji presence and 2. the number of strokes.
           answer.dataset.answer = new RegExp(answer.dataset.kanji).test(kanji) && answer.dataset.strokesAnswer == answer.dataset.strokes;
         }
-        
+
         // mark the selected answer for reviews
         answer.className += ' selected-answer';
 
@@ -1294,7 +1295,7 @@
         // if there's another question, show it and hide the last one
         var last = document.getElementById('quiz-q' + Genki.stats.solved++),
             next = document.getElementById('quiz-q' + Genki.stats.solved);
-        
+
         if (next) {
           // instantly show if the answer was wrong or correct
           if (Genki.feedbackMode == 'instant' && Genki.active.type == 'multi') {
@@ -1307,27 +1308,27 @@
                 last : null
               };
             }
-            
+
             // prevent reanswering questions (by initiating "quiz ended" state) + show the next button
             Genki.quizOver = true;
             Genki.multiNodes.list.className += ' multi-quiz quiz-over';
             Genki.multiNodes.button.style.visibility = 'visible';
             Genki.multiNodes.button.firstChild.focus(); // focus next button
-            
+
             // cache these for use with showNextQuestion()
             Genki.multiNodes.next = next;
             Genki.multiNodes.last = last;
           }
-          
+
           // classic progression (answers shown only at end)
           else {
             next.style.display = ''; // show the next question
             last.style.display = 'none'; // hide the prior question
-            
+
             // focus answer for next question
             var q = next.querySelector(document.querySelector('.spoiler-mode') ? '.vocab-spoiler-toggle' : '.quiz-multi-answer');
             if (q) q.focus();
-            
+
             Genki.incrementProgressBar();
           }
 
@@ -1343,28 +1344,28 @@
           document.getElementById('quiz-progress').style.display = 'none';
         }
       }
-      
+
       // initialize canvas for stroke order quizzes
       if (flag == 'stroke' && document.getElementById('canvas-' + Genki.stats.solved)) {
         KanjiCanvas.init('canvas-' + Genki.stats.solved);
       }
     },
-    
+
     // proceeds to next question without interacting with answer values (mainly used for instant feedback mode)
     showNextQuestion : function (caller) {
       // hide prev question + show next one
       Genki.multiNodes.next.style.display = '';
       Genki.multiNodes.last.style.display = 'none';
-      
+
       // restore active quiz state (not ended) + hide next button
       Genki.quizOver = false;
       Genki.multiNodes.list.className = Genki.multiNodes.list.className.replace(' multi-quiz quiz-over', '');
       Genki.multiNodes.button.style.visibility = 'hidden';
-      
+
       // focus answer for next question
       var q = Genki.multiNodes.next.querySelector(document.querySelector('.spoiler-mode') ? '.vocab-spoiler-toggle' : '.quiz-multi-answer');
       if (q) q.focus();
-      
+
       // increment progress
       Genki.incrementProgressBar();
     },
@@ -1373,10 +1374,10 @@
     // ends the quiz
     endQuiz : function (type) {
       Genki.quizOver = true; // marks quiz as over
-      
+
       // type value adjustments
       type = type == 'drawing' ? 'stroke' : type; // changes type to "stroke" for drawing practice, since they share many traits.
-      
+
       // calculate the total score based on problems solved and mistakes made
       var solved = Genki.stats.solved - Genki.stats.exclude,
           problems = Genki.stats.problems - Genki.stats.exclude;
@@ -1389,7 +1390,7 @@
       timer.style.display = 'none';
 
       // show the student their results
-      document.getElementById('quiz-result').innerHTML = 
+      document.getElementById('quiz-result').innerHTML =
       '<div id="complete-banner" class="center"><span class="en">Quiz Complete!</span><span class="ja">テスト終了！</span></div>'+
       '<div id="result-list">'+
         '<div class="result-row"><span class="result-label"><span class="en">Problems Solved:</span><span class="ja">問題を解いた：</span></span>' + problems + '</div>'+
@@ -1419,9 +1420,9 @@
         var lesson = Genki.active.exercise[0],
             genkiEdition = localStorage.GenkiEdition,
             lessonsResults = JSON.parse(localStorage.Results);
-        
+
         if(!lessonsResults[genkiEdition]) lessonsResults[genkiEdition] = {};
-        
+
         var editionLessonsResults = lessonsResults[genkiEdition];
         editionLessonsResults[lesson] = (typeof editionLessonsResults[lesson] == 'undefined' || Genki.stats.score > editionLessonsResults[lesson]) ? Genki.stats.score : editionLessonsResults[lesson];
 
@@ -1430,7 +1431,7 @@
         // refresh the exercise list with the new results
         Genki.create.removeExerciseList();
         Genki.create.exerciseList();
-        
+
         // shows data backup reminder if 10 or more exercises were completed
         if (localStorage.dataBackupReminder == 'true' || localStorage.dataBackupReminder == undefined) {
           if (++Genki.dataBackupReminderCount >= 10) {
@@ -1462,13 +1463,13 @@
           localStorage.dataBackupReminderCount = Genki.dataBackupReminderCount;
         }
       }
-      
+
       // changes display over certain buttons
       if (type == 'stroke')  {
         document.getElementById('toggle-stroke-numbers').style.display = '';
         document.getElementById('toggle-tracing-guide').style.display = 'none';
       }
-      
+
       // kill drag event handlers
       if (Genki.drake) {
         // slight delay is required, otherwise an error is thrown
@@ -1477,7 +1478,7 @@
           delete Genki.drake;
         }, 100);
       }
-      
+
       // hide change exercise type button
       var changeType = document.getElementById('change-exercise-type-container');
       if (changeType) changeType.style.display = 'none';
@@ -1486,8 +1487,8 @@
       document.getElementById('exercise').className += ' quiz-over';
       Genki.scrollTo('#complete-banner', true); // jump to the quiz results
     },
-    
-    
+
+
     // resets exercise state, allowing students to redo quizzes without reloading the page
     reset : function (skipModal) {
       if (window.JSON) {
@@ -1507,24 +1508,24 @@
               for (var currentAnswers = [], a = document.querySelectorAll('.writing-zone-input'), i = 0, j = a.length; i < j; i++) {
                 currentAnswers.push(a[i].value);
               }
-              
+
               // temporarily cache the answers and previous exercise type (in case of mulitple types, we can check and apply the answers or not)
               Genki.currentAnswers = {
                 type : /fill-quiz/.test(document.getElementById('exercise').className) ? 'fill' : 'writing',
                 list : currentAnswers
               };
-              
+
               GenkiModal.close();
               Genki.reset(true);
             },
-            
+
             closeCallback : function () {
               GenkiModal.close();
               Genki.reset(true);
             }
           });
         }
-        
+
         // reset data
         Genki.exerciseComplete = false;
         Genki.quizOver = false;
@@ -1539,14 +1540,14 @@
              score : 0,
            exclude : 0
         };
-        
+
         if (Genki.multiNodes) {
           delete Genki.multiNodes;
         }
-        
+
         // stop timer
         Genki.timer.isRunning() && Genki.timer.stop();
-        
+
         // reset quick dictionary state
         if (Genki.quickJisho.cache) {
           !Genki.quickJisho.hidden && Genki.quickJisho.toggle();
@@ -1557,27 +1558,27 @@
         // hide exercise and reset contents
         var exercise = document.getElementById('exercise'),
             img = document.querySelector('.multi-quiz-image');
-        
+
         exercise.className = 'content-block';
         exercise.innerHTML = document.getElementById('exercise-title').outerHTML + '<div id="quiz-result"></div><div id="quiz-zone" class="clear"></div>' + (img ? img.outerHTML : '') + '<div id="quiz-timer" class="center"></div>' + document.querySelector('.more-exercises').outerHTML;
-        
+
         // things to do depending on the page
         // appendix
         if (Genki.appendix) {
           // hide/show main containers
           exercise.style.display = 'none'; // hides exercise
           document.getElementById('appendix-tool').style.display = ''; // shows tools
-          
+
           // scroll to the main titles
           Genki.scrollTo(/\/dictionary\//.test(window.location) ? '#practice-words' : '.title');
-          
+
           // launch exercise prompt based on the current page
           if (/\/dictionary\//.test(window.location)) Genki.appendix.jisho.launchExercise();
           else if (/\/map-of-japan\//.test(window.location)) Genki.appendix.studyMap();
           else if (/\/numbers-chart\//.test(window.location)) Genki.appendix.studyChart('numbers');
           else if (/\/conjugation-chart\//.test(window.location)) Genki.appendix.studyChart('conjugation');
-        } 
-        
+        }
+
         // study tools
         else if (Genki.tools) {
           // similar to appendix; see above comments
@@ -1585,18 +1586,18 @@
           document.getElementById('study-tool-editor').style.display = '';
           Genki.scrollTo('.title');
         }
-        
+
         // standard quizzes
         else {
           Genki.generateQuiz(JSON.parse(Genki.exerciseData));
         }
-        
+
       } else {
         window.location.reload(); // reloads the page if unable to use JSON to reset quizzes
       }
     },
-    
-    
+
+
     // allows the student to take a break before trying again
     breakTime : function () {
       GenkiModal.open({
@@ -1605,7 +1606,7 @@
         '<div class="center"><span class="en">Wait </span><span class="ja">待つ時間：</span><input id="break-minutes" class="center" type="number" value="' + Genki.breakTimer[Genki.breakMultiplier] + '" min="1" max="60" onchange="Genki.changeBreakMultiplier(this);"> <span class="en">Minute(s)</span><span class="ja">分</span></div>',
         buttonHTML : '<span class="en">Wait</span><span class="ja">待つ</span>',
         keepOpen : true,
-        
+
         // initializes the break timer
         callback : function () {
           // increment default break time
@@ -1617,45 +1618,45 @@
                 f.click();
               }
             }
-            
-            
+
+
             Genki.breakMultiplier++;
           }
-          
+
           // request permission to show a notification when break time is up
           if (!Genki.local && Genki.canNotify && !/denied|granted/.test(Notification.permission)) {
             Notification.requestPermission();
           }
-          
+
           var time = +document.getElementById('break-minutes').value, n;
-          
+
           // corrects time
           if (time > 60) {
             time = 60;
           } else if (time <= 0) {
             time = 1;
           }
-          
+
           // opens the break modal
           GenkiModal.open({
             title : '<span class="en">Taking a Break</span><span class="ja">休憩中</span>',
             content : '<div id="break-timer" class="center">00:' + (time < 10 ? '0' : '') + time + ':00</div>',
             buttonHTML : '<span class="en">End Break Time</span><span class="ja">休憩を終了する</span>',
             keepOpen : Genki.appendix || (!Genki.tools && /"format"/.test(Genki.exerciseData)) ? true : false,
-            
+
             // reloads the current exercise
             callback : function () {
               Genki.reset();
               document.body.className = document.body.className.replace(' taking-a-break', '');
             }
           });
-          
+
           document.body.className += ' taking-a-break'; // adjusts the style and functionality of the modal
-          
+
           // turns the overlay into a soothing backround
           n = Math.floor(Math.random() * 10) + 1;
           document.getElementById('genki-modal-overlay').style.backgroundImage = 'url(../../../resources/images/backgrounds/bg-' + (n < 10 ? '0' : '') + n + '.jpg)';
-          
+
           // initialize timer
           var timer = new Timer(),
               clock = document.getElementById('break-timer');
@@ -1665,17 +1666,17 @@
             target : { seconds : 0 },
             countdown : true
           });
-          
+
           // update the timer
           timer.addEventListener('secondsUpdated', function (e) {
             var timeString = timer.getTimeValues().toString();
             clock.innerHTML = timeString;
-            
+
             // break time ends
             if (timeString == '00:00:00') {
               clock.innerHTML = '<span class="en">Break time is up!</span><span class="ja">休憩が終了しました！</span><div style="font-size:15px;"><span class="en">Click the button below to resume your studies.</span><span class="ja">勉強を続けるために下のボタンをクリックしてください。</span></div>';
               document.getElementById('genki-modal-ok').style.display = 'inline-block';
-              
+
               // notify the user that break time has ended
               if (!Genki.local && Genki.canNotify && Notification.permission == 'granted') {
                 var notif = new Notification(document.title.replace(/ \| Genki Study Resources.*$/, ''), {
@@ -1683,7 +1684,7 @@
                   icon : document.querySelector('meta[property="og:image"]').content,
                   tag : 'breakTime-' + Genki.active.index
                 });
-                
+
                 // focus the tab
                 notif.onclick = function () {
                   window.focus();
@@ -1695,7 +1696,7 @@
         }
       });
     },
-    
+
     // break time increments based on number of breaks taken (limited to 8 break periods (4hrs total) + 10 study sessions (avg per sesson is about 2-5 mintues))
     // studying over this period of time seems to greatly help with retention, so long as you utilize the vocab afterwards by reading, writing, etc.
     breakMultiplier : 0,
@@ -1709,13 +1710,13 @@
       50,
       60 // review vocab once more, then wait a day or two to review to check retention (reading anytime after this period is fine)
     ],
-    
+
     breakTimerCustom : false, // tells if time was set manually by the user so furigana state remains untouched
-    
+
     // adjusts break multiplier based on user input
     changeBreakMultiplier : function (caller) {
       var n = Number(caller.value);
-      
+
       if (n <= 5) {
         Genki.breakMultiplier = 0;
       } else if (n <= 10) {
@@ -1733,10 +1734,10 @@
       } else if (n <= 60) {
         Genki.breakMultiplier = 7;
       }
-      
+
       Genki.breakTimerCustom = true;
     },
-    
+
 
     // places draggable items into their correct places
     // allows the student to review meanings without having to consult their textbook
@@ -1745,7 +1746,7 @@
       GenkiModal.open({
         title : '<span class="en">Activate Review Mode?</span><span class="ja">単語を復習しますか？</span>',
         content : '<span class="en">Are you sure you want to review? Your current progress will be lost.</span><span class="ja">今までの進み具合は失われます。よろしいですか？</span>',
-        
+
         callback : function () {
           var a = document.querySelectorAll('[data-answer]'),
               i = 0,
@@ -1769,15 +1770,15 @@
           // change the quiz info
           document.getElementById('quiz-info').innerHTML = '<span class="en">You are currently in review mode; go ahead and take your time to study. When you are ready to practice this exercise, click the "restart" button.</span><span class="ja">復習モードになっていますので、ゆっくり勉強してください。復習し終わったら「リセットする」をクリックしてください。</span>';
           document.getElementById('quiz-zone').className += ' review-mode';
-          
+
           // hide change exercise type button
           var changeType = document.getElementById('change-exercise-type-container');
           if (changeType) changeType.style.display = 'none';
         }
       });
     },
-    
-    
+
+
     // converts to half-width characters if full-width (e.g. ＡＢＣ --> ABC)
     // used in check.answers to reduce erroneous incorrect answers due to usage of full-width characters.
     toHalfWidth : function (str) {
@@ -1785,8 +1786,8 @@
         return String.fromCharCode(c.charCodeAt(0) - 0xFEE0);
       });
     },
-    
-    
+
+
     // functions that check the value of input fields
     check : {
       // checks the value of the current input and automatically moves onto the next input if the value is correct
@@ -1795,7 +1796,7 @@
       value : function (input) {
         if (!Genki.check.busy && input.value == input.dataset.answer) {
           Genki.check.busy = true;
-          
+
           var next = Genki.input.map[Genki.input.index + 1];
 
           // focuses the next input if available, otherwise it asks if the student wants to check their answers
@@ -1810,12 +1811,12 @@
             }, 10);
           }
         }
-        
+
         // checks if currently busy processing the previous answer
         else if (Genki.check.busy) {
           window.setTimeout(function() { // delay required to prevent text duplication when proceeding to already filled inputs
             Genki.check.busy = false;
-            
+
             // use `document.activeElement` over `input` as the latter causes previously input text to disappear on firefox
             if (document.activeElement && document.activeElement.value && document.activeElement.value == Genki.input.map[Genki.input.index - 1].value) { // clears up duplicated texts from IMEs on current input
               document.activeElement.value = '';
@@ -1823,8 +1824,8 @@
           }, 10);
         }
       },
-      
-      
+
+
       // check the answers for writing exercises
       // mapEnded means the end of Genki.input.map was reached via Genki.check.value()
       answers : function (mapEnded, type) {
@@ -1832,40 +1833,40 @@
           title : '<span class="en">Check Answers?</span><span class="ja">答え合わせをしますか？</span>',
           content : mapEnded ? '<span class="en">The last input field has been filled in. Are you ready to check your answers?</span><span class="ja">最後の入力欄が入力されました。答え合わせをしてもよろしいですか？</span>' : '<span class="en">Checking your answers will end the quiz. Do you want to continue?</span><span class="ja">答え合わせをするとテストが終了します。よろしいですか？</span>',
           buttonHTML : '<span class="en">Yes, check my answers!</span><span class="ja">はい、答え合わせをしよう！</span>',
-          
+
           callback : function () {
             Genki.exerciseComplete = true;
 
             // hide check answers button
             document.querySelector('#check-answers button').style.display = 'none';
-            
+
             // kanji/kana drawing quizzes
             if (type && type == 'drawing') {
               var answer = document.querySelectorAll('.kanji-canvas'), i = 0, j = answer.length, kanji;
-              
+
               for (; i < j; i++) {
                 kanji = KanjiCanvas.recognize(answer[i].id); // find kanji with the given strokes
-                
+
                 // debugging (logs info about matched kanji, match index, and whether the answer was correct or not)
                 Genki.debug && console.log('toDraw: ' + answer[i].dataset.kanji);
                 Genki.debug && console.log('Results: ' + kanji);
                 Genki.debug && console.log('Correct: ' + (new RegExp(answer[i].dataset.kanji).test(kanji) && answer[i].dataset.strokesAnswer == answer[i].dataset.strokes).toString());
-                
+
                 // correct answer
                 if (new RegExp(answer[i].dataset.kanji).test(kanji) && answer[i].dataset.strokesAnswer == answer[i].dataset.strokes) {
                   answer[i].dataset.answer = true;
-                } 
-                
+                }
+
                 // incorrect answer
                 else {
                   answer[i].dataset.answer = false;
                   ++Genki.stats.mistakes;
                 }
-                
+
                 ++Genki.stats.solved;
               }
-            } 
-            
+            }
+
             // standard written quizzes
             else {
               // loop over the inputs and check to see if the answers are correct
@@ -1881,7 +1882,7 @@
                 for (k in data) {
                   if (/answer/.test(k)) {
                     answer = Genki.toHalfWidth(data[k]).toLowerCase().replace(/。|、|^\s+|\s+$|\n/g, '');
-                    
+
                     // check if there's alternative answers in the answer
                     // alternative answers are given as %(alt1/alt2/etc.)
                     if (/%\(.*?\)/.test(answer)) {
@@ -1896,21 +1897,21 @@
 
                         alt.splice(0, 1); // remove the checked answer
                       }
-                    } 
+                    }
 
                     // otherwise check the answer normally
                     else if (val == answer) {
                       correct = true;
                     }
 
-                    // break out of the loop when a correct answer is found 
+                    // break out of the loop when a correct answer is found
                     if (correct) break;
                   }
                 }
 
                 // add classname to correct answers
                 if (correct) {
-                  input[i].parentNode.className += ' answer-correct';  
+                  input[i].parentNode.className += ' answer-correct';
                 }
 
                 // increment mistakes if the answer is incorrect
@@ -1939,16 +1940,16 @@
       }
     },
 
-    
+
     // functions that toggle the display of elements
     toggle : {
-      
+
       // toggle the exercise list
       exerciseList : function (button) {
         button.className = button.className == 'list-open' ? '' : 'list-open';
       },
-      
-      
+
+
       // toggles the display of lists
       list : function (el) {
         var closed = 'lesson-title',
@@ -1963,13 +1964,13 @@
           }
         }
       },
-      
-      
+
+
       // toggles furigana in drag and drop quizzes
       furigana : function (button) {
         var zone = document.getElementById('quiz-zone'),
             state = (storageOK && localStorage.furiganaVisible) || (/helper-hidden/.test(zone.className) ? 'false' : 'true');
-        
+
         // hide or show the textual aids
         switch (state) {
           case 'true' :
@@ -1983,21 +1984,21 @@
             zone.className = zone.className.replace('helper-hidden', 'helper-present');
             button.innerHTML = button.innerHTML.replace('Show', 'Hide').replace('表示', '非表示');
             break;
-            
+
           default :
             break;
         }
-        
+
         // update button html
         Genki.lang.toggle_furigana = button.outerHTML;
-        
+
         // save settings if supported
         if (storageOK) {
           localStorage.furiganaVisible = state;
         }
       },
-      
-      
+
+
       // toggles the vocab spoiler in multi-choice vocab
       vocabSpoiler : function (button) {
         var spoiler = button.nextSibling;
@@ -2014,8 +2015,8 @@
           button.innerHTML = button.innerHTML.replace('Show', 'Hide').replace('表示', '非表示');
         }
       },
-      
-      
+
+
       // toggles the orientation of drag and drop vocab from vertical-vertical to horizontal-horizontal
       vocabOrientation : function (button, customState) {
         var zone = document.getElementById('quiz-zone'),
@@ -2023,7 +2024,7 @@
             answer = document.querySelectorAll('.quiz-answer-zone'),
             i = 0,
             j = answer.length;
-        
+
         // change the vocab orientation
         switch (state) {
           case 'true' :
@@ -2031,70 +2032,70 @@
             zone.className = zone.className.replace(' vocab-horizontal', '');
             button.innerHTML = button.innerHTML.replace('Vertical', 'Horizontal').replace('垂直', '水平');
             button.querySelector('i').style.transform = 'rotate(90deg)';
-            
+
             // revert answer zones to their original positions
             for (var dropList = document.getElementById('drop-list'); i < j; i++) {
               dropList.appendChild(answer[i]);
             }
-            
+
             break;
-            
+
           case 'false' :
             state = 'true';
             zone.className += ' vocab-horizontal';
             button.innerHTML = button.innerHTML.replace('Horizontal', 'Vertical').replace('水平', '垂直');
             button.querySelector('i').style.transform = 'rotate(0deg)';
-            
+
             // reposition answer zones
             for (var group = document.querySelectorAll('.quiz-item-group'); i < j; i++) {
               group[i].appendChild(answer[i]);
             }
-            
+
             break;
-            
+
           default :
             break;
         }
-        
+
         // save settings if supported
         if (storageOK && !customState) {
           localStorage.vocabHorizontal = state;
         }
       },
-      
-      
+
+
       // toggles display of stroke numbers in stroke order quizzes
       strokeNumbers : function (button) {
         var zone = document.getElementById('quiz-zone');
-        
+
         // hide or show the textual aids
         switch (Genki.strokeNumberDisplay) {
           case true :
             Genki.strokeNumberDisplay = false;
             button.innerHTML = button.innerHTML.replace('Show', 'Hide').replace('表示', '非表示');
             break;
-            
+
           case false :
             Genki.strokeNumberDisplay = true;
             button.innerHTML = button.innerHTML.replace('Hide', 'Show').replace('非表示', '表示');
             break;
-            
+
           default :
             break;
         }
-        
+
         // redraw each canvas
         for (var a = document.querySelectorAll('.kanji-canvas'), i = 0, j = a.length; i < j; i++) {
           if (KanjiCanvas['canvas_' + a[i].id]) KanjiCanvas.redraw(a[i].id, false, Genki.strokeNumberDisplay);
         }
       },
-      
-      
+
+
       // toggles stroke order in stroke order quizzes
       strokeOrder : function (button) {
         var zone = document.getElementById('quiz-zone'),
             state = (storageOK && localStorage.strokeOrderVisible) || (/stroke-order-hidden/.test(zone.className) ? 'false' : 'true');
-        
+
         // hide or show the textual aids
         switch (state) {
           case 'true' :
@@ -2102,48 +2103,48 @@
             zone.className = zone.className += ' stroke-order-hidden';
             button.innerHTML = button.innerHTML.replace('Hide', 'Show').replace('非表示', '表示');
             break;
-            
+
           case 'false' :
             state = 'true';
             zone.className = zone.className.replace(' stroke-order-hidden', '');
             button.innerHTML = button.innerHTML.replace('Show', 'Hide').replace('表示', '非表示');
             break;
-            
+
           default :
             break;
         }
-        
+
         // save settings if supported
         if (storageOK) {
           localStorage.strokeOrderVisible = state;
         }
       },
-      
-      
+
+
       // toggles tracing guides in the stroke order quizzes
       tracingGuide : function (button, drawingPractice) {
         var zone = document.getElementById('quiz-zone'),
             state = storageOK && localStorage.tracingGuideVisible ? localStorage.tracingGuideVisible : 'true';
-        
+
         // hide or show the tracing guides
         switch (state) {
           case 'true' :
             state = 'false';
             button.innerHTML = button.innerHTML.replace('Hide', 'Show').replace('非表示', '表示');
             break;
-            
+
           case 'false' :
             state = 'true';
             button.innerHTML = button.innerHTML.replace('Show', 'Hide').replace('表示', '非表示');
             break;
-            
+
           default :
             break;
         }
-        
+
         // loop through and update the data-guide value and redraw each canvas
         var a = document.querySelectorAll('.kanji-canvas'), i = 0, j = a.length
-        
+
         // Stroke Order loop
         if (!drawingPractice) {
           for (; i < j; i++) {
@@ -2151,7 +2152,7 @@
             if (KanjiCanvas['canvas_' + a[i].id]) KanjiCanvas.redraw(a[i].id, true);
           }
         }
-        
+
         // Drawing Practice loop
         else {
           for (var n = 0, kanji = ''; i < j; i++) {
@@ -2160,7 +2161,7 @@
               kanji = a[i].dataset.kanji;
               n = 0;
             }
-            
+
             // changes the guide state of the first 3 canvases
             if (n++ < 3) {
               a[i].dataset.guide = state;
@@ -2168,18 +2169,18 @@
             }
           }
         }
-        
+
         // save settings if supported
         if (storageOK) {
           localStorage.tracingGuideVisible = state;
         }
       },
-      
-      
+
+
       // toggles text selection for buttons in multi-choice quizzes
       textSelection : function (button) {
         var zone = document.getElementById('quiz-zone');
-        
+
         // hide or show the textual aids
         switch (Genki.textSelectMode) {
           case true :
@@ -2187,24 +2188,24 @@
             zone.className = zone.className.replace(' text-selection-mode', '');
             button.innerHTML = button.innerHTML.replace('Dis', 'En').replace('無', '有');
             break;
-            
+
           case false :
             Genki.textSelectMode = true;
             zone.className = zone.className += ' text-selection-mode';
             button.innerHTML = button.innerHTML.replace('En', 'Dis').replace('有', '無');
             break;
-            
+
           default :
             break;
         }
       }
     },
 
-    
+
     // functions that create new functionality and adds it to the document
     // usually functions that are executed via init
     create : {
-      
+
       // creates prev/next exercise buttons
       exerciseButtons : function () {
         var more = '<div class="more-exercises clear">',
@@ -2231,7 +2232,7 @@
       removeExerciseList : function () {
         var list = document.getElementById('exercise-list'),
             toggle = document.getElementById('toggle-exercises');
-        
+
         if (list) list.parentNode.removeChild(list);
         if (toggle) toggle.parentNode.removeChild(toggle);
       },
@@ -2239,7 +2240,7 @@
 
       // creates the exercise list
       exerciseList : function () {
-        var main = 
+        var main =
           '<div id="link-list" class="normal-block indent-block">'+
             '<div><a id="link-home" class="button" href="' + (getPaths() + (storageOK && localStorage.GenkiEdition == '3rd' ? 'lessons-3rd/' : '') + Genki.local) + '"><i class="fa">&#xf015;</i><span class="en">Home</span><span class="ja">トップページ</span></a></div>'+
             '<div><a id="link-grammar" href="' + getPaths() + 'lessons-3rd/appendix/grammar-index/' + Genki.local + '"><i class="fa">&#xf02d;</i><span class="en">Grammar Index</span><span class="ja">文法索引</span></a></div>'+
@@ -2257,10 +2258,10 @@
             '<a href="https://sethclydesdale.github.io/quartet-study-resources/" title="Quartet Study Resources"><img src="' + getPaths() + 'resources/images/quartet-img.png" alt="Quartet Study Resources"></a>'+
             '<a href="https://sethclydesdale.github.io/colloquial-kansai-dictionary/" title="Colloquial Kansai Japanese"><img src="' + getPaths() + 'resources/images/kansai-img.png" alt="Colloquial Kansai Japanese"></a>'+
           '</div>';
-        
+
         if (Genki.exercises) {
           var attrs = 'class="lesson-title" onclick="Genki.toggle.list(this);" onkeydown="event.key == \'Enter\' && Genki.toggle.list(this);" tabindex="0"', // lesson-title attrs
-              list = 
+              list =
               '<nav id="exercise-list">'+
                 '<h3 class="main-title"><span class="en">Exercise List</span><span class="ja">練習問題一覧</span></h3>'+
                 '<button id="random-exercise" class="button" onclick="Genki.randomExercise();" title="' + (GenkiLang == 'ja' ? 'ランダム練習' : 'Random Exercise') + '"><i class="fa">&#xf074;</i></button>'+
@@ -2300,7 +2301,7 @@
 
             // if the lesson group is different create a new group
             if (!new RegExp(lesson).test(linkData[0])) {
-              lesson = /^appendix/.test(linkData[0]) ? 'appendix' : 
+              lesson = /^appendix/.test(linkData[0]) ? 'appendix' :
                        /^study-tools/.test(linkData[0]) ? 'study-tools' :
                        linkData[0].replace(/(lesson-\d+)\/.*/, '$1');
 
@@ -2352,10 +2353,10 @@
             document.getElementById('lessons-list').scrollTop = active.offsetTop - (active.getBoundingClientRect().height + (window.matchMedia && matchMedia('(pointer:coarse)').matches ? 0 : 6));
           }
         }
-        
+
         // creates quick nav for non-exercise pages
         else {
-          var nav = 
+          var nav =
               '<a href="#toggle-navigation" id="toggle-exercises" onclick="Genki.toggle.exerciseList(this); return false;" title="' + (GenkiLang == 'ja' ? 'クイックナビゲーションをトグルする' : 'Toggle quick navigation') + '"></a>'+
               '<nav id="exercise-list">'+
                 '<h3 class="main-title"><span class="en">Quick Navigation</span><span class="ja">クイックナビゲーション</span></h3>'+
@@ -2367,71 +2368,72 @@
           document.getElementById('content').insertAdjacentHTML('afterbegin', nav);
         }
       },
-      
-      
+
+
       // creates button for refreshing the page and triggering the exercise type selection
       exerciseTypeButton : function () {
         // container and button creation
         var timer = document.getElementById('quiz-timer'),
             div = document.createElement('DIV'),
             button = document.createElement('BUTTON');
-        
+
         // container and button attributes
         div.id = 'change-exercise-type-container';
         div.className = 'center';
-        
+
         button.id = 'change-exercise-type';
         button.className = 'button';
-        button.innerHTML = '<i class="fa">&#xf021;</i> <span class="en">Change Exercise Type</span><span class="ja">練習型を変更する</span>';
-        
+        button.innerHTML = '<i class="fa">&#xf021;</i> <span class="en">Changer le type d\'exercice</span><span class="ja">練習型を変更する</span>';
+
         // action to perform on click of the button
         button.onclick = function () {
           // opens a prompt warning the user that the exercise will end
           GenkiModal.open({
-            title : '<span class="en">Change Exercise Type?</span><span class="ja">練習型を変更しますか？</span>',
-            content : '<span class="en">To change the exercise type, you must quit the current exercise. Do you want to quit?</span><span class="ja">練習型を変更するためにテストが終了しなければいけません。よろしいですか？</span>',
-            buttonHTML : '<span class="en">Quit</span><span class="ja">終了する</span>',
-            closeButtonText : '<span class="en">Cancel</span><span class="ja">戻る</span>',
+            title : '<span class="en">Changer le type d\'exercice ?</span><span class="ja">練習型を変更しますか？</span>',
+            content : '<span class="en">Pour changer le type d\'exercice, vous devez quitter l\'exercice en cours. Voulez-vous quitter ?</span><span class="ja">練習型を変更するためにテストが終了しなければいけません。よろしいですか？</span>',
+            buttonHTML : '<span class="en">Quitter</span><span class="ja">終了する</span>',
+            closeButtonText : '<span class="en">Annuler</span><span class="ja">戻る</span>',
+
             keepOpen : /\/dictionary\//.test(window.location) || (!Genki.tools && /"format"/.test(Genki.exerciseData)) ? true : false,
-            
+
             // clicking "OK" will reload the exercise, leading to the exercise type selection screen
             callback : function () {
               // remove start/begin queries, so the user can select a new exercise type
               if (/(?:begin|start)=\d/.test(window.location.search)) {
                 if (window.history && window.history.pushState) {
                   window.history.pushState({}, document.title, window.location.href.replace(window.location.search, '') + Genki.debug);
-                } 
-              
+                }
+
                 // remove the old fashioned way if the history API cannot be used
                 else {
                   window.location.search = '';
                   return;
                 }
-              } 
-              
+              }
+
               // set flag so genkiSkipExType doesn't trigger while trying to change the exercise type
               Genki.changingExType = true;
-              
+
               // reset exercise state
               Genki.reset();
             }
           });
         }
-        
+
         // appends the button to the container
         div.appendChild(button);
-        
+
         // adds the container and button to the document
         if (timer.nextSibling) {
           timer.parentNode.insertBefore(div, timer.nextSibling);
-          
+
         } else {
           timer.parentNode.appendChild(div);
         }
       }
     },
-    
-    
+
+
     // parsing functions
     parse : {
       // parse images
@@ -2446,23 +2448,23 @@
 
       }
     },
-    
-    
+
+
     // quick dictionary functionality
     quickJisho : {
       hidden : true, // display state of dictionary
       selectorHidden : true, // display state of "lookup button"
       tabbing : false, // prevents selection change from occuring while tabbing
-      
+
       // creates the quick dictionary button and popup
       create : function () {
         if (Genki.quickJisho.cache) return; // prevent duplication of the quickJisho
-        
+
         var button = document.createElement('DIV'),
             box = document.createElement('DIV'),
             selector = document.createElement('BUTTON'),
             frag = document.createDocumentFragment();
-        
+
         // button attrs
         button.id = 'quick-jisho-toggle';
         button.innerHTML = '<i class="fa">&#xf02d;</i>';
@@ -2472,11 +2474,11 @@
         button.onkeypress = function (e) {
           e.key == 'Enter' && Genki.quickJisho.toggle();
         }
-        
+
         // box attrs
         box.id = 'quick-jisho-window';
         box.className = 'quick-jisho-hidden';
-        box.innerHTML = 
+        box.innerHTML =
           '<div class="quick-jisho-header">' +
             '<h3 id="quick-jisho-title" class="main-title"> <span class="en">Quick Dictionary</span><span class="ja">クイック辞書</span> <span id="quick-jisho-hits"></span> </h3> ' +
             '<i class="fa fa-hover" tabindex="0" onclick="Genki.quickJisho.toggle();" onkeydown="event.key == \'Enter\' && Genki.quickJisho.toggle();" title="' + (GenkiLang == 'ja' ? '最小化' : 'Minimize') + '">&#xf2d1;</i>  ' +
@@ -2489,7 +2491,7 @@
               '<ul id="quick-jisho-results"></ul>' +
             '</div>' +
           '</div>';
-        
+
         // selection button
         selector.id = 'quick-jisho-selector';
         selector.className = 'button';
@@ -2497,7 +2499,7 @@
         selector.innerHTML = '<i class="fa">&#xf002;</i><span class="en">Look up</span><span class="ja">辞書で調べる</span>';
         selector.onclick = Genki.quickJisho.lookUp;
         selector.tabIndex = 0;
-        
+
         // add nodes to the document
         frag.appendChild(box);
         frag.appendChild(button);
@@ -2505,7 +2507,7 @@
         document.body.appendChild(frag);
         var footerRight = document.querySelector('.footer-right');
         footerRight.style.marginRight = '40px'; // offset footer so texts are visible
-        
+
         // node cache
         Genki.quickJisho.cache = {
           box : box,
@@ -2514,16 +2516,16 @@
           hits : document.getElementById('quick-jisho-hits'),
           selector : document.getElementById('quick-jisho-selector')
         };
-        
+
         // selection handler
         document.onselectionchange = Genki.quickJisho.getSelection;
-        
+
         // get mouse position for adjusting x/y values of the selector
         document.onmousemove = function (e) {
           Genki.quickJisho.x = Math.abs(e.pageX - document.body.clientWidth) < 100 ? e.pageX - 95 : e.pageX;
           Genki.quickJisho.y = Math.abs(e.pageY - document.body.clientHeight) < 40 ? e.pageY - 32 : e.pageY + 12;
         };
-        
+
         // key handler for focusing the dictionary lookup button with a tab press
         document.onkeydown = function (e) {
           if (e.key == 'Tab' && !Genki.quickJisho.selectorHidden && document.activeElement != Genki.quickJisho.cache.selector) {
@@ -2533,59 +2535,59 @@
           }
         };
       },
-      
-      
+
+
       // toggles the quick dictionary
       toggle : function () {
         // load in the dictionary definitions
         if (!Genki.jisho && !Genki.quickJisho.loading) {
           Genki.quickJisho.loading = true;
-          
+
           var jisho = document.createElement('SCRIPT');
           jisho.src = getPaths() + 'resources/javascript/jisho.min.js';
           jisho.onload = function () {
             if (Genki.quickJisho.cache.search.value) {
               Genki.quickJisho.search(Genki.quickJisho.cache.search.value);
             }
-            
+
             Genki.quickJisho.loading = false;
           };
-          
+
           document.body.appendChild(jisho);
         }
-        
-        
+
+
         // toggle dictionary display
         if (Genki.quickJisho.hidden) {
           Genki.quickJisho.cache.box.className = '';
           Genki.quickJisho.hidden = false;
           Genki.quickJisho.cache.search.focus();
-          
+
         } else {
           Genki.quickJisho.cache.box.className = 'quick-jisho-hidden';
           Genki.quickJisho.hidden = true;
         }
       },
-      
-      
+
+
       // searches the dictionary
       search : function (value, retry) {
         // clear existing timeout
         if (Genki.quickJisho.searchTimeout) {
           window.clearTimeout(Genki.quickJisho.searchTimeout);
         }
-        
+
         // wait 300ms before submitting search, just in case the user is still typing
         Genki.quickJisho.searchTimeout = window.setTimeout(function() {
           var results = '',
               hits = 0,
               k, i, j, l, ja;
-          
+
           Genki.quickJisho.cache.results.innerHTML = '';
-          
+
           if (value) {
             value = value.toLowerCase();
-            
+
             for (k in Genki.jisho) {
               for (i = 0, j = Genki.jisho[k].length; i < j; i++) {
                 for (l in Genki.jisho[k][i]) {
@@ -2609,27 +2611,27 @@
               }
             }
           }
-          
+
           // perform a kanji only search if the previous one yeilded no results
           if (!retry && !results && value && /[\u3400-\u9faf]/.test(value)) {
             var kanji = value.match(/[\u3400-\u9faf]+/);
-            
+
             if (kanji && kanji[0]) {
               Genki.quickJisho.search(kanji[0], true);
             }
-          } 
-          
+          }
+
           // show results
           else {
             Genki.quickJisho.cache.results.innerHTML = results ? results : value ? '<li><span class="en">No results found for "' + value + '".</span><span class="ja">「' + value + '」が見つかりませんでした。</span></li>' : '';
             Genki.quickJisho.cache.hits.innerHTML = hits ? '(' + hits + ')' : '';
           }
-          
+
           delete Genki.quickJisho.searchTimeout;
         }, 300);
       },
-      
-      
+
+
       // look up a selected word
       lookUp : function () {
         if (Genki.quickJisho.hidden) {
@@ -2643,13 +2645,13 @@
         this.style.display = 'none';
         Genki.quickJisho.selectorHidden = true;
       },
-      
-      
+
+
       // gets the selected text and shows the look up button
       getSelection : function () {
         // disables quick jisho look up if preferred
         if (storageOK && localStorage.genkiJishoLookUp == 'false') return false;
-        
+
         // returns if tabbing to the lookup button
         // required, as some browsers change selection when focusing a new element w/focus()
         if (Genki.quickJisho.tabbing) {
@@ -2660,10 +2662,10 @@
               delete Genki.quickJisho.tabbingOff;
             }, 10);
           }
-          
+
           return false;
         }
-        
+
         // get the currently selected texts
         if (document.getSelection) {
           var selection = document.getSelection();
@@ -2671,11 +2673,11 @@
           if (selection.type == 'Range' && selection.toString && !/quick-jisho/.test(selection.focusNode.className)) {
             // stores selected text for searches
             Genki.quickJisho.selectedText = selection.toString();
-            
+
             // update lookup button position
             Genki.quickJisho.cache.selector.style.left = Genki.quickJisho.x + 'px';
             Genki.quickJisho.cache.selector.style.top = Genki.quickJisho.y + 'px';
-            
+
             // show lookup button
             if (Genki.quickJisho.selectorHidden) {
               Genki.quickJisho.cache.selector.style.display = '';
@@ -2693,24 +2695,24 @@
         }
       }
     },
-    
-    
+
+
     // plays the specific audio element
     playAudio : function (id, time) {
       // play the targeted audio file
       var audio = document.getElementById(id);
-      
+
       if (audio) {
         audio.currentTime = time;
         audio.play();
       }
     },
-    
-    
+
+
     // for viewing the stroke order in Kanji Writing Practice exercises
     viewStrokeOrder : function (kanji, order, kana) {
       var img = getPaths() + 'resources/images/stroke-order/' + order + '.png';
-          
+
       GenkiModal.open({
         title : kanji + '<span class="en"> Stroke Order</span><span class="ja">の書き順</span>',
         content :
@@ -2719,11 +2721,11 @@
             '<a class="button-link" href="' + (kana ? getPaths() + 'resources/images/stroke-order/sasagami-' + kana + '.jpg' : 'https://jisho.org/search/' + kanji + '%20%23kanji') + '" target="_blank" title="' + (GenkiLang == 'ja' ? 'jisho.orgで書き順を見る' : 'View stroke order on jisho.org') + '"><button class="button"><i class="fa">&#xf002;</i></button></a>'+
             '<a href="' + img + '" target="_blank" title="' + (GenkiLang == 'ja' ? 'クリックして画像を見る' : 'Click to view image') + '"><img src="' + img + '" alt="' + ( GenkiLang == 'ja' ? '書き順' : 'stroke order' ) + '"/></a>'+
           '</div>'
-        
+
       });
     },
-    
-    
+
+
     // Returns a list of alternative answers for a string. Generally used for mixed kana/kanji answers.
     // Special thanks to Patrick Roberts for helping me improve this function (stackoverflow.com/a/59337819/12502093)
     // USAGE: Genki.getAlts('...{A}...{B}...{C}...', '1|2|3'); // add 'true' to the 3rd arg to return an array
@@ -2747,7 +2749,7 @@
 
         results.push(result);
       }
-      
+
       // append ?debug to the URL for debug logs
       if (Genki.debug) {
         var len = results.length;
@@ -2756,8 +2758,8 @@
 
       return arrayOnly ? results : '%(' + results.join('/') + ')|';
     },
-    
-    
+
+
     // returns the specified grammar point in a popup window
     getGrammarPoint : function (caller, id) {
       // check if grammar point is being opened in the popup window, to cache the currently opened grammar point
@@ -2767,20 +2769,20 @@
           // push new history entry
           Genki.grammarPointHistory.push(parent.innerHTML);
           break;
-          
+
         } else if (parent.tagName == 'BODY' || !parent) {
           break;
-          
+
         } else {
           parent = parent.parentNode;
         }
       }
-      
+
       // open modal
       GenkiModal.open({
         title : 'Quick Grammar Review',
         content : '<div id="appendix-tool" class="loading"></div>',
-        customButton : 
+        customButton :
         (Genki.grammarPointHistory.length ? '<button id="genki-modal-back" class="button" onclick="Genki.grammarPointBack(this);" title="Go back to previous grammar point."><i class="fa">&#xf112;</i><span class="en">Back</span><span class="ja">先の文法ノートに戻る</span></button>' : '')+
         '<a href="' + caller.href + '" class="button" target="_blank"><i class="fa">&#xf08e;</i><span class="en">View in Grammar Index</span><span class="ja">文法索引で見る</span></a>',
         customSize : {
@@ -2790,18 +2792,18 @@
           right : '20%'
         },
         zIndex : 'low',
-        
+
         // clears grammar history when closed
         closeCallback : function () {
           Genki.grammarPointHistory = [];
         }
       });
-      
+
       Get(caller.href, function (data) {
         var zone = document.querySelector('#genki-modal #appendix-tool'),
             grammar = data.match(new RegExp('(<h3 id="' + id + '"[\\s\\S]*?<\/table><br>)', 'm')), // should return h3 title and table right below it
             url = caller.href.replace(/#.*$/, ''); // clean grammar index url for use in anchor links
-        
+
         if (grammar && grammar[0]) {
           if (zone) {
             // trim out grammar point number and format anchor links for use with the quick grammar review modal
@@ -2814,7 +2816,7 @@
         }
       });
     },
-    
+
     // return to a previously viewed grammar point in the quick grammar review window
     grammarPointHistory : [],
     grammarPointBack : function (button) {
@@ -2822,54 +2824,54 @@
         var content = document.getElementById('genki-modal-content');
         content.innerHTML = Genki.grammarPointHistory.pop();
         content.scrollTop = 0;
-        
+
         // hide button if no more history entries
         if (!Genki.grammarPointHistory.length) {
           button.style.display = 'none';
         }
       }
     },
-    
-    
+
+
     // takes the user to a random exercise
     randomExercise : function () {
       // random exercise preference (current lesson)
       if (storageOK && localStorage.genkiRandomExercise == 'lesson' && /lesson-\d+/.test(window.location.href)) {
         var regex = new RegExp(window.location.href.replace(/.*?(lesson-\d+).*/, '$1/')),
             list = Genki.exercises.filter(function(a) { return regex.test(a) });
-      } 
+      }
 
       // random exercise preference (random, previously completed lesson)
       else if (storageOK && localStorage.genkiRandomExercise == 'completed' && localStorage.Results && JSON.parse(localStorage.Results)[localStorage.GenkiEdition]) {
         var editionLessonResults = JSON.parse(localStorage.Results)[localStorage.GenkiEdition];
         var list = Genki.exercises.filter(function(a) { return a.split('|')[0] in editionLessonResults });
-        
+
         if (!list[0]) {
           return alert(GenkiLang == 'ja' ? '完成した練習が足りませんのでランダム練習はできません。' : 'Cannot select a random exercise, because you have not completed enough exercises yet.');
         }
       }
-      
+
       else if (storageOK && localStorage.genkiRandomExercise == 'custom' && GenkiRandomList.length) {
         var list = GenkiRandomList;
-      } 
-      
+      }
+
       // default (all lessons), triggers this instead of preference if in the appendix or study tools since they're not lessons
       else {
         var list = Genki.exercises;
       }
-      
+
       // the random exercise
       var exercise = list[Math.floor(Math.random() * list.length)].split('|');
-      
+
       // only take the user to random lessons
       if (/lesson-\d+/.test(exercise[0])) {
         window.location.href = '../../../' + Genki.ed + '/' + exercise[0] + '/' + Genki.local + Genki.debug;
-        
+
       } else { // try again if not a lesson
         Genki.randomExercise();
       }
     },
-    
+
 
     // start or pause timer according to page visibility
     startOrPauseTimerByVisibility : function () {
@@ -2886,7 +2888,7 @@
        Genki.timer.pause();
        Genki.isTimerPausedByPopup = true;
     },
-    
+
 
     // start timer when close popup
     startTimerWhenClosePopup: function () {
@@ -2953,27 +2955,27 @@
         // setup navigational objects
         Genki.create.exerciseButtons();
       }
-      
+
       Genki.create.exerciseList();
-      
+
       // define Genki in the global namespace
       window.Genki = this;
     }
-    
+
   };
-  
-  
+
+
   // prevent progress loss on page change
   window.onbeforeunload = function () {
     var lossDetected = false,
         type = document.getElementById('exercise');
-    
+
     if (type) {
       type = type.className;
       // determine exercise type and find if the user may incur progress loss for the current exercise
       if (/quiz-over/.test(type) || document.querySelector('.review-mode')) { // ignore this check completely if the quiz is over or student is in review mode
         lossDetected = false;
-      } 
+      }
 
       // check if any of the inputs have been filled in for a written quiz
       else if (/fill-quiz|writing-quiz/.test(type)) {
@@ -3006,8 +3008,8 @@
       }
     }
   };
-  
-  
+
+
   // initial setup
   Genki.init();
 }(window, document));
