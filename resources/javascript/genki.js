@@ -237,29 +237,45 @@
                      .replace('Write the Numbers', '数を書く');
         }
 
+        // japanese language for exercise types
+        if (GenkiLang == 'fr') {
+          opts = opts.replace('Drag and Drop', 'Glisser-déposer')
+                     .replace('Multiple Choice', 'QCM')
+                     .replace('Writing Practice', 'Pratique de l\'écriture')
+                     .replace('Spelling Practice', 'Orthographe') 
+                     .replace('Write the Definition', 'Écrire la définition') 
+                     .replace('Written', 'Écrit')
+                     .replace('Stroke Order Practice', 'Ordre des traits')
+                     .replace('Extended Drawing Practice', 'Pratique avancée de l\'écriture')
+                     .replace('Drawing Practice', 'Pratique de l\'écriture')
+                     .replace('Fill in the Chart', 'Remplissez le tableau')
+                     .replace('Write the Numbers', 'Écriture des nombres');
+        }
+        
         // open selection window
         modal = GenkiModal.open({
-          title : '<span class="en">Veuillez sélectionner un type d\'exercice</span><span class="ja">練習型を選択してください</span>',
-          content : '<span class="en">Veuillez sélectionner le type d\'exercice que vous souhaitez faire, puis cliquez sur "Commencer" pour commencer à étudier.</span><span class="ja">練習型を選択してから練習を始めるために「始める」をクリックしてください。</span><br><br>'+
+          title : '<span class="en">Please Select an Exercise Type</span><span class="ja">練習型を選択してください</span><span class="fr">Merci de choisir un type d\'exercice</span>',
+          content : '<span class="en">Please select the type of exercise you would like to do, then click "Begin" to start studying.</span><span class="ja">練習型を選択してから練習を始めるために「始める」をクリックしてください。</span><span class="fr">Merci de choisir le type d\'exercice que vous voulez faire, puis cliquer sur "Démarrer" pour commencer l\'étude.</span><br><br>'+
           '<div class="center">'+
             (/\/vocabulary-index\/|\/custom-vocab\//.test(window.location) ? '' : '<div>'+
-              '<b><span class="en">Exercice en cours</span><span class="ja">今の練習</span></b><br>'+
+              '<b><span class="en">Current Exercise</span><span class="ja">今の練習</span><span class="en">Exercice en cours</span></b><br>'+
+
               document.title.replace(/ \| Genki Study Resources.*$/, '')+
             '</div><br>')+
 
             '<div>'+
-              '<b><span class="en">Type d\'exercice</span><span class="ja">練習型</span></b><br>'+
+              '<b><span class="en">Exercise Type</span><span class="ja">練習型</span><span class="fr">Type d\'exercice</span></b><br>'+
               '<select id="exercise-type">' + opts + '</select>'+
             '</div><br>'+
 
-            '<div title="' + (GenkiLang == 'ja' ? '練習型を変更したいなら練習ページの下の「練習型を変更する」をクリックしてください。' : 'The exercise type can still be changed via the Change Exercise Type button at the bottom of an exercise.') + '">'+
+            '<div title="' + (GenkiLang == 'fr' ? 'Le type d\'execice peut toujours être changé par le bouton "Changer de type d\'exercice" au bas de l\'exercice' : GenkiLang == 'ja' ? '練習型を変更したいなら練習ページの下の「練習型を変更する」をクリックしてください。' : 'The exercise type can still be changed via the Change Exercise Type button at the bottom of an exercise.') + '">'+
               '<input id="modal-skip-ex-type" class="genki_input_hidden" type="checkbox"' + (storageOK && localStorage.genkiSkipExType == 'true' ? ' checked' : '') + ' onchange="localStorage.genkiSkipExType = this.checked">'+
               '<span tabindex="0" class="genki_pseudo_checkbox" onclick="this.previousSibling.click();" onkeypress="event.key == \'Enter\' && this.previousSibling.click();"></span>'+
-              '<label class="checkbox-label" for="modal-skip-ex-type"><span class="en">Sauter la sélection du type d\'exercice</span><span class="ja">練習型の選択をスキップする</span></label>'+
+              '<label class="checkbox-label" for="modal-skip-ex-type"><span class="en">Skip Exercise Type Selection</span><span class="ja">練習型の選択をスキップする</span><span class="fr">Ignorer la sélection dy type d\'exercice</span></label>'+
             '</div>'+
           '</div>',
 
-          buttonHTML : '<span class="en">Commencer</span><span class="ja">始める</span>',
+          buttonHTML : '<span class="en">Begin</span><span class="ja">始める</span><span class="fr">Démarrer</span>',
           noClose : 1,
           zIndex : 'low',
 
