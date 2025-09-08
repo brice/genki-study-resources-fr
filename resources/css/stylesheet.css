@@ -61,7 +61,7 @@
 ::-moz-selection { color:#FFF; background-color:#F93; }
 
 /* page language */
-.lang-en .ja, .lang-ja .en {
+.lang-en .ja, .lang-en .fr, .lang-ja .en, .lang-ja .fr, .lang-fr .ja, .lang-fr .en {
   display:none !important;
 }
 
