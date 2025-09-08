@@ -31,7 +31,7 @@ def vocab_type_sort_key(path_name):
       path_name = "greetings-1"
     elif path_name == "greetings-practice":
       path_name = "greetings-3"
-      
+
     match_groups = re.match(r'^(.*)-(\d\d*)$', path_name).groups()
     vocab_type = match_groups[0]
     lesson_number = int(match_groups[1])
@@ -127,7 +127,7 @@ ruby:hover rt {
 
     combined_deck = genanki.Deck(
         1443802639,  # Random hardcoded id
-        f'Genki')
+        f'Genki All Vocabulary')
     combined_deck.add_model(my_model)
 
     decks = [combined_deck]
@@ -139,12 +139,12 @@ ruby:hover rt {
             f'Genki FR L{lesson_number}')
         my_deck.add_model(my_model)
         decks.append(my_deck)
-        
+
         patterns = ['vocab*', 'literacy*', 'greetings*']
         all_files = []
         for pattern in patterns:
           all_files.extend(lesson_folder.glob(pattern))
-        
+
         for vocab_folder in sorted(all_files,
                                    key=lambda path: vocab_type_sort_key(path.name)):
             with open(vocab_folder.joinpath('index.html'), 'r', encoding='UTF8') as f:
@@ -167,7 +167,7 @@ ruby:hover rt {
         if deck.notes:
             print(f'Creating deck for {deck.name}...');
             genanki.Package(deck).write_to_file(output_folder.joinpath(f'{deck.name.replace(" ", "_")}.apkg'))
-            
+
     print('All Anki decks for the selected edition have been generated!')
 
 
