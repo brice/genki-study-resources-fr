@@ -1,14 +1,14 @@
 // # MODIFICATIONS FOR THE HOMEPAGE ONLY #
 (function (window, document) {
   'use strict';
-  
+
   // # EDITION PREFERENCE #
   // stores the currently selected edition so the student can be correctly redirected when clicking home links
   if (storageOK) {
     localStorage.GenkiEdition = /lessons-3rd/.test(window.location.pathname) ? '3rd' : '2nd';
   }
-  
-  
+
+
   // # QUICK SEARCH #
   if (document.getElementById('quick-search')) {
     window.QuickSearcher = {
@@ -16,11 +16,11 @@
       search : document.getElementById('quick-search'),
       results : document.getElementById('quick-search-results'),
       hitsCounter : document.getElementById('quick-search-hits'),
-      
+
       // set after definition
       li : null,
       exLen : null,
-      
+
       // search for the specified value
       query : function (value) {
         // clear existing timeout
@@ -80,7 +80,7 @@
             QuickSearcher.results.appendChild(frag);
 
           } else {
-            QuickSearcher.results.innerHTML = value ? '<li><span class="en">No results found for "' + value + '".</span><span class="ja">「' + value + '」が見つかりませんでした。</span></li>' : '';
+            QuickSearcher.results.innerHTML = value ? '<li><span class="fr">Pas de résultats pour "' + value + '".</span><span class="en">No results found for "' + value + '".</span><span class="ja">「' + value + '」が見つかりませんでした。</span></li>' : '';
           }
 
           // update the hits counter and add a button to copy the search link
@@ -96,12 +96,12 @@
           delete QuickSearcher.timeout;
         }, 300);
       },
-      
+
       // opens a popup for copying the search link
       copyLink : function (value) {
         GenkiModal.open({
           title : '<span class="en">Copy Search Link</span><span class="ja">サーチリンクをコピーする</span>',
-          content : 
+          content :
           '<div class="center">'+
             '<p><span class="en">You can copy the direct search link from the box below.</span><span class="ja">下の箱からサーチリンクがコピーできます。</span></p>'+
             '<textarea id="copied-search-link" onfocus="this.select();" style="width:80%;height:100px;">' + (window.location.protocol + '//' + window.location.host + window.location.pathname) + '?search=' + encodeURIComponent(value) + '#quick-search-exercises</textarea><br>'+
@@ -111,7 +111,7 @@
         });
       }
     };
-    
+
     // set remaining data for search functionality
     QuickSearcher.li = document.querySelectorAll(QuickSearcher.grammarIndex ? '.workbook-title' : '.lesson-exercises li');
     QuickSearcher.exLen = QuickSearcher.li.length;
@@ -144,54 +144,54 @@
       QuickSearcher.query(QuickSearcher.search.value);
     }
   }
-  
-  
+
+
   // # QUICK NAV SUB-SECTIONS #
   // Adds buttons for showing sub-sections in each lesson.
   for (var a = document.querySelectorAll('#quick-nav-list a'), i = 0, j = a.length, lesson_regex = /grammar-index/.test(window.location.pathname) ? /.*?lesson-grammar-(\d+).*/ : /.*?lesson-(\d+).*/, l; i < j; i++) {
     if (/lesson-\d+|lesson-grammar-\d+/.test(a[i])) {
       l = a[i].href.replace(lesson_regex, '$1'); // get lesson number
-      
+
       // create button and list
       a[i].insertAdjacentHTML('beforebegin', '<a class="sub-section-button fa" href="#toggle-sub-section" onclick="ToggleSubSection(this, '+ l +'); return false;" title="' + (GenkiLang == 'ja' ? 'サブセクションをトグルする' : 'Toggle sub-sections') + '" data-open="false"></a>');
       a[i].insertAdjacentHTML('afterend', '<ul style="display:none;"></ul>');
-      
+
       // hide bullet style
       a[i].parentNode.className += ' noBullet';
     }
   }
-  
+
   // toggles the display of each sub-section
   window.ToggleSubSection = function (caller, lesson) {
     var list = caller.parentNode.lastChild;
-    
+
     // gets the sub-section title for the lesson
     if (!list.innerHTML) {
       // gets all sub section titles and parses them into a list
       for (var sec = document.querySelectorAll('#exercises-' + lesson + ' h3'), i = 0, j = sec.length, str = ''; i < j; i++) {
         str += '<li><a href="#' + sec[i].id + '">' + sec[i].innerHTML.replace(/\s\(.*\)$/, '').replace(/<a.*?>.*?<\/a>/g, '') + '</a></li>';
       }
-      
+
       // add the html to the list
       list.innerHTML = str;
     }
-    
+
     // toggle list display and button icon
     if (/none/.test(list.style.display)) {
       list.style.display = 'block';
       caller.dataset.open = true;
-      
+
     } else {
       list.style.display = 'none';
       caller.dataset.open = false;
     }
   };
-  
-  
+
+
   // # JUMP ARROWS #
   // Add arrows to each lesson title that will take the student back to the quick navigation
-  AddJumpArrowsTo('.lesson-title', 'quick-nav', GenkiLang == 'ja' ? 'クイックナビゲーションに戻る' : 'Jump to Quick Navigation');  
-  
+  AddJumpArrowsTo('.lesson-title', 'quick-nav', GenkiLang == 'ja' ? 'クイックナビゲーションに戻る' : 'Jump to Quick Navigation');
+
   // # EXERCISE RESULTS #
   // Displays exercise results next to each exercise
   if (storageOK && localStorage.Results) {
@@ -204,6 +204,6 @@
         }
       }
     }
-  }  
-  
+  }
+
 }(window, document));
