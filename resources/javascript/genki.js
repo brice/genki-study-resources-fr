@@ -242,8 +242,8 @@
           opts = opts.replace('Drag and Drop', 'Glisser-déposer')
                      .replace('Multiple Choice', 'QCM')
                      .replace('Writing Practice', 'Pratique de l\'écriture')
-                     .replace('Spelling Practice', 'Orthographe') 
-                     .replace('Write the Definition', 'Écrire la définition') 
+                     .replace('Spelling Practice', 'Orthographe')
+                     .replace('Write the Definition', 'Écrire la définition')
                      .replace('Written', 'Écrit')
                      .replace('Stroke Order Practice', 'Ordre des traits')
                      .replace('Extended Drawing Practice', 'Pratique avancée de l\'écriture')
@@ -251,7 +251,7 @@
                      .replace('Fill in the Chart', 'Remplissez le tableau')
                      .replace('Write the Numbers', 'Écriture des nombres');
         }
-        
+
         // open selection window
         modal = GenkiModal.open({
           title : '<span class="en">Please Select an Exercise Type</span><span class="ja">練習型を選択してください</span><span class="fr">Merci de choisir un type d\'exercice</span>',
@@ -1194,7 +1194,7 @@
 
       // add dictionary for looking up words, but not for vocab exercises, since that would be cheating!
       // also disabled in the appendix
-      if (Genki.debug || (!/drag|kana|drawing/.test(o.type) && !Genki.appendix)) {
+      if (Genki.debug || (!/drag|kana|drawing|stroke/.test(o.type) && !Genki.appendix)) {
         if (Genki.debug || (o.format && !/vocab|kana|numbers/.test(o.format)) || !o.format) {
           Genki.quickJisho.create();
         }
