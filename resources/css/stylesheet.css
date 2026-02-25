@@ -1,10 +1,10 @@
 @font-face {
   font-family:'FontAwesomeWeb';
   src:url('../fonts/fontawesome-webfont.eot?v=4.7.0');
-  src:url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), 
-      url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), 
-      url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), 
-      url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), 
+  src:url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+      url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+      url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+      url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
       url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
   font-weight:normal;
   font-style:normal;
@@ -61,7 +61,7 @@
 ::-moz-selection { color:#FFF; background-color:#F93; }
 
 /* page language */
-.lang-en .ja, .lang-ja .en {
+.lang-en .ja, .lang-en .fr, .lang-ja .en, .lang-ja .fr, .lang-fr .ja, .lang-fr .en {
   display:none !important;
 }
 
@@ -193,7 +193,7 @@ input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:foc
 .ul { text-decoration:underline; }
 .ul-double {
   text-decoration:underline;
-  position:relative; 
+  position:relative;
 }
 .ul-double:after {
   content:"";
@@ -266,7 +266,7 @@ input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:foc
 
 /* tables */
 .table {
-  width:100%;  
+  width:100%;
   border-collapse:collapse;
 }
 
@@ -2808,7 +2808,7 @@ input:checked + .genki_pseudo_checkbox:after { font-size:14px; }
   box-sizing:border-box;
 }
 
-.dict-search-results { 
+.dict-search-results {
   border:1px solid #CCC;
   margin:0;
 }
@@ -2868,7 +2868,7 @@ input:checked + .genki_pseudo_checkbox:after { font-size:14px; }
   height:30px;
 }
 
-.dictionary-group .group-selectors .select-all:before, .dictionary-group .group-selectors .deselect-all:before, 
+.dictionary-group .group-selectors .select-all:before, .dictionary-group .group-selectors .deselect-all:before,
 .dict-search-wrapper .group-selectors .select-all:before, .dict-search-wrapper .group-selectors .deselect-all:before {
   margin:0;
 }
@@ -3174,21 +3174,21 @@ input:checked + .genki_pseudo_checkbox:after { font-size:14px; }
   /* wrapper's max-width is 1000px, so remove padding so the page takes up the whole screen */
   .content-block { padding:30px 0; }
   #announce-inner { padding:0 6px; }
-  
+
   /* footer links */
   footer li {
     float:none;
     display:inline-block;
   }
-  
+
   footer li:before { margin-left:0; }
-  
+
   .footer-left, .footer-right {
     float:none;
     text-align:center;
     margin-bottom:10px;
   }
-  
+
   #light-switch-container {
     height:auto;
     margin-top:0;
@@ -3198,22 +3198,22 @@ input:checked + .genki_pseudo_checkbox:after { font-size:14px; }
   p, h2, h3, h4, #quick-search-wrapper, .normal-block {
     padding:0 6px;
   }
-  
+
   /* adjust anchor position */
   a.anchor {
     margin:0 0 0 -5px;
   }
-  
+
   .sub-lesson-title a.anchor, .workbook-title a.anchor, .center a.anchor {
     margin:0 0 0 -25px;
   }
 
   /* remove margin in kana columns to reduce wrapping */
   .kana-quiz .quiz-column { margin:0; }
-  
+
   /* increase the size of text passages in multi-choice quizzes */
   .text-passage { width:90%; }
-  
+
   /* increase the size of multiple choice answers */
   .quiz-multi-answer { width:80%; }
 
@@ -3223,7 +3223,7 @@ input:checked + .genki_pseudo_checkbox:after { font-size:14px; }
     float:none;
     margin:3px;
   }
-  
+
   /* modal */
   #genki-modal-header { font-size:16px; }
   #genki-modal-content { font-size:14px; }
@@ -3240,7 +3240,7 @@ input:checked + .genki_pseudo_checkbox:after { font-size:14px; }
     width:auto !important;
     margin:3px auto;
   }
-  
+
   .drawing-quiz .quiz-answer-row {
     flex-wrap:wrap;
     padding-bottom:25px;
@@ -3267,22 +3267,22 @@ input:checked + .genki_pseudo_checkbox:after { font-size:14px; }
     left:50%;
     margin-left:-60px;
   }
-  
+
   .edition-icon:after { margin-top:30px; }
-  
+
   /* display columns below one another */
   .columns-2 > div, .dictionary-group {
     float:none;
     width:100%;
   }
-  
+
   .inline-columns > div, .lesson-summary .inline-columns > div {
     margin-right:5px;
   }
-  
+
   .dictionary-group { margin:0; }
   .dictionary-group .definition { padding:0 3px; }
-  
+
   /* change vocab key border to a horizontal one */
   .vocab-key > div:first-child, .vocab-key > div:last-child { border:none; }
   .vocab-key > div:first-child { border-bottom:1px solid #999; }
@@ -3292,20 +3292,20 @@ input:checked + .genki_pseudo_checkbox:after { font-size:14px; }
     float:left;
     width:33.33%;
   }
-  
+
   .drag-quiz .vocab-horizontal #question-list, .drag-quiz .vocab-horizontal #drop-list, .drag-quiz .vocab-horizontal #answer-list {
     float:none;
     width:auto;
   }
-  
+
   .vocab-horizontal .quiz-item-group { width:auto; }
-  
+
   /* reduce size of lesson titles on index */
   #lessons .lesson-title { font-size:18px; }
-  
+
   /* reduce quick dictionary width */
   #quick-jisho-window { width:300px; }
-  
+
   /* add margin below problems that can overlap each other */
   .fill-quiz.quiz-over .writing-zone + .writing-zone {
     margin-bottom:20px;
